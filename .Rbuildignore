@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^papers$
+^README\.Rmd$
+^README-.*\.png$

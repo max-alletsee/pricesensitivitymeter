@@ -1,0 +1,4 @@
+exportPattern("^[[:alpha:]]+")
+S3method(summary, psm)
+importFrom("methods", "new")
+importFrom("stats", "ecdf")

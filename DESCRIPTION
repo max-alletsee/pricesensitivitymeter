@@ -1,0 +1,19 @@
+Package: pricesensitivitymeter
+Date: 2017-05-13
+Type: Package
+Title: Van Westendorp Price Sensitivity Meter Analysis
+Version: 0.3.0
+Authors@R: person("Max", "Alletsee", email = "max.alletsee@gmail.com",
+                  role = c("aut", "cre"))
+Maintainer: Max Alletsee <max.alletsee@gmail.com>
+Description: An implementation of the van Westendorp Price
+    Sensitivity Meter in R, which is a survey-based approach
+	to analyze consumer price preferences and sensitivity.
+License: MIT + file LICENSE
+LazyData: true
+Encoding: UTF-8
+BugReports: https://github.com/alletsee/pricesensitivitymeter/issues
+URL: https://github.com/alletsee/pricesensitivitymeter
+Depends:
+    R (>= 3.0.0),
+	methods
