@@ -2,7 +2,7 @@ Package: pricesensitivitymeter
 Date: 2017-05-13
 Type: Package
 Title: Van Westendorp Price Sensitivity Meter Analysis
-Version: 0.3.0
+Version: 0.2.0
 Authors@R: person("Max", "Alletsee", email = "max.alletsee@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Max Alletsee <max.alletsee@gmail.com>
@@ -17,3 +17,8 @@ URL: https://github.com/alletsee/pricesensitivitymeter
 Depends:
     R (>= 3.0.0),
 	methods
+Suggests: knitr,
+    rmarkdown,
+    testthat,
+    ggplot2
+VignetteBuilder: knitr

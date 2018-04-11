@@ -1,7 +1,22 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
-version 0.3 // 2017-05-20 ...
---------------------------------------------------------------------------
+version 0.2 (Release date: 2018-04-11)
+==============
 
-- first complete Github version incl. function documentation
+Changes: 
+
+* adding support for running the analysis without a "too cheap" price
+* adding a charting vignette
+* adding automated testing of function inputs and function outputs
+* renaming the main function from "PSManalysis" to "psm_analysis" (for readability reasons)
+* improving smoothing of trial/revenue optimization when using Newton Miller Smith extension: setting up the price matrix with continuous price steps between the minimum and the maximum to avoid jumps that come from the lack of price points in a specific area
+* refining the data input checks (resulting from the c() implementation of hierarchies between data classes)
+
+
+version 0.1 (Release date: 2017-05-20)
+==============
+
+Changes: 
+
+* first complete Github version incl. function documentation

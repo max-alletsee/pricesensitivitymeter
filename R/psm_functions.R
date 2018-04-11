@@ -2,7 +2,7 @@
 # Implementing van Westendorp's PSM in R
 #---------------------
 
-PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, validate = TRUE,
+psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA, validate = TRUE,
                         pi_cheap = NA, pi_expensive = NA, pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
 
   #---
@@ -28,18 +28,20 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
 
   if(is.data.frame(data) | is.matrix(data)) {
     # identify columns in data object that are supposed to contain the price variables
+    if(length(toocheap) == 1 & length(cheap) == 1 & length(expensive) == 1 & length(tooexpensive) == 1) {
     col_toocheap <- match(toocheap, colnames(data))
     col_cheap <- match(cheap, colnames(data))
     col_expensive <- match(expensive, colnames(data))
     col_tooexpensive <- match(tooexpensive, colnames(data))
+    }
 
     if(is.na(col_toocheap) | is.na(col_cheap) | is.na(col_expensive) | is.na(col_tooexpensive)) {
       stop("Could not find all variable names of the price variables (toocheap, cheap, expensive, tooexpensive) in the data object")
     }
 
-    if(!is.numeric(data[, col_toocheap])  | !is.numeric(data[, col_cheap]) |
+    if(ifelse(!is.numeric(data[, col_toocheap]), !all(is.na(data[, col_toocheap])), FALSE) | !is.numeric(data[, col_cheap]) |
        !is.numeric(data[, col_expensive]) | !is.numeric(data[, col_tooexpensive])) {
-      stop("All price variables (toocheap, cheap, expensive, tooexpensive) must contain only numeric values")
+      stop("All price variables (toocheap, cheap, expensive, tooexpensive) must contain only numeric values\n(toocheap is also tolerated if all values are NA)")
     }
 
     # if input structure of data is valid, create internal dataframe for PSM function
@@ -51,9 +53,10 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
 
   # input check 3: if no dataset is provided, all price variables must be numeric vectors that have the same length
   if(!is.data.frame(data) & !is.matrix(data) & all(is.na(data))) {
-    if(!is.vector(toocheap)  | !is.vector(cheap)  | !is.vector(expensive)  | !is.vector(tooexpensive) |
-       !is.numeric(toocheap) | !is.numeric(cheap) | !is.numeric(expensive) | !is.numeric(tooexpensive)) {
-      stop("If the data argument is not provided, all price variables (toocheap, cheap, expensive, tooexpensive) must be numeric vectors")
+    if(!is.vector(toocheap) | !is.vector(cheap) | !is.vector(expensive)  | !is.vector(tooexpensive) |
+       ifelse(!all(is.na(toocheap)), !is.numeric(toocheap), FALSE) | !is.numeric(cheap) | !is.numeric(expensive) |
+       !is.numeric(tooexpensive)) {
+      stop("If the data argument is not provided, all price variables (toocheap, cheap, expensive, tooexpensive) must be numeric vectors\n(toocheap is also tolerated if all values are NA)")
     }
 
     if(!(length(toocheap) == length(cheap)) |
@@ -113,34 +116,66 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
 
   # input check 7: purchase intent data must only contain values from the pre-defined scale
   if(isTRUE(NMS)) {
-    for(i in unique(c(psmdata$pi_cheap, psmdata$pi_expensive))) {
-      if(all(pi_scale != i)) {
-        stop("The purchase intent data has values which are not defined in the purchase intent scale variable")
-      }
+    # check that purchase intent data and scale have the same class (special handling for integer vs. numeric vs. double)
+    if(!identical(x = class(psmdata$pi_cheap), y = class(pi_scale)) &
+       !(is.numeric(psmdata$pi_cheap) & is.numeric(pi_scale))) {
+      stop("pi_cheap and pi_scale must have the same class")
+    }
+
+    if(!identical(x = class(psmdata$pi_expensive), y = class(pi_scale)) &
+       !(is.numeric(psmdata$pi_expensive) & is.numeric(pi_scale))) {
+      stop("pi_expensive and pi_scale must have the same class")
+    }
+
+    # check that all purchase intent data only includes values from the pre-defined scale
+    if(!all(unique(psmdata$pi_cheap) %in% unique(pi_scale))) {
+      stop("pi_cheap contains values which are not defined in the pi_scale variable")
+    }
+
+    if(!all(unique(psmdata$pi_expensive) %in% unique(pi_scale))) {
+      stop("pi_expensive contains values which are not defined in the pi_scale variable")
+    }
+
+    # input check 8: calibration values must be numeric
+    if(any(!is.numeric(pi_calibrated))) {
+      stop("All calibrated purchase intent values must be numeric")
+    }
+
+    # input check 9: calibration values must be between 0 and 1 - only warning if this is not the case...
+    if(any(pi_calibrated < 0)) {
+      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+    }
+
+    if(any(pi_calibrated > 1)) {
+      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+    }
+
+    if(any(is.nan(pi_calibrated))) {
+      stop("Some of the purchase intent calibration values are not a number (NaN)")
+    }
+
+    if(any(is.infinite(pi_calibrated))) {
+      stop("Some of the purchase intent calibration values are infinite (-Inf, Inf).")
     }
   }
 
-  # input check 8: calibration values must be numeric
-  if(isTRUE(NMS) & any(!is.numeric(pi_calibrated))) {
-    stop("All calibrated purchase intent values must be numeric")
-  }
-
-  # input check 9: calibration values must be between 0 and 1 - only warning if this is not the case...
-  if(isTRUE(NMS) & any(pi_calibrated < 0)) {
-    warning("Some values of the calibration values are smaller than 0. Please consider this when interpreting the outputs.")
-  }
-
-
-  if(isTRUE(NMS) & any(pi_calibrated > 1)) {
-    warning("Some values of the calibration values are larger than 1. Please consider this when interpreting the outputs.")
-  }
 
   #-----
   # 3) Validation of response patterns answers and optional cleaning of data set
   #-----
 
   # validation: "too cheap < cheap < expensive < too expensive" for each case. if not, drop from the data
-  psmdata$valid <- psmdata$tooexpensive > psmdata$expensive & psmdata$expensive > psmdata$cheap & psmdata$cheap > psmdata$toocheap
+  # consider special case of data without "too cheap" values for all respondents
+  if(all(is.na(psmdata$toocheap))) { # if "too cheap" is missing: ignore for validation
+    psmdata$valid <- psmdata$tooexpensive > psmdata$expensive & psmdata$expensive > psmdata$cheap
+    # set to invalid if any NAs
+    psmdata$valid[which(is.na(psmdata$tooexpensive) | is.na(psmdata$expensive) | is.na(psmdata$cheap))] <- FALSE
+  } else { # if "too cheap" is included: consider in validation
+    psmdata$valid <- psmdata$tooexpensive > psmdata$expensive & psmdata$expensive > psmdata$cheap & psmdata$cheap > psmdata$toocheap
+    # set to invalid if any NAs
+    psmdata$valid[which(is.na(psmdata$tooexpensive) | is.na(psmdata$expensive) | is.na(psmdata$cheap) | is.na(psmdata$toocheap))] <- FALSE
+  }
+
 
   if(any(psmdata$valid == FALSE) & !isTRUE(validate)) {
     warning("Some respondents' price structures might not be consistent (i.e. different from too cheap < cheap < expensive < too expensive). Consider running this function with the additional option 'validate == TRUE' to analyse only the subset of respondents with consistent price structure.")
@@ -149,6 +184,10 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
   # save values for return function later
   invalid_cases <- nrow(psmdata) - sum(psmdata$valid)
   total_sample <- nrow(psmdata)
+
+  if(total_sample == invalid_cases) {
+    stop("All respondents have intransitive preference structures (i.e. different from too cheap < cheap < expensive < too expensive).")
+  }
 
   if (isTRUE(validate) & !isTRUE(NMS)) {
     psmdata <- subset(psmdata, psmdata$valid, select = c("toocheap", "cheap", "expensive", "tooexpensive"))
@@ -165,10 +204,15 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
   # new data set: 1st variable shows all prices that were given by respondents, other variables show the respective cumulative density
   data_ecdf <- data.frame(price = sort(unique(c(psmdata$toocheap, psmdata$cheap, psmdata$expensive, psmdata$tooexpensive))))
 
-  # empirical cumulative density for "too cheap" as a function
-  ecdf_psm <- ecdf(psmdata$toocheap)
-  # ... apply the function to all prices (1 - f(x) because the function is reversed in the original paper)
-  data_ecdf$ecdf_toocheap <- 1 - ecdf_psm(data_ecdf$price)
+
+  # empirical cumulative density for "too cheap" (ignore if no "too cheap" values provided)
+  if(!all(is.na(psmdata$toocheap))) { # if there are values: first as a function
+    ecdf_psm <- ecdf(psmdata$toocheap)
+    # ... apply the function to all prices (1 - f(x) because the function is reversed in the original paper)
+    data_ecdf$ecdf_toocheap <- 1 - ecdf_psm(data_ecdf$price)
+  } else { # if no "too cheap" values provided: set to NA
+    data_ecdf$ecdf_toocheap <- NA
+  }
 
   # same for "cheap", "expensive", and "too expensive"
   # "cheap" is also reversed in the original paper, "expensive" and "too expensive" are not
@@ -219,8 +263,9 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
     }
 
 
-    # set up respondent-level data for the price steps (= all prices for which there are answers)
-    nms_prices <- data_ecdf$price
+    # set up respondent-level data for the price steps (= steps of 0.01 between minimal and maximal price)
+    # replacing
+    nms_prices <- seq(from = min(data_ecdf$price), to = max(data_ecdf$price), by = 0.01)
 
     # create a matrix: each row is one respondent, each column is one (unique) price
     nms_matrix <- matrix(nrow = nrow(psmdata), ncol = length(nms_prices),
@@ -245,20 +290,37 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
     table(nms_matrix[1,])
 
     # gradual interpolation of purchase probabilities
-    for (i in 1:nrow(nms_matrix)) {
-      nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- c(
-        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
-                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-                length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
-        # linear interpolation between second pair of values (usually: "cheap" to "expensive")
-        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-                length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1],
-        # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
-        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[4]],
-                length.out = which(!is.na(nms_matrix[i, ]))[4] - which(!is.na(nms_matrix[i, ]))[3] + 1)[-1]
-      )
+
+    if(all(is.na(psmdata$toocheap))) {# if no data for "too cheap": interpolation between two pairs of values
+      for (i in 1:nrow(nms_matrix)) {
+        # linear interpolation between first pair of values (usually: "cheap" and "expensive")
+        nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- c(
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
+          # linear interpolation between second pair of values (usually: "expensive" to "too expensive")
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1])
+          # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
+      }
+    } else {# if data for "too cheap": interpolation between three pairs of values
+      for (i in 1:nrow(nms_matrix)) {
+        # linear interpolation between first pair of values (usually: "too cheap" and "cheap")
+        nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- c(
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
+          # linear interpolation between second pair of values (usually: "cheap" to "expensive")
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1],
+          # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[4]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[4] - which(!is.na(nms_matrix[i, ]))[3] + 1)[-1]
+        )
+      }
     }
 
     # purchase probabilities outside of the individual's personal price range must be set to zero
@@ -280,7 +342,7 @@ PSManalysis <- function(data = NA, toocheap, cheap, expensive, tooexpensive, val
   # 7) Construct the object to be returned
   #-----
 
-  NMS <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
+  # NMS <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
 
   output_psm <- list(data_input = psmdata,
                      validated = validate,

@@ -17,7 +17,7 @@ devtools::install_github("alletsee/pricesensitivitymeter")
 Usage
 -----
 
-The main function of the package is PSManalysis() which performs all necessary analyses.
+The main function of the package is psm\_analysis() which performs all necessary analyses.
 
 ``` r
 ## creating example data
@@ -30,13 +30,13 @@ tex <- round(rnorm(n = 250, mean = 17, sd = 1), digits = 2)
 data.psm.demo <- data.frame(tch, ch, ex, tex)
 
 ## running the analysis
-output.psm.demo2 <- PSManalysis(toocheap = "tch",
+output.psm.demo <- psm_analysis(toocheap = "tch",
   cheap = "ch",
   expensive = "ex",
   tooexpensive = "tex",
   data = data.psm.demo)
 
-summary(output.psm.demo2)
+summary(output.psm.demo)
 ```
 
 Additional Information

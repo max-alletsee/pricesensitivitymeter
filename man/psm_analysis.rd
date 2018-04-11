@@ -1,12 +1,12 @@
-\name{PSManalysis}
-\alias{PSManalysis}
+\name{psm_analysis}
+\alias{psm_analysis}
 
 \title{
 Van Westendorp Price Sensitivity Meter Analysis (PSM)
 }
 
 \description{
-\code{PSManalysis()} performs an analysis of consumer price
+\code{psm_analysis()} performs an analysis of consumer price
   preferences and price sensitivity known as \bold{van
   Westendorp Price Sensitivity Meter (PSM)}. It takes respondent's
   price preferences (from survey data) as an input and estimates
@@ -15,8 +15,9 @@ Van Westendorp Price Sensitivity Meter Analysis (PSM)
 }
 
 \usage{
-PSManalysis(data = NA,
+psm_analysis(
   toocheap, cheap, expensive, tooexpensive,
+  data = NA,
   validate = TRUE,
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
@@ -24,22 +25,32 @@ PSManalysis(data = NA,
 }
 
 \arguments{
+  \item{toocheap, cheap, expensive, tooexpensive}{If a
+  data.frame/matrix is provided in the \code{data} argument:
+  names of the variables in the data.frame/matrix that contain
+  the survey data on the respondents' "too cheap", "cheap",
+  "expensive" and "too expensive" price preferences.
+
+  If no data.frame/matrix is provided in the \code{data}
+  argument: numeric vectors that directly include this
+  information. If numeric vectors are provided, it is assumed
+  that they are sorted by respondent ID (the preferences for
+  respondent \code{n} are stored at the \code{n}-th position in
+  all vectors).
+
+  If the \code{toocheap} price was not assessed, a
+  variable/vector of NAs can be used instead. This
+  variable/vector needs to have the same length as the other
+  survey information. If \code{toocheap} is NA for all cases,
+  it is possible to calculate the Point of Marginal
+  Expensiveness and the Indifference Price Point, but it is
+  impossible to calculate the Point of Marginal Cheapness and
+  the Optimal Price Point.}
   \item{data}{data.frame or matrix that contains the function's
   input data. \code{data} input is not mandatory: Instead of
   using one data.frame/matrix as an input, it is also possible
   to provide the data directly as vectors in the "too cheap",
   "cheap", "expensive" and "too expensive" arguments.}
-  \item{toocheap, cheap, expensive, tooexpensive}{if a
-  data.frame/matrix is provided in the \code{data} argument:
-  names of the variables in the data.frame/matrix that contain
-  the survey data on the respondents' "too cheap", "cheap",
-  "expensive" and "too expensive" price preferences. if no
-  data.frame/matrix is provided in the \code{data} argument:
-  numeric vectors that directly include this information. If
-  numeric vectors are provided, it is assumed that they are
-  sorted by respondent ID (the preferences for respondent
-  \code{n} are stored at the \code{n}-th position in all
-  vectors).}
   \item{validate}{logical. should only respondents with
   consistent price preferences (too cheap < cheap < expensive
   < too expensive) be considered in the analysis?}
@@ -251,7 +262,7 @@ ch <- round(rnorm(n = 250, mean = 8.5, sd = 0.5), digits = 2)
 ex <- round(rnorm(n = 250, mean = 13, sd = 0.75), digits = 2)
 tex <- round(rnorm(n = 250, mean = 17, sd = 1), digits = 2)
 
-output.psm.demo1 <- PSManalysis(toocheap = tch,
+output.psm.demo1 <- psm_analysis(toocheap = tch,
   cheap = ch,
   expensive = ex,
   tooexpensive = tex)
@@ -267,7 +278,7 @@ pint_ex <- sample(x = c(1:5), size = length(tex),
 
 data.psm.demo <- data.frame(tch, ch, ex, tex, pint_ch, pint_ex)
 
-output.psm.demo2 <- PSManalysis(toocheap = "tch",
+output.psm.demo2 <- psm_analysis(toocheap = "tch",
   cheap = "ch",
   expensive = "ex",
   tooexpensive = "tex",

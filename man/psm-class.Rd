@@ -6,19 +6,19 @@
 
 \title{Class \code{"psm"}}
 \description{
-Class \code{"psm"} is a class for outputs of Price Sensitivity Meter analyses as performed by the \code{\link{PSManalysis}} function.
+Class \code{"psm"} is a class for outputs of Price Sensitivity Meter analyses as performed by the \code{\link{psm_analysis}} function.
 
 The main purpose is to create a custom \code{summary} function for objects of class \code{"psm"}.
 }
 
 \section{Objects from the Class}{
-Objects are usually created as a result of a call of the \code{\link{PSManalysis}} function.
+Objects are usually created as a result of a call of the \code{\link{psm_analysis}} function.
 }
 
 \section{Slots}{
   \describe{
     \item{\code{data_input}:}{Object of class \code{"data.frame"}. Contains the data that was used as an input for the analysis.}
-    \item{\code{validated}:}{Object of class \code{"logical"}. Indicates whether the \code{"validate"} option of the \code{PSManalysis} function has been used (to exclude cases with intransitive price preferences).}
+    \item{\code{validated}:}{Object of class \code{"logical"}. Indicates whether the \code{"validate"} option of the \code{psm_analysis} function has been used (to exclude cases with intransitive price preferences).}
     \item{\code{invalid_cases}:}{Object of class \code{"numeric"}. Number of cases with intransitive price preferences.}
     \item{\code{total_sample}:}{Object of class \code{"numeric"}. Total sample size of the input sample \emph{before} assessing the transitivity of individual price preferences.}
     \item{\code{data_vanwestendorp}:}{Object of class \code{"data.frame"}. Output data of the Price Sensitivity Meter analysis. Contains the cumulative distribution functions for the four price assessments (too cheap, cheap, expensive, too expensive) for all prices.}
@@ -39,7 +39,7 @@ Objects are usually created as a result of a call of the \code{\link{PSManalysis
 }
 
 \seealso{
-To understand the main function that creates an object of class \code{"psm"}, see \code{\link{PSManalysis}}.
+To understand the main function that creates an object of class \code{"psm"}, see \code{\link{psm_analysis}}.
 
 To understand how the summaries of objects of class \code{"psm"} look like, see \code{\link{summary.psm}}
 }
