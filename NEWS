@@ -1,6 +1,14 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 0.2.1 (Release date: 2018-04-12)
+==============
+
+Changes: 
+
+* addressing feedback from CRAN submit: adding proper citation of the main publication in the DESCRIPTION file
+
+
 version 0.2 (Release date: 2018-04-11)
 ==============
 

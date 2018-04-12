@@ -237,7 +237,7 @@ The function output consists of the following elements:
 \references{
   Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) --
   A new approach to study consumer perception of price"
-  \emph{Proceedings of the ESOMAR Congress}, 139--167. Online
+  \emph{Proceedings of the ESOMAR 29th Congress}, 139--167. Online
   available at \url{https://rwconnect.esomar.org/a-new-approach-to-study-consumer-perception-of-price/}.
 
   Newton, D, Miller, J, Smith, P, (1993) "A market acceptance
