@@ -24,6 +24,7 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+build_package.R
 
 inst/doc
 
