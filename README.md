@@ -4,6 +4,8 @@ pricesensitivitymeter
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/pricesensitivitymeter)](http://cran.r-project.org/package=pricesensitivitymeter)
 
+=======
+
 Overview
 --------
 
