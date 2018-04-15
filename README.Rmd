@@ -16,12 +16,20 @@ knitr::opts_chunk$set(
 
 # pricesensitivitymeter
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/pricesensitivitymeter)](http://cran.r-project.org/package=pricesensitivitymeter)
+
 ## Overview 
-pricesensitivitymeter is an implementation of the van Westendorp Price Sensitivity Meter (PSM) in R, which is a popular method in market research to analyze consumer price preferences and price sensitivity. It also covers the so-called Newton Miller which allows to estimate prices that maximize the trial rate and the revenue.
+pricesensitivitymeter is an implementation of the van Westendorp Price Sensitivity Meter (PSM) in R, which is a popular method in market research to analyze consumer price preferences and price sensitivity. It also covers the so-called Newton Miller Smith Extension which allows to estimate prices that maximize the trial rate and the revenue.
 
 ## Installation
 
+As of version 0.2.1, this package is hosted on CRAN.
+
 ```{r installation, eval = FALSE}
+# install the stable release from CRAN
+install.packages("pricesensitivitymeter")
+
+# install the development version from Github
 devtools::install_github("alletsee/pricesensitivitymeter")
 ```
 
