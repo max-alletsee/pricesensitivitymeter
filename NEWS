@@ -1,10 +1,19 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 0.3.0 (Release date: 2018-04-30)
+==============
+
+Changes:
+
+* adding option to interpolate between price points
+* edits in the README: fixing typos, amending the installation instructions
+
+
 version 0.2.1 (Release date: 2018-04-12)
 ==============
 
-Changes: 
+Changes:
 
 * addressing feedback from CRAN submit: adding proper citation of the main publication in the DESCRIPTION file
 
@@ -12,7 +21,7 @@ Changes:
 version 0.2 (Release date: 2018-04-11)
 ==============
 
-Changes: 
+Changes:
 
 * adding support for running the analysis without a "too cheap" price
 * adding a charting vignette
@@ -25,6 +34,6 @@ Changes:
 version 0.1 (Release date: 2017-05-20)
 ==============
 
-Changes: 
+Changes:
 
 * first complete Github version incl. function documentation

@@ -2,16 +2,23 @@
 # Implementing van Westendorp's PSM in R
 #---------------------
 
-psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA, validate = TRUE,
-                        pi_cheap = NA, pi_expensive = NA, pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
+psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
+                         validate = TRUE, interpolate = FALSE,
+                         pi_cheap = NA, pi_expensive = NA,
+                         pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
 
   #---
   # 1) Input Check: Price Sensitivity Meter data
   #---
 
-  # input check 1: validate is required and must be boolean
+  # input check 1a: validate is required and must be boolean
   if(any(is.na(validate)) | !is.logical(validate) | length(validate) != 1) {
     stop("validate requires one logical value")
+  }
+
+  # input check 1b: interpolation is required and must be boolean
+  if(any(is.na(interpolate)) | !is.logical(interpolate) | length(interpolate) != 1) {
+    stop("interpolate requires one logical value")
   }
 
   # input check 2: if data is provided in a dataset, structure and format must be correct
@@ -201,9 +208,8 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA, va
   # 4) Creating the empirical cumulative density per price
   #-----
 
-  # new data set: 1st variable shows all prices that were given by respondents, other variables show the respective cumulative density
+  # new data set: 1st variable shows all prices, other variables show the respective cumulative density
   data_ecdf <- data.frame(price = sort(unique(c(psmdata$toocheap, psmdata$cheap, psmdata$expensive, psmdata$tooexpensive))))
-
 
   # empirical cumulative density for "too cheap" (ignore if no "too cheap" values provided)
   if(!all(is.na(psmdata$toocheap))) { # if there are values: first as a function
@@ -224,6 +230,43 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA, va
 
   ecdf_psm <- ecdf(psmdata$tooexpensive)
   data_ecdf$ecdf_tooexpensive <- ecdf_psm(data_ecdf$price)
+
+  # if interpolation is enabled: create bigger dataframe that contains all the actual price information plus fixed price steps of 0.01 between those values
+  if(isTRUE(interpolate)) {
+    data_ecdf_smooth <- data.frame(price = seq(from = min(data_ecdf$price),
+                                               to = max(data_ecdf$price),
+                                               by = 0.01))
+
+    # merge with existing dataframe incl. information on empirical cumulative density functions
+    data_ecdf_smooth <- merge(x = data_ecdf_smooth,
+                              y = data_ecdf,
+                              by = "price",
+                              all.x = TRUE)
+
+    # linear interpolation with the approx function for all empirical cumulative density functions
+    data_ecdf_smooth$ecdf_toocheap <- approx(x = data_ecdf$price,
+                                             y = data_ecdf$ecdf_toocheap,
+                                             xout = data_ecdf_smooth$price,
+                                             method = "linear")
+
+    data_ecdf_smooth$ecdf_cheap <- approx(x = data_ecdf$price,
+                                          y = data_ecdf$ecdf_cheap,
+                                          xout = data_ecdf_smooth$price,
+                                          method = "linear")
+
+    data_ecdf_smooth$ecdf_expensive <- approx(x = data_ecdf$price,
+                                              y = data_ecdf$ecdf_expensive,
+                                              xout = data_ecdf_smooth$price,
+                                              method = "linear")
+
+    data_ecdf_smooth$ecdf_tooexpensive <- approx(x = data_ecdf$price,
+                                                 y = data_ecdf$ecdf_tooexpensive,
+                                                 xout = data_ecdf_smooth$price,
+                                                 method = "linear")
+
+    # replacing the old data_ecdf with its new smoothed version
+    data_ecdf <- data_ecdf_smooth
+  }
 
   #-----
   # 5) Identifying the price points
@@ -263,9 +306,9 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA, va
     }
 
 
-    # set up respondent-level data for the price steps (= steps of 0.01 between minimal and maximal price)
-    # replacing
-    nms_prices <- seq(from = min(data_ecdf$price), to = max(data_ecdf$price), by = 0.01)
+    # set up respondent-level data for the price steps
+    nms_prices <- data_ecdf$price
+
 
     # create a matrix: each row is one respondent, each column is one (unique) price
     nms_matrix <- matrix(nrow = nrow(psmdata), ncol = length(nms_prices),

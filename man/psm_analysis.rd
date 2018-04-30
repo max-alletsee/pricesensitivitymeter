@@ -19,6 +19,7 @@ psm_analysis(
   toocheap, cheap, expensive, tooexpensive,
   data = NA,
   validate = TRUE,
+  interpolate = FALSE,
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
   pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
@@ -54,6 +55,12 @@ psm_analysis(
   \item{validate}{logical. should only respondents with
   consistent price preferences (too cheap < cheap < expensive
   < too expensive) be considered in the analysis?}
+  \item{interpolate}{logical. should smoothing of the price
+  curves be applied between the actual prices given by the
+  respondents? If smoothing is enabled, the output appears
+  less bumpy in regions with sparse price information. If the
+  sample size is sufficiently large, smoothing should not be
+  necessary.}
   \item{pi_cheap, pi_expensive}{Only required for the Newton
   Miller Smith extension. If \code{data} argument is provided:
   names of the variables in the data.frame/matrix that contain
