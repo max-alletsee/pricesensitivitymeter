@@ -1,12 +1,13 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
-version 0.3.0 (Release date: 2018-04-30)
+version 0.3.0 (Release date: 2018-05-10)
 ==============
 
 Changes:
 
-* adding option to interpolate between price points
+* adding optional argument to interpolate between price points
+* adding a vignette for the interpolate argument
 * edits in the README: fixing typos, amending the installation instructions
 
 

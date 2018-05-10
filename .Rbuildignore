@@ -3,4 +3,6 @@
 ^papers$
 ^README\.Rmd$
 ^README-.*\.png$
-build_package.R
+^build_package\.R$
+^benchmarks/benchmarks\.r$
+^benchmarks/benchmark_results\.txt$

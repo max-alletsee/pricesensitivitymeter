@@ -247,22 +247,22 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     data_ecdf_smooth$ecdf_toocheap <- approx(x = data_ecdf$price,
                                              y = data_ecdf$ecdf_toocheap,
                                              xout = data_ecdf_smooth$price,
-                                             method = "linear")
+                                             method = "linear")$y
 
     data_ecdf_smooth$ecdf_cheap <- approx(x = data_ecdf$price,
                                           y = data_ecdf$ecdf_cheap,
                                           xout = data_ecdf_smooth$price,
-                                          method = "linear")
+                                          method = "linear")$y
 
     data_ecdf_smooth$ecdf_expensive <- approx(x = data_ecdf$price,
                                               y = data_ecdf$ecdf_expensive,
                                               xout = data_ecdf_smooth$price,
-                                              method = "linear")
+                                              method = "linear")$y
 
     data_ecdf_smooth$ecdf_tooexpensive <- approx(x = data_ecdf$price,
                                                  y = data_ecdf$ecdf_tooexpensive,
                                                  xout = data_ecdf_smooth$price,
-                                                 method = "linear")
+                                                 method = "linear")$y
 
     # replacing the old data_ecdf with its new smoothed version
     data_ecdf <- data_ecdf_smooth

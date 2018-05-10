@@ -1,0 +1,41 @@
+[1] "---------------------------------------"
+[1] "pricensitivitymeter benchmarking results"
+[1] "package version 0.3.0"
+
+
+[1] "-------------"
+[1] "Benchmarking results for small dataset"
+                             expr       min        lq      mean    median         uq        max neval
+1  PSM (no NMS, no interpolation)  2.382079  2.475518  2.608318  2.532692   2.717651   3.342504    20
+2 PSM with interpolation (no NMS)  6.122235  6.467408  9.053625  7.229862  10.367992  26.337258    20
+3 PSM with NMS (no interpolation) 16.025586 16.532253 19.734320 17.720732  20.953370  32.695866    20
+4  PSM with NMS and interpolation 70.865434 80.144360 97.222126 86.068194 106.080977 183.341925    20
+[1] "-------------"
+[1] "Benchmarking results for large dataset"
+                             expr         min          lq        mean      median          uq        max neval
+1  PSM (no NMS, no interpolation)    4.715517    4.858450    5.675857    4.962557    6.160636   10.53951    25
+2 PSM with interpolation (no NMS)    9.526180    9.931939   11.272866   10.307405   12.824736   15.10313    25
+3 PSM with NMS (no interpolation) 1936.430135 2030.892348 2163.424868 2104.831058 2203.544147 3257.98250    25
+4  PSM with NMS and interpolation 2280.553574 2453.764307 2576.214310 2540.374580 2693.536262 3059.21403    25
+
+[1] "2018-05-10 22:06:57 CEST"
+R version 3.5.0 (2018-04-23)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows >= 8 x64 (build 9200)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Germany.1252  LC_CTYPE=German_Germany.1252    LC_MONETARY=German_Germany.1252 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] pricesensitivitymeter_0.3.0 microbenchmark_1.4-4       
+
+loaded via a namespace (and not attached):
+[1] compiler_3.5.0 tools_3.5.0    yaml_2.1.19   
+
+
