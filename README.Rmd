@@ -33,7 +33,7 @@ devtools::install_github("alletsee/pricesensitivitymeter")
 
 ## Usage
 
-The main function of the package is psm_analysis() which performs all necessary analyses. 
+The main function of the package is psm_analysis() which performs all necessary analyses. The additional function psm_analysis_weighted() performs the same analyses for weighted survey data that is created by the "survey" package.
 
 ```{r example, eval = FALSE}
 ## creating example data

@@ -1,6 +1,15 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 0.4.0 (Release date: 2018-MM-DD)
+==============
+
+Changes
+* adding psm_analysis_weighted() function to deal with weighted input data. this requires the survey package. for the moment, it does not yet support the Newton Miller Smith extension.
+* amending the psm class definition and the summary function for the psm class to account for weighted/unweighted data
+* fixing typo in summary() function
+* fixing bug in calculation of % of removed cases (did show only 0/1 before, now proper percentages)
+
 version 0.3.2 (Release date: 2018-05-12)
 ==============
 
