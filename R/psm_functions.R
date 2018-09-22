@@ -22,6 +22,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   }
 
   # input check 2: if data is provided in a dataset, structure and format must be correct
+
   if(!is.data.frame(data) & !is.matrix(data) & !all(is.na(data))) {
     stop("If the data argument is used, it must provide a data frame (or matrix) object")
 
@@ -149,11 +150,11 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
 
     # input check 9: calibration values must be between 0 and 1 - only warning if this is not the case...
     if(any(pi_calibrated < 0)) {
-      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. Interpretating the trial/revenue values is not recommended.")
+      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
     }
 
     if(any(pi_calibrated > 1)) {
-      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. Interpretating the trial/revenue values is not recommended.")
+      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
     }
 
     if(any(is.nan(pi_calibrated))) {
@@ -329,6 +330,8 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     pos_expensive <- sapply(as.character(psmdata$expensive), FUN = function(x) which(colnames(nms_matrix) == x))
     nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_expensive))] <- psmdata$pi_expensive_cal
 
+    table(nms_matrix[1,])
+
     # gradual interpolation of purchase probabilities
 
     if(all(is.na(psmdata$toocheap))) {# if no data for "too cheap": interpolation between two pairs of values
@@ -393,7 +396,6 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
                      pricerange_upper = pricerange_upper,
                      idp = idp,
                      opp = opp,
-                     weighted = FALSE,
                      NMS = NMS)
 
   # if NMS analysis was run: amend additional NMS outputs
@@ -407,4 +409,51 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   class(output_psm) <- "psm"
 
   return(output_psm)
+}
+
+# Definition of psm class
+
+psm.class <- setClass("psm", slots = c(data_input = "data.frame",
+                                       validated = "logical",
+                                       invalid_cases = "numeric",
+                                       total_sample = "numeric",
+                                       data_vanwestendorp = "data.frame",
+                                       pricerange_lower = "numeric",
+                                       pricerange_upper = "numeric",
+                                       idp = "numeric",
+                                       opp = "numeric",
+                                       NMS = "logical",
+                                       data_nms = "data.frame",
+                                       pi_scale = "data.frame",
+                                       price_optimal_trial = "numeric",
+                                       price_optimal_revenue = "numeric"))
+
+# summary function for psm class
+
+summary.psm <- function(object, ...) {
+  cat("Van Westendorp Price Sensitity Meter Analysis\n\n")
+
+  cat("Accepted Price Range:", round(object$pricerange_lower, digits = 2), "-", round(object$pricerange_upper, digits = 2),"\n")
+  cat("Indifference Price Point:", object$idp,"\n")
+  cat("Optimal Price Point:", object$opp, "\n\n")
+
+  if(object$NMS == TRUE) {
+    cat("Newton Miller Smith Extension\n")
+    cat("Price with Optimal Trial Rate:", object$price_optimal_trial, "\n")
+    cat("Price with Optimal Revenue:", object$price_optimal_revenue, "\n\n")
+  }
+
+  cat("---\n")
+  cat(ifelse(object$validated == TRUE, object$total_sample - object$invalid_cases, object$total_sample), "cases with individual price preferences were analyzed\n")
+
+  if(object$invalid_cases > 0) {
+    cat("Total data set consists of ", object$total_sample, " cases. Analysis was ",
+        ifelse(object$validated == TRUE, "", "not "), "limited to cases with transitive price preferences.\n", sep = "")
+
+    if(object$validated == TRUE) {
+      cat("(Removed: n = ", object$invalid_cases, " / ", round(object$invalid_cases / object$total_sample, digits = 0), "% of data)", sep = "")
+    } else {
+      cat("Consider re-running the analysis with option 'validate = TRUE' to exclude all cases with invalid price preferences (n = ", object$invalid_cases, ")", sep = "")
+    }
+  } # end of "invalid cases" section
 }

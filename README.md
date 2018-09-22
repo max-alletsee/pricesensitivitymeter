@@ -29,9 +29,7 @@ Usage
 -----
 
 The main function of the package is psm\_analysis() which performs all
-necessary analyses. The additional function psm\_analysis\_weighted()
-performs the same analyses for weighted survey data that is created by
-the “survey” package.
+necessary analyses.
 
 ``` r
 ## creating example data

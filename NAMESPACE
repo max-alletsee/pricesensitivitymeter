@@ -1,10 +1,5 @@
 exportPattern("^[[:alpha:]]+")
 S3method(summary, psm)
-
 importFrom("methods", "new")
 importFrom("stats", "ecdf")
 importFrom("stats", "approx")
-
-importFrom("survey", "svycdf")
-importFrom("survey", "svydesign")
-
