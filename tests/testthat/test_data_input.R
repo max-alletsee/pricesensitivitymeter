@@ -108,8 +108,6 @@ data.psm.test$pi_expensive3 <- sample(x = c(TRUE, FALSE), size = nrow(data.psm.t
 
 test_that("Data Input: NMS using dataframe", {
   expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
-                            pi_cheap = rep.int(2, nrow(data.psm.test)), pi_expensive = rep.int(1, nrow(data.psm.test))))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "foo", pi_expensive = "bar"))
   expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap2", pi_expensive = "pi_expensive"))

@@ -1,6 +1,13 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 0.3.3 (Release date: 2018-10-14)
+==============
+
+Changes:
+
+* fixes an issue in the unit testing with an if condition with length greater 1 (thanks to Tomas Kalibera for automated testing in R-devel)
+
 version 0.3.2 (Release date: 2018-05-12)
 ==============
 
