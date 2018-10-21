@@ -86,7 +86,7 @@ psm_analysis(
 \details{
 The Price Sensitivity Meter method for the analysis of consumer
 price preferences was proposed by the Dutch economist Peter van
-Westendorp in 1976 on the ESOMAR conference. It is a
+Westendorp in 1976 at the ESOMAR conference. It is a
 survey-based approach that has become one of the standard price
 acceptance measurement techniques in the market research
 industry and is still widely used for during early-stage product
@@ -131,15 +131,15 @@ describes the four intersections as follows:
 \itemize{
 \item \bold{Point of Marginal Cheapness (MGP)}: Below this price
 point, there are more respondents that consider the price as
-"too cheap" than respondents who consider it as "cheap"
-(intersection of "too cheap" and "cheap"). This is interpreted
+"too cheap" than respondents who consider it as "not cheap"
+(intersection of "too cheap" and "not cheap"). This is interpreted
 as the lower limit of the range of acceptable prices.
 \item \bold{Point of Marginal Expensiveness (MEP)}. Above this
 price point, there are more respondent that consider the price
 as "too expensive" than there are respondents who consider it as
-"expensive" (intersection of "expensive" and "too expensive").
-This is interpreted as the upper limit of the range of acceptable
-prices.
+"not expensive" (intersection of "not expensive" and "too
+expensive"). This is interpreted as the upper limit of the
+range of acceptable prices.
 \item \bold{Indifference Price Point (IDP)}: The same number of
 respondents perceives the price as "cheap" and "expensive"
 (intersection of "cheap" and "expensive"). In van Westendorp's
@@ -208,12 +208,12 @@ The function output consists of the following elements:
     limit of the acceptable price range as defined by the
     Price Sensitivity Meter, also known as \bold{point of
     marginal cheapness}: Intersection of the "too cheap" and the
-    "expensive" curves.}
+    "not cheap" curves.}
     \item{\code{pricerange_upper}:}{\code{numeric} object. Upper
     limit of the acceptable price range as defined by the Price
     Sensitivity Meter, also known as \bold{point of marginal
     expensiveness}: Intersection of the "too expensive" and the
-    "cheap" curves.}
+    "not expensive" curves.}
     \item{\code{idp}:}{\code{numeric} object. \bold{Indifference
     Price Point} as defined by the Price Sensitivity Meter:
     Intersection of the "cheap" and the "expensive" curves.}

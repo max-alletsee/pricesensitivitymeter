@@ -53,10 +53,10 @@ test_that("Data Output: Matrices have rows and columns", {
   expect_gt(nrow(psm.result2$data_nms), 0)
 
   expect_equal(ncol(psm.result1$data_input), 4)
-  expect_equal(ncol(psm.result1$data_vanwestendorp), 5)
+  expect_equal(ncol(psm.result1$data_vanwestendorp), 7)
 
   expect_equal(ncol(psm.result2$data_input), 8)
-  expect_equal(ncol(psm.result2$data_vanwestendorp), 5)
+  expect_equal(ncol(psm.result2$data_vanwestendorp), 7)
   expect_equal(ncol(psm.result2$data_nms), 3)
 })
 

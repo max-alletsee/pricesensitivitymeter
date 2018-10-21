@@ -5,7 +5,7 @@
 Summarizing Price Sensitivity Meter Analyses
 }
 \description{
-\code{summary} method for class \code{"lm"}.
+\code{summary} method for class \code{"psm"}.
 }
 \usage{
 \method{summary}{psm}(object, \dots)
