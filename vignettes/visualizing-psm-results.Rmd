@@ -213,7 +213,7 @@ points(x = output.psm$idp,
        col = "#009E73")
 
 text(x = output.psm$idp,
-     y = output.psm$data_vanwestendorp$ecdf_not_cheap[which(output.psm$data_vanwestendorp$price == output.psm$idp)],
+     y = output.psm$data_vanwestendorp$ecdf_cheap[which(output.psm$data_vanwestendorp$price == output.psm$idp)],
      labels = paste("IDP:", output.psm$idp),
      pos = 4)
 
