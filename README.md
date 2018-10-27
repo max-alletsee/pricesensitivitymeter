@@ -1,10 +1,8 @@
-pricesensitivitymeter
-=====================
+# pricesensitivitymeter
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 
-Overview
---------
+## Overview
 
 pricesensitivitymeter is an implementation of the van Westendorp Price
 Sensitivity Meter (PSM) in R, which is a popular method in market
@@ -12,10 +10,10 @@ research to analyze consumer price preferences and price sensitivity. It
 also covers the so-called Newton Miller Smith Extension which allows to
 estimate prices that maximize the trial rate and the revenue.
 
-Installation
-------------
+## Installation
 
-As of version 0.2.1, this package is hosted on CRAN.
+As of version 0.2.1, this package is
+[https://cran.r-project.org/package=pricesensitivitymeter](hosted%20on%20CRAN).
 
 ``` r
 # install the stable release from CRAN
@@ -25,8 +23,7 @@ install.packages("pricesensitivitymeter")
 devtools::install_github("alletsee/pricesensitivitymeter")
 ```
 
-Usage
------
+## Usage
 
 The main function of the package is psm\_analysis() which performs all
 necessary analyses.
@@ -51,15 +48,13 @@ output.psm.demo <- psm_analysis(toocheap = "tch",
 summary(output.psm.demo)
 ```
 
-Additional Information
-----------------------
+## Additional Information
 
--   Please [report any issues or
+  - Please [report any issues or
     bugs](https://github.com/alletsee/pricesensitivitymeter/issues).
--   License: MIT
+  - License: MIT
 
-References
-----------
+## References
 
 Van Westendorp, P (1976) “NSS-Price Sensitivity Meter (PSM) – A new
 approach to study consumer perception of price” *Proceedings of the
