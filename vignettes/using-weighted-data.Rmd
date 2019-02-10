@@ -1,0 +1,229 @@
+---
+title: "Using weighted survey data"
+author: "Max Alletsee"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using weighted survey data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+  
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Like all survey-based analyses, the Price Sensitivity Meter analysis is usually based on data from a sample and not from the full target population.  If the analysis should be helpful for making statements about the range of acceptable prices in the target population, it is necessary that the sample is a good representation of this target population. In an ideal world, we have a scenario where each member of the target population has the same likelihood of being included in the sample. In practice, this is often not the case - as participation in surveys is often voluntary and some people might refuse, selection of a surveying technique (for instance online interviewing excludes all members of the population that do not have internet access or use it very rarely) etc. A sample is hardly ever perfect, in particular when it comes to market research where cost and timing constraints come into play.
+
+Weighting the survey data is one potential solution to dealing with the shortcomings from an imbalanced sample. This imbalance is sometimes a deliberate choice (for instance when using cluster sampling) and sometimes the result of systematic problems of the fieldwork. It is important to note that weighting is often a rather pragmatic solution to a problem, but not necessarily the best solution from a methodological standpoint. It can certainly help, but it is not the miracle cure that finds reliable insights in a crappy sample.
+
+The *pricesensitivitymeter* package includes a function that allows to use *weighted* survey data. This vignette explains the use of this function. For a general overview of the main function for unweighted data, please read the help of th *psm_analysis()* function. The function that uses weighted data uses the *survey* package to calculate the weights; please read its documentation if you need to find out how to specify your sample design. The author of the *survey* package has also published a very helpful book^[Lumley, T (2010) *Complex Surveys: A Guide to Analysis Using R*] that offers guidance on weighting in general and the R package in particular.
+
+This vignette will show a simple workflow with simulated (random) data.
+
+## Using weighting to correct for a biased sample
+
+The following paragraphs will show the benefits of weighting in case of a biased sample. Let's consider the following example:
+
+1. We have a sample in which two thirds of the respondents are men and one third of the respondents are women
+2. We know that we have a gender balance of 50%/50% in our target population (in other words: women are underrepresented in our sample)
+3. Women are on average willing to pay +50% of the price compared to men
+
+This is of course an extreme example because the same variable (gender) is directly linked to *both* the likelihood to be included in the sample *and* the price preference.
+
+The R code below creates this example data set with the gender bias and creates the survey design object with the *survey* package (assuming simple random sampling and a population of 10k people).
+
+```{r, echo=TRUE}
+set.seed(20)
+library(survey)
+
+# Creating dataset with price acceptance and biased gender variable
+input_data <- data.frame(tch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits = 2),
+                         ch = round(rnorm(n = 250, mean = 12, sd = 0.5), digits = 2),
+                         ex = round(rnorm(n = 250, mean = 13, sd = 0.5), digits = 2),
+                         tex = round(rnorm(n = 250, mean = 15, sd = 0.5), digits = 2),
+                         gender = sample(x = c("male", "female"),
+                                         size = 250,
+                                         replace = TRUE,
+                                         prob = c(2/3, 1/3)))
+
+# for women: increasing the price acceptance by +50%
+input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 1.5
+input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender == "female"] * 1.5
+input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 1.5
+input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 1.5
+
+# for survey design object: occurence of each gender in the target population
+# it's only one figure in this example because we assume that gender should be perfectly balanced. 
+# if this is not balanced in the population, we would need a vector with the number of occurences in the population.
+# the sum of the strata size across all strata gives the total population size
+# (here: two strata with 5k each = 10k total population) 
+input_data$gender_pop <- 5000
+
+# creating the survey design object for post-stratification based on gender
+# we assume that the selection of respondents within each gender is biased and...
+# only the gender balance in the sample is problematic
+input_design <- survey::svydesign(ids = ~ 1, # no clusters
+                          probs = NULL, # hence no cluster samling probabilities,
+                          strata = input_data$gender, # stratified by gender
+                          fpc = input_data$gender_pop, # strata size in the population
+                          data = input_data) # data object used as input
+```
+
+After those preparations, we can run the weighted Price Sensitivity Meter Analysis using the *psm_analysis_weighted()* function. Its basic inputs are the names of the variables with the price information ("too cheap", "cheap", "expensive" and "too expensive") and the survey design object that we have just created using the *svydesign()* function of the *survey* package. To emphasize the difference to unweighted data, the input for this survey design object is called "design" instead of "data". Please note that the *psm_analysis_weighted()* function requires a "design" input and cannot cope with just four vectors that contain the price information.
+
+The resulting object and the *summary()* function use the same template as the function for the unweighted PSM analysis.
+
+```{r, echo=TRUE}
+library(pricesensitivitymeter)
+output_weighted_psm <- psm_analysis_weighted(toocheap = "tch",
+                                             cheap = "ch",
+                                             expensive = "ex",
+                                             tooexpensive = "tex",
+                                             design = input_design)
+summary(output_weighted_psm)
+```
+
+## Identical results when weights are identical
+
+If the sample is a perfect representation of the target population, the results of the Price Sensitivity Meter analysis will be the same regardless if the *psm_analysis()* function or the *psm_analysis_weighted()* function is used - under the condition that there are no respondents with intransitive price preferences.
+
+The code below demonstrates first what happens if there are indeed only respondents with transitive preferences. I will discuss the special case of respondents with intransitive price preferences afterwards.
+
+Note that in this example women *still* have a higher price acceptance than men. The main difference to the example above is the fact that the gender balance in the sample is a perfect representation of the target population (as the data is simulated, I model the target population after the sample - which is obviously impossible in real life). It is important to keep this distinction in mind: Weighting *can* correct for differences of the likelihood to be included in the sample, but it *cannot* be used to understand if different strata/groups have a different price acceptance. In this example below, the price acceptance differs quite a lot across genders, but we would need sub-group analyses to understand this.
+
+```{r, echo=TRUE}
+set.seed(20)
+library(survey)
+
+# Creating dataset with price acceptance and unbiased gender variable
+input_data_2 <- data.frame(tch = round(rnorm(n = 250, mean = 4, sd = 0.5), digits = 2),
+                         ch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits = 2),
+                         ex = round(rnorm(n = 250, mean = 12, sd = 0.5), digits = 2),
+                         tex = round(rnorm(n = 250, mean = 16, sd = 0.5), digits = 2),
+                         gender = sample(x = c("male", "female"),
+                                         size = 250,
+                                         replace = TRUE,
+                                         prob = c(0.5, 0.5)))
+
+# for women: increasing the price acceptance by +50%
+input_data_2$tch[input_data_2$gender == "female"] <- input_data_2$tch[input_data_2$gender == "female"] * 1.5
+input_data_2$ch[input_data_2$gender == "female"] <- input_data_2$ch[input_data_2$gender == "female"] * 1.5
+input_data_2$ex[input_data_2$gender == "female"] <- input_data_2$ex[input_data_2$gender == "female"] * 1.5
+input_data_2$tex[input_data_2$gender == "female"] <- input_data_2$tex[input_data_2$gender == "female"] * 1.5
+
+# now let's create a sample design object (using the survey package)
+# ... assuming that gender is balanced equally in the population of 10000
+
+# for survey design object: occurence of each gender in the target population
+# would usually be information from sampling frame, differs here only for demonstration purposes
+# here: scaling up based on actual sample information (hypothetical population of 250 * 4 = 10k)
+input_data_2$gender_pop <- NA
+input_data_2$gender_pop[input_data_2$gender == "female"] <- sum(input_data_2$gender == "female") * 40
+input_data_2$gender_pop[input_data_2$gender == "male"] <- sum(input_data_2$gender == "male") * 40
+
+# creating the survey design object for post-stratification based on gender
+input_design_2 <- survey::svydesign(ids = ~ 1, # no clusters
+                                  probs = NULL, # hence no cluster sampling probabilities,
+                                  strata = input_data_2$gender, # stratified by gender
+                                  fpc = input_data_2$gender_pop, # strata size in the population
+                                  data = input_data_2) # data object used as input
+
+# quick check: there is only one weight for all our strata
+# if we would have different weights per gender, we would see two unique values here
+unique(weights(input_design_2, type = "analysis"))
+
+# Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data 
+library(pricesensitivitymeter)
+
+check_weighted_1 <- psm_analysis_weighted(toocheap = "tch",
+                                          cheap = "ch",
+                                          expensive = "ex",
+                                          tooexpensive = "tex",
+                                          design = input_design_2)
+
+check_unweighted_1 <- psm_analysis(toocheap = "tch",
+                                   cheap = "ch",
+                                   expensive = "ex",
+                                   tooexpensive = "tex",
+                                   data = input_data_2)
+
+# results should be identical
+summary(check_weighted_1)
+summary(check_unweighted_1)
+```
+
+As this example has shown, the results are identical when the weights are identical (meaning that our sample is a perfect representation of the target population) and the information on price acceptance is transitive for all respondents. Let's now consider an example where we have intransitive price information for some respondents. For a few selected men in the sample, I manipulate the values so that the "cheap" price is larger than the "expensive" price.
+
+```{r}
+input_data_3 <- input_data_2
+
+manipulated_men <- sample(which(input_data_2$gender == "male"), 10)
+input_data_3$ch[manipulated_men] <- input_data_3$tex[manipulated_men]
+```
+
+
+The survey design object is now re-created and used as an input for the weighted Price Sensitivity Meter analysis. When we compare the results again to an unweighted analysis, we see a slight difference. This is the case because the weighting occurs **after** removing cases with intransitive preferences (at the same time when the weighted empirical cumulative density functions are calculated). At this stage in our example, we still have all women from our original sample, but have removed a few men with intransitive preferences. Therefore, all remaining men have a slightly higher weight in our sample - assuming that the removed cases are missing at random. This affects then the results of our analysis.
+
+```{r}
+# creating the survey design object for post-stratification based on gender
+input_design_3 <- survey::svydesign(ids = ~ 1, # no clusters
+                                  probs = NULL, # hence no cluster sampling probabilities,
+                                  strata = input_data_3$gender, # stratified by gender
+                                  fpc = input_data_3$gender_pop, # strata size in the population
+                                  data = input_data_3) # data object used as input
+
+# Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data 
+library(pricesensitivitymeter)
+
+check_weighted_2 <- psm_analysis_weighted(toocheap = "tch",
+                                          cheap = "ch",
+                                          expensive = "ex",
+                                          tooexpensive = "tex",
+                                          design = input_design_3)
+
+check_unweighted_2 <- psm_analysis(toocheap = "tch",
+                                   cheap = "ch",
+                                   expensive = "ex",
+                                   tooexpensive = "tex",
+                                   data = input_data_3)
+
+# results should be different now
+summary(check_weighted_2)
+summary(check_unweighted_2)
+
+```
+
+
+The example above has been carefully chosen to show this effect. In real life examples, it only occurs when two conditions are fulfilled at the same time:
+
+1. The respondents with intransitive preferences are not distributed proportionally across all strata (in our example: all women have transitive preferences, only men have intransitive preferences)
+2. The strata which are over-/underrepresented in terms of respondents with intransitive preferences also differ in their price acceptance from the other strata
+
+
+## Missing "too cheap" data
+
+Run another test with missing "too cheap" data
+
+```{r}
+# setting up data with NAs in "too cheap" variable
+input_data_2 <- input_data
+input_data_2$tch <- NA
+
+# create new sample design
+input_design_2 <- survey::svydesign(ids = ~ 1, # no clusters
+                                    probs = NULL, # hence no cluster samling probabilities,
+                                    strata = input_data_2$gender, # stratified by gender
+                                    fpc = input_data_2$gender_pop, # strata size in the population
+                                    data = input_data_2) # data object used as input
+
+library(pricesensitivitymeter)
+
+test_2 <- psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design_2)
+summary(test_2)
+
+```

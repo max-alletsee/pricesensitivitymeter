@@ -107,9 +107,6 @@ data.psm.test$pi_expensive3 <- sample(x = c(TRUE, FALSE), size = nrow(data.psm.t
                                       replace = TRUE, prob = c(0.5, 0.5))
 
 test_that("Data Input: NMS using dataframe", {
-  # expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
-  #                           pi_cheap = rep.int(2, nrow(data.psm.test)), pi_expensive = rep.int(1, nrow(data.psm.test))))
-  # throws unexpected errors in dev versions of R 3.6. Wait until stable R 3.6 version has been released
   expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "foo", pi_expensive = "bar"))
   expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
@@ -221,9 +218,3 @@ test_that("Running analysis while too cheap price is missing", {
 
 # clean up workspace after test
 rm(data.psm.test, data.psm.test2, data.psm.test3, data.psm.test4, random.row)
-
-# TODO: write output test
-# length of output object
-# class of output object
-# are non-empty matrices and price estimations returned?
-# does NMS (only) show up when input data provided?

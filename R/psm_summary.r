@@ -1,3 +1,7 @@
+#---------------------
+# Meta: psm class definition and summary function
+#---------------------
+
 # Definition of psm class
 
 psm.class <- setClass("psm", slots = c(data_input = "data.frame",
@@ -9,12 +13,13 @@ psm.class <- setClass("psm", slots = c(data_input = "data.frame",
                                        pricerange_upper = "numeric",
                                        idp = "numeric",
                                        opp = "numeric",
+                                       weighted = "logical",
+                                       survey_design = "survey.design2",
                                        NMS = "logical",
                                        data_nms = "data.frame",
                                        pi_scale = "data.frame",
                                        price_optimal_trial = "numeric",
                                        price_optimal_revenue = "numeric"))
-
 
 # summary function for psm class
 
@@ -32,7 +37,7 @@ summary.psm <- function(object, ...) {
   }
 
   cat("---\n")
-  cat(ifelse(object$validated == TRUE, object$total_sample - object$invalid_cases, object$total_sample), "cases with individual price preferences were analyzed\n")
+  cat(ifelse(object$validated == TRUE, object$total_sample - object$invalid_cases, object$total_sample), " cases with individual price preferences were analyzed (", ifelse(object$weighted == TRUE, "weighted", "unweighted"), " data).\n", sep = "")
 
   if(object$invalid_cases > 0) {
     cat("Total data set consists of ", object$total_sample, " cases. Analysis was ",

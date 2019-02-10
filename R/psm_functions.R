@@ -401,6 +401,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
                      pricerange_upper = pricerange_upper,
                      idp = idp,
                      opp = opp,
+                     weighted = FALSE,
                      NMS = NMS)
 
   # if NMS analysis was run: amend additional NMS outputs

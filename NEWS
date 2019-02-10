@@ -1,6 +1,15 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 0.9.0 (Release date: 2019-xx-xx)
+==============
+
+Changes:
+* adds the psm_analysis_weighted() function to deal with weighted input data. this requires the survey package. for the moment, it does not yet support the Newton Miller Smith extension.
+* amends the psm class definition and the summary function for the psm class to account for weighted/unweighted data
+* adds option to specify calculation of indifference price point and optimal price point in case of multiple intersection points
+
+
 version 0.4.1 (Release date: 2018-10-21)
 ==============
 

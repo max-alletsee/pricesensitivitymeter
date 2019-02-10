@@ -13,14 +13,16 @@ Summarizing Price Sensitivity Meter Analyses
 
 \arguments{
   \item{object}{an object of class \code{"psm"}, usually a
-  result of a call to \code{\link{psm_analysis}}.}
+  result of a call to \code{\link{psm_analysis}} or
+  \code{\link{psm_analysis_weighted}}.}
   \item{\dots}{further arguments from other methods - will be
   ignored in the summary}
 }
 
 \seealso{
 A comprehensive description of all elements of an object of
-  class \code{"psm"} can be found in \code{\link{psm_analysis}}.
+  class \code{"psm"} can be found in \code{\link{psm_analysis}}
+  and \code{\link{psm_analysis_weighted}}.
 
 The generic \code{\link{summary}} function.
 }

@@ -15,7 +15,8 @@ pricensitivitymeter is an implementation of the van Westendorp
   so-called Newton Miller Smith extension).
 
   To read the documentation for the function's syntax,
-  see \code{\link{psm_analysis}}.
+  see \code{\link{psm_analysis}} and
+  \code{\link{psm_analysis_weighted}} (for weighted data).
 }
 
 \author{

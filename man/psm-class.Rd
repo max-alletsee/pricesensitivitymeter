@@ -26,6 +26,8 @@ Objects are usually created as a result of a call of the \code{\link{psm_analysi
     \item{\code{pricerange_upper}:}{Object of class \code{"numeric"}. Upper limit of the acceptable price range as defined by the Price Sensitivity Meter, also known as \bold{point of marginal expensiveness}: Intersection of the "too expensive" and the "not expensive" curves.}
     \item{\code{idp}:}{Object of class \code{"numeric"}. \bold{Indifference Price Point} as defined by the Price Sensitivity Meter: Intersection of the "cheap" and the "expensive" curves.}
     \item{\code{opp}:}{Object of class \code{"numeric"}. \bold{Optimal Price Point} as defined by the Price Sensitivity Meter: Intersection of the "too cheap" and the "too expensive" curves.}
+    \item{\code{weighted}:}{Object of class \code{"logical"}. TRUE if the function has used weighted data to calulate the price points; FALSE if unweighted data has been used.}
+    \item{\code{survey_design}:}{Object of class \code{"survey.design2"}. If weighted data has been used, the survey design object from the survey package is returned here. Please refer to the documentation in the survey package for more details.}
     \item{\code{NMS}:}{Object of class \code{"logical"}. Indicates whether the additional analyses of the Newton Miller Smith Extension were performed.}
     \item{\code{data_nms}:}{Object of class \code{"data.frame"}. Output of the Newton Miller Smith extension: calibrated mean purchase probabilities for each price point.}
     \item{\code{pi_scale}:}{Object of class \code{"data.frame"}. Shows the values of the purchase intent variable and the corresponding calibrated purchase probabilities as defined in the function input for the Newton Miller Smith extension.}
@@ -39,9 +41,11 @@ Objects are usually created as a result of a call of the \code{\link{psm_analysi
 }
 
 \seealso{
-To understand the main function that creates an object of class \code{"psm"}, see \code{\link{psm_analysis}}.
+To understand the main function that creates an object of class \code{"psm"}, see \code{\link{psm_analysis}} or \code{\link{psm_analysis_weighted}}.
 
-To understand how the summaries of objects of class \code{"psm"} look like, see \code{\link{summary.psm}}
+To understand how the summaries of objects of class \code{"psm"} look like, see \code{\link{summary.psm}}.
+
+For a documentation of objects of class \code{"survey.design2"}, see the documentation of the survey package.
 }
 
 \examples{

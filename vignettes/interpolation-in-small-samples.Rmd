@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Sparse price information can become a problem when running Price Sensitivity Meter Analyses, particularly in small samples. In order to deal with this issue, the *psm_analysis* package has an option *interpolate* to approximate values on the price curves for all values where the actual information from respondents is missing.
+Sparse price information can become a problem when running Price Sensitivity Meter Analyses, particularly in small samples. In order to deal with this issue, the *pricesensitivitymeter* package has an option *interpolate* to approximate values on the price curves for all values where the actual information from respondents is missing.
 
 This vignette illustrates the underlying problem and explains how the *interpolate* argument provides a solution.
 
