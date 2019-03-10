@@ -58,6 +58,8 @@ test_that("Data Input: data frame variable format", {
 test_that("Data Input: validate must be logical vector of length 1", {
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, validate = "yes"))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, validate = c(TRUE, TRUE)))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, validate = TRUE))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, validate = FALSE))
 }
 )
 
@@ -67,6 +69,8 @@ test_that("Data Input: validate must be logical vector of length 1", {
 test_that("Data Input: interpolate must be logical vector of length 1", {
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = "yes"))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = c(TRUE, TRUE)))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = TRUE))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = FALSE))
 }
 )
 
