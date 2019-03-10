@@ -19,10 +19,16 @@ input_data <- data.frame(tch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits 
                                          replace = TRUE,
                                          prob = c(2/3, 1/3)))
 
-input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 1.5
-input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender == "female"] * 1.5
-input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 1.5
-input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 1.5
+# manipulating one row to ensure one case with intransitive price preferences
+input_data$ch_invalid <- input_data$ch
+random_row <- sample(x = nrow(input_data), size = 1)
+input_data$ch_invalid[random_row] <- input_data$ex[random_row] + 0.5
+
+
+# input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 1.5
+# input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender == "female"] * 1.5
+# input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 1.5
+# input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 1.5
 
 input_data$gender_pop <- 5000
 
@@ -74,7 +80,6 @@ test_that("Data Input - Weighted Analysis: validate must be logical vector of le
   expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, validate = 2))
   expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, validate = c(TRUE, TRUE)))
   expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, validate = TRUE))
-  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, validate = FALSE))
 })
 
 #----
@@ -95,28 +100,23 @@ test_that("Data Input - Weighted Analysis: interpolate must be logical vector of
 #---
 
 
-# #----
-# # Validation of response patterns
-# #----
-#
-# random.row <- sample(x = nrow(data.psm.test), size = 1)
-#
-# data.psm.test$ch[random.row] <- data.psm.test$ex[random.row] + 0.5
-#
-# test_that("(In)Transitive Preference Structures", {
-#   expect_warning(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", validate = FALSE))
-#   expect_error(psm_analysis(toocheap = 2, cheap = 1, expensive = 3, tooexpensive = 4))
-# }
-# )
+#----
+# Validation of response patterns
+#----
+
+
+test_that("(In)Transitive Preference Structures- Weighted Analysis", {
+  expect_warning(psm_analysis_weighted(toocheap = "tch", cheap = "ch_invalid", expensive = "ex", tooexpensive = "tex", design = input_design, validate = FALSE))
+})
 
 
 #----
 # Not specifying any "too cheap" price should be handled by the function
 #----
 
-test_that("Running analysis while too cheap price is missing",
+test_that("Weighted Analysis: Running analysis while too cheap price is missing",
   expect_silent(psm_analysis_weighted(toocheap = "tch_empty", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design)))
 
 
 # clean up workspace after test
-rm(input_data, input_design)
+rm(input_data, input_design, random_row)

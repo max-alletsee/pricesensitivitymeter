@@ -20,35 +20,35 @@ test_that("Data Input: vectors", {
 # Detecting invalid input data: data as data frame
 #----
 
-data.psm.test <- data.frame(tch = round(rnorm(n = 20, mean = 5, sd = 0.5), digits = 2),
+data_psm_test <- data.frame(tch = round(rnorm(n = 20, mean = 5, sd = 0.5), digits = 2),
                             ch = round(rnorm(n = 20, mean = 8.5, sd = 0.5), digits = 2),
                             ex = round(rnorm(n = 20, mean = 13, sd = 0.75), digits = 2),
                             tex = round(rnorm(n = 20, mean = 17, sd = 1), digits = 2))
 
 test_that("Data Input: data frame input structure", {
-  expect_silent(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
-  expect_silent(psm_analysis(data = as.matrix(data.psm.test), toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = tch, cheap = "ch", expensive = "ex", tooexpensive = "tex"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "2", expensive = "ex", tooexpensive = "tex"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = c("tex", "tex")))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "", expensive = "ex", tooexpensive = "tex"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", expensive = "ex", tooexpensive = "tex"))
+  expect_silent(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_silent(psm_analysis(data = as.matrix(data_psm_test), toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test, toocheap = tch, cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "2", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = c("tex", "tex")))
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", expensive = "ex", tooexpensive = "tex"))
 }
 )
 
-data.psm.test2 <- data.psm.test
-data.psm.test2$ch <- as.factor(data.psm.test2$ch)
+data_psm_test2 <- data_psm_test
+data_psm_test2$ch <- as.factor(data_psm_test2$ch)
 
-data.psm.test3 <- data.psm.test
-data.psm.test3$ex <- as.character(data.psm.test3$ex)
+data_psm_test3 <- data_psm_test
+data_psm_test3$ex <- as.character(data_psm_test3$ex)
 
-data.psm.test4 <- data.psm.test
-data.psm.test4$tex <- rep(TRUE, times = nrow(data.psm.test4))
+data_psm_test4 <- data_psm_test
+data_psm_test4$tex <- rep(TRUE, times = nrow(data_psm_test4))
 
 test_that("Data Input: data frame variable format", {
-  expect_error(psm_analysis(data = data.psm.test2, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
-  expect_error(psm_analysis(data = data.psm.test3, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
-  expect_error(psm_analysis(data = data.psm.test4, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test2, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test3, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_error(psm_analysis(data = data_psm_test4, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
 }
 )
 
@@ -94,34 +94,34 @@ test_that("Data Input: NMS using vectors", {
 # Detecting invalid input data: NMS using data frames
 #----
 
-data.psm.test$pi_cheap <- sample(x = c(1:5), size = nrow(data.psm.test),
+data_psm_test$pi_cheap <- sample(x = c(1:5), size = nrow(data_psm_test),
                                  replace = TRUE, prob = c(0.1, 0.1, 0.2, 0.3, 0.3))
 
-data.psm.test$pi_cheap2 <- sample(x = letters[1:5], size = nrow(data.psm.test),
+data_psm_test$pi_cheap2 <- sample(x = letters[1:5], size = nrow(data_psm_test),
                                   replace = TRUE, prob = c(0.1, 0.1, 0.2, 0.3, 0.3))
 
-data.psm.test$pi_cheap3 <- NA
+data_psm_test$pi_cheap3 <- NA
 
-data.psm.test$pi_expensive <- sample(x = c(1:5), size = nrow(data.psm.test),
+data_psm_test$pi_expensive <- sample(x = c(1:5), size = nrow(data_psm_test),
                                      replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1, 0.1))
 
-data.psm.test$pi_expensive2 <- as.factor(data.psm.test$pi_expensive)
+data_psm_test$pi_expensive2 <- as.factor(data_psm_test$pi_expensive)
 
-data.psm.test$pi_expensive3 <- sample(x = c(TRUE, FALSE), size = nrow(data.psm.test),
+data_psm_test$pi_expensive3 <- sample(x = c(TRUE, FALSE), size = nrow(data_psm_test),
                                       replace = TRUE, prob = c(0.5, 0.5))
 
 test_that("Data Input: NMS using dataframe", {
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "foo", pi_expensive = "bar"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap2", pi_expensive = "pi_expensive"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive2"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap3", pi_expensive = "pi_expensive"))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive3"))
-  expect_silent(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_silent(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive"))
 }
 )
@@ -133,58 +133,58 @@ test_that("Data Input: NMS using dataframe", {
 
 
 test_that("Data Input: NMS - length of PI scale and calibration scale", {
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 1:6, pi_calibrated = seq(0, 1, length.out = 5)))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 1:5, pi_calibrated = seq(0, 1, length.out = 6)))
-  expect_silent(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_silent(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 1:6, pi_calibrated = seq(0, 1, length.out = 6)))
 }
 )
 
 test_that("Data Input: NMS - match between answers and defined pattern", {
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 2:5, pi_calibrated = seq(0, 1, length.out = 4)))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = c(1.1, 2:5)))
 }
 )
 
 test_that("Data Input: NMS - numeric calibration values", {
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 5:1, pi_calibrated = letters[1:5]))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 5:1, pi_calibrated = factor(seq(0, 1, length.out = 5))))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 5:1, pi_calibrated = rep(NA, 5)))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 5:1, pi_calibrated = c(TRUE, TRUE, TRUE, FALSE, FALSE)))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 5:1, pi_calibrated = c(NaN, NaN, NaN, NaN, NaN)))
 }
 )
 
 test_that("Data Input: NMS - warning if calibration values out of bounds", {
-  expect_warning(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_warning(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                               pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                               pi_scale = 5:1, pi_calibrated = 5:1))
-  expect_warning(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_warning(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                               pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                               pi_scale = 5:1, pi_calibrated = -5:-1))
-  expect_warning(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_warning(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                               pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                               pi_scale = 5:1, pi_calibrated = seq(-0.25, 0.5, length.out = 5)))
-  expect_error(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
+  expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
                             pi_scale = 5:1, pi_calibrated = c(Inf, 0, 0, 0, -Inf)))
 }
@@ -195,12 +195,12 @@ test_that("Data Input: NMS - warning if calibration values out of bounds", {
 # Validation of response patterns
 #----
 
-random.row <- sample(x = nrow(data.psm.test), size = 1)
+random_row <- sample(x = nrow(data_psm_test), size = 1)
 
-data.psm.test$ch[random.row] <- data.psm.test$ex[random.row] + 0.5
+data_psm_test$ch[random_row] <- data_psm_test$ex[random_row] + 0.5
 
 test_that("(In)Transitive Preference Structures", {
-  expect_warning(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", validate = FALSE))
+  expect_warning(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", validate = FALSE))
   expect_error(psm_analysis(toocheap = 2, cheap = 1, expensive = 3, tooexpensive = 4))
 }
 )
@@ -209,11 +209,11 @@ test_that("(In)Transitive Preference Structures", {
 # Not specifying any "too cheap" price should be handled by the function
 #----
 
-data.psm.test$tch <- NA
+data_psm_test$tch <- NA
 
 test_that("Running analysis while too cheap price is missing", {
   expect_silent(psm_analysis(toocheap = NA, cheap = 1, expensive = 3, tooexpensive = 4))
-  expect_silent(psm_analysis(data = data.psm.test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
+  expect_silent(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex"))
 }
 )
 
@@ -221,4 +221,4 @@ test_that("Running analysis while too cheap price is missing", {
 
 
 # clean up workspace after test
-rm(data.psm.test, data.psm.test2, data.psm.test3, data.psm.test4, random.row)
+rm(data_psm_test, data_psm_test2, data_psm_test3, data_psm_test4, random_row)
