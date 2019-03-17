@@ -7,18 +7,18 @@ context("Data Output Checks: Weighted Data")
 library(survey)
 
 input_data <- data.frame(tch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits = 2),
-                         ch = round(rnorm(n = 250, mean = 12, sd = 0.5), digits = 2),
-                         ex = round(rnorm(n = 250, mean = 13, sd = 0.5), digits = 2),
-                         tex = round(rnorm(n = 250, mean = 15, sd = 0.5), digits = 2),
+                         ch = round(rnorm(n = 250, mean = 13, sd = 0.5), digits = 2),
+                         ex = round(rnorm(n = 250, mean = 16, sd = 0.5), digits = 2),
+                         tex = round(rnorm(n = 250, mean = 20, sd = 0.5), digits = 2),
                          gender = sample(x = c("male", "female"),
                                          size = 250,
                                          replace = TRUE,
                                          prob = c(2/3, 1/3)))
 
-input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 1.5
-input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender == "female"] * 1.5
-input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 1.5
-input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 1.5
+input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 2.5
+input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender == "female"] * 2.5
+input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 2.5
+input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 2.5
 
 input_data$gender_pop <- 5000
 
@@ -98,8 +98,8 @@ test_that("Data Output: Matrices have rows and columns", {
 })
 
 test_that("Data Output: Numeric Data in Matrices", {
-  expect_true(unique(sapply(psm_results_w1$data_input[, c("toocheap", "cheap", "expensive", "tooexpensive")], is.numeric)))
-  expect_true(unique(sapply(psm_results_w1$data_vanwestendorp[, c("toocheap", "cheap", "expensive", "tooexpensive")], is.numeric)))
+  expect_true(unique(apply(psm_results_w1$data_input[, c("toocheap", "cheap", "expensive", "tooexpensive")], 2, is.numeric)))
+  expect_true(unique(apply(psm_results_w1$data_vanwestendorp, 2, is.numeric)))
 
   # Placeholder here: Expectation for objects with NSM analysis
 })
@@ -215,18 +215,24 @@ test_that("Data Output - Plausibility: If data is misbalanced, weighted analysis
                  psm_results_w1$opp == psm_results_unw$opp)
 })
 
-# TODO - FIXME: CURRENTLY DOES NOT WORK, CONTINUE TO INSPECT THE INITIAL OBJECT
-# test_that("Data Output - Plausibility: If data is not misbalanced, weighted analysis and unweighted analysis should result in the same results", {
-#   expect_equal(psm_results_w2$pricerange_lower, psm_results_unw$pricerange_lower)
-#   expect_equal(psm_results_w2$pricerange_upper, psm_results_unw$pricerange_upper)
-#   expect_equal(psm_results_w2$idp, psm_results_unw$idp)
-#   expect_equal(psm_results_w2$opp, psm_results_unw$opp)
-# })
+test_that("Data Output - Plausibility: If data is not misbalanced, weighted analysis and unweighted analysis should result in the same results", {
+  # Internal Note: Checking for absence of invalid cases is necessary as the survey package re-weights directly *after* removing the invalid cases, meaning that all weights will not be equal anymore. This would lead to cases where the point estimates are not equal anymore, which is driven by the adjustment of weights after removing the invalid cases.
+  if(psm_results_w2$invalid_cases == 0) {
+    expect_equal(psm_results_w2$pricerange_lower, psm_results_unw$pricerange_lower)
+    expect_equal(psm_results_w2$pricerange_upper, psm_results_unw$pricerange_upper)
+    expect_equal(psm_results_w2$idp, psm_results_unw$idp)
+    expect_equal(psm_results_w2$opp, psm_results_unw$opp)
+  }
+})
 
-
-
-## TODO: commonalities/differences between weighted and unweighted model
-## TODO: higher price points for underrepresented groups / lower price points for overrepresented groups
+test_that("Data Output - Plausibility: If data is misbalanced, weighting should pull the results in the direction of the underrepresented group", {
+  # In the example "input_data"/"input_design1", women are underrepresented and have a higher price tolerance.
+  # When using a weighted PSM analysis, the overall price points should be higher as we correct for the underrepresentation of women
+  expect_gt(psm_results_w1$pricerange_lower, psm_results_unw$pricerange_lower)
+  expect_gt(psm_results_w1$pricerange_upper, psm_results_unw$pricerange_upper)
+  expect_gt(psm_results_w1$idp, psm_results_unw$idp)
+  expect_gt(psm_results_w1$opp, psm_results_unw$opp)
+})
 
 # clean up workspace after test
 rm(input_data, input_data_2, input_design_1, input_design_2, psm_results_w1, psm_results_w2, psm_results_unw)

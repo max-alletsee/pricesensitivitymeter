@@ -167,7 +167,7 @@ input_data_3$ch[manipulated_men] <- input_data_3$tex[manipulated_men]
 ```
 
 
-The survey design object is now re-created and used as an input for the weighted Price Sensitivity Meter analysis. When we compare the results again to an unweighted analysis, we see a slight difference. This is the case because the weighting occurs **after** removing cases with intransitive preferences (at the same time when the weighted empirical cumulative density functions are calculated). At this stage in our example, we still have all women from our original sample, but have removed a few men with intransitive preferences. Therefore, all remaining men have a slightly higher weight in our sample - assuming that the removed cases are missing at random. This affects then the results of our analysis.
+The survey design object is now re-created and used as an input for the weighted Price Sensitivity Meter analysis. When we compare the results again to an unweighted analysis, we see a slight difference. This is the case because the weighting occurs **after** removing cases with intransitive preferences (at the same time when the weighted empirical cumulative density functions are calculated). At this stage in our example, we still have all women from our original sample, but have removed a few men with intransitive preferences. Therefore, all remaining men have a slightly higher weight in our sample. This affects the results of our analysis.
 
 ```{r}
 # creating the survey design object for post-stratification based on gender
@@ -204,10 +204,11 @@ The example above has been carefully chosen to show this effect. In real life ex
 1. The respondents with intransitive preferences are not distributed proportionally across all strata (in our example: all women have transitive preferences, only men have intransitive preferences)
 2. The strata which are over-/underrepresented in terms of respondents with intransitive preferences also differ in their price acceptance from the other strata
 
+If any of those conditions is not fulfilled, any difference in the price estimates due to removing cases with intransitive preferences will be very small and unsystematic.
 
 ## Missing "too cheap" data
 
-Run another test with missing "too cheap" data
+It is also possible to run a weighted Price Sensitivity Meter analysis if there is no "too cheap" price (like for certain services like a drawing account, access to a sports match, ...).  The *psm_analysis_weighted()* function handles this in the same way as the *psm_analysis()* function: The "toocheap" variable should be set to NA for all cases. Having no "too cheap" price means that the lower bound of the price range and the optimal price point cannot be estimated, whereas the upper end of the price range and the indifference price point are estimated.  
 
 ```{r}
 # setting up data with NAs in "too cheap" variable
