@@ -5,9 +5,10 @@ version 0.9.0 (Release date: 2019-xx-xx)
 ==============
 
 Changes:
-* adds the psm_analysis_weighted() function to deal with weighted input data. this requires the survey package. for the moment, it does not yet support the Newton Miller Smith extension.
+* adds the psm_analysis_weighted() function to deal with weighted input data. This requires the survey package.
 * amends the psm class definition and the summary function for the psm class to account for weighted/unweighted data
-* adds option to specify calculation of indifference price point and optimal price point in case of multiple intersection points
+* bug fix: if a respondent has the same answer for both the "cheap" and the "expensive" price, the interpolation of purchase probabilities in the Newton Miller Smith extension now returns non-empty answers
+* bug fix: if "too cheap" information is missing, skip
 
 
 version 0.4.1 (Release date: 2018-10-21)

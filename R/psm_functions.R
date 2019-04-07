@@ -126,12 +126,12 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     # check that purchase intent data and scale have the same class (special handling for integer vs. numeric vs. double)
     if(!identical(x = class(psmdata$pi_cheap), y = class(pi_scale)) &
        !(is.numeric(psmdata$pi_cheap) & is.numeric(pi_scale))) {
-      stop("pi_cheap and pi_scale must have the same class")
+      stop("pi_cheap and pi_scale must both be numeric")
     }
 
     if(!identical(x = class(psmdata$pi_expensive), y = class(pi_scale)) &
        !(is.numeric(psmdata$pi_expensive) & is.numeric(pi_scale))) {
-      stop("pi_expensive and pi_scale must have the same class")
+      stop("pi_expensive and pi_scale must both be numeric")
     }
 
     # check that all purchase intent data only includes values from the pre-defined scale
@@ -244,10 +244,10 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
                               all.x = TRUE)
 
     # linear interpolation with the approx function for all empirical cumulative density functions
-    data_ecdf_smooth$ecdf_toocheap <- approx(x = data_ecdf$price,
+    data_ecdf_smooth$ecdf_toocheap <- try(approx(x = data_ecdf$price,
                                              y = data_ecdf$ecdf_toocheap,
                                              xout = data_ecdf_smooth$price,
-                                             method = "linear")$y
+                                             method = "linear")$y)
 
     data_ecdf_smooth$ecdf_cheap <- approx(x = data_ecdf$price,
                                           y = data_ecdf$ecdf_cheap,
@@ -339,37 +339,42 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
 
     # gradual interpolation of purchase probabilities
 
-    if(all(is.na(psmdata$toocheap))) {# if no data for "too cheap": interpolation between two pairs of values
-      for (i in 1:nrow(nms_matrix)) {
-        # linear interpolation between first pair of values (usually: "cheap" and "expensive")
-        nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- c(
+    for (i in 1:nrow(nms_matrix)) {
+      interpolate_prob <- NA
+
+      # try linear interpolation between three pairs of values
+      interpolate_prob <- try(c(
+        # linear interpolation between first pair of values (usually: "too cheap" and "cheap")
+        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
+                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
+        # linear interpolation between second pair of values (usually: "cheap" to "expensive")
+        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1],
+        # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
+        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[4]],
+                length.out = which(!is.na(nms_matrix[i, ]))[4] - which(!is.na(nms_matrix[i, ]))[3] + 1)[-1]),
+        silent = TRUE)
+
+      # if try() function throws a silent error, perform interpolation between two pairs of values instead
+      if(inherits(interpolate_prob, "try-error")) {
+        # linear interpolation between first pair of values (usually: "too cheap"/"cheap" OR "cheap"/"expensive")
+        interpolate_prob <- c(
           seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
                   to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
                   length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
-          # linear interpolation between second pair of values (usually: "expensive" to "too expensive")
+          # linear interpolation between second pair of values (usually: "cheap"/"expensive" OR "expensive"/"too expensive")
           seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
                   to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
                   length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1])
-          # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
       }
-    } else {# if data for "too cheap": interpolation between three pairs of values
-      for (i in 1:nrow(nms_matrix)) {
-        # linear interpolation between first pair of values (usually: "too cheap" and "cheap")
-        nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- c(
-          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
-                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-                  length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
-          # linear interpolation between second pair of values (usually: "cheap" to "expensive")
-          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-                  length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1],
-          # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
-          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[4]],
-                  length.out = which(!is.na(nms_matrix[i, ]))[4] - which(!is.na(nms_matrix[i, ]))[3] + 1)[-1]
-        )
-      }
+
+      # write vector with interpolated values to matrix
+      nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- interpolate_prob
     }
+
 
     # purchase probabilities outside of the individual's personal price range must be set to zero
     nms_matrix[is.na(nms_matrix)] <- 0
@@ -405,7 +410,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
                      NMS = NMS)
 
   # if NMS analysis was run: amend additional NMS outputs
-  if(NMS == TRUE) {
+  if(isTRUE(NMS)) {
     output_psm$data_nms <- data_nms
     output_psm$pi_scale <- data.frame(pi_scale, pi_calibrated)
     output_psm$price_optimal_trial <- price_optimal_trial

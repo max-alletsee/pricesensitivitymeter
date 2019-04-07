@@ -4,6 +4,7 @@
 
 # Definition of psm class
 
+setOldClass("survey.design2")
 psm.class <- setClass("psm", slots = c(data_input = "data.frame",
                                        validated = "logical",
                                        invalid_cases = "numeric",

@@ -21,7 +21,7 @@ Sparse price information can become a problem when running Price Sensitivity Met
 
 This vignette illustrates the underlying problem and explains how the *interpolate* argument provides a solution.
 
-## Illustrating the problem
+## Illustrating the Problem
 
 Consider an example with the following price information.
 
@@ -94,7 +94,7 @@ The Indifference Price Point (IDP) in this plot is not at the actual intersectio
 
 A larger sample size is usually sufficient to overcome this issue. However, this might not always be possible. Therefore, the *psm_analysis* function has an optional argument which helps to interpolate the pricing curve in cases of sparse information.
 
-## Using the *interpolate* argument
+## Using the *interpolate* Argument
 
 The *psm_analysis* function includes an optional argument *interpolate*. If this argument is set to *TRUE*, the function uses linear interpolation to estimate the price curves between the price points that are provided by the respondents. Consider an easy example: If the "cheap" function is at 20% for a price of 5.99 and at 21% for a price of 6.01, the function would estimate that it is at 20.5% for a price of 6.00. The function uses fixed price steps of 0.01 units between the smallest and the largest price for which the respondents provide information.^[This might not always be practical, for instance in currencies where such a subdivision does not exist (such as the Chilean peso or the Tanzanian shilling).]
 

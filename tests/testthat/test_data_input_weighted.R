@@ -14,6 +14,10 @@ input_data <- data.frame(tch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits 
                          ch_wrong = as.factor(round(rnorm(n = 250, mean = 12, sd = 0.5), digits = 2)),
                          ex_wrong = as.character(round(rnorm(n = 250, mean = 13, sd = 0.5), digits = 2)),
                          tex_wrong = rep(TRUE, times = 250),
+                         pi_cheap = sample(x = c(1:5), size = 250,
+                                           replace = TRUE, prob = c(0.1, 0.1, 0.2, 0.3, 0.3)),
+                         pi_expensive = sample(x = c(1:5), size = 250,
+                                               replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1, 0.1)),
                          gender = sample(x = c("male", "female"),
                                          size = 250,
                                          replace = TRUE,
@@ -94,10 +98,38 @@ test_that("Data Input - Weighted Analysis: interpolate must be logical vector of
 })
 
 #---
-# Some Placeholders for a Potential Future Implementation of Weighted NMS:
-# NMS Input: Variables in a Data Frame
 # General NMS Options (length of PI scale and calibration scale, match between answers and defined pattern, numeric calibration values, warning if calibration out of bounds)
 #---
+
+test_that("Data Input - Weighted NMS: length of PI scale and calibration scale", {
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 1:6, pi_calibrated = seq(0, 1, length.out = 5)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 1:5, pi_calibrated = seq(0, 1, length.out = 6)))
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 1:5, pi_calibrated = seq(0, 1, length.out = 5)))
+}
+)
+
+test_that("Data Input: NMS - match between answers and defined pattern", {
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 2:5, pi_calibrated = seq(0, 1, length.out = 4)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = c(1.1,2:5), pi_calibrated = seq(0, 1, length.out = 5)))
+}
+)
+
+test_that("Data Input: NMS - numeric calibration values", {
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = letters[1:5]))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = factor(seq(0, 1, length.out = 5))))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = rep(NA, 5)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = c(TRUE, TRUE, TRUE, FALSE, FALSE)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = c(NaN, NaN, NaN, NaN, NaN)))
+}
+)
+
+test_that("Data Input: NMS - warning if calibration values out of bounds", {
+  expect_warning(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = 5:1))
+  expect_warning(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = -5:-1))
+  expect_warning(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = seq(-0.25, 0.5, length.out = 5)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 5:1, pi_calibrated = c(Inf, 0, 0, 0, -Inf)))
+}
+)
 
 
 #----

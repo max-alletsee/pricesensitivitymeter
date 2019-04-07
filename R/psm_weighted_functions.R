@@ -4,7 +4,9 @@
 #---------------------
 
 psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, design,
-                                  validate = TRUE, interpolate = FALSE) {
+                                  validate = TRUE, interpolate = FALSE,
+                                  pi_cheap = NA, pi_expensive = NA,
+                                  pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
 
   #---
   # 1) Input Check: Price Sensitivity Meter data
@@ -12,7 +14,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
 
   # check if survey package could be loaded
   if (!requireNamespace("survey", quietly = TRUE)) {
-    stop("The \"survey\" package is needed for the psm_analysis_weighted() function to work. Please install it. If you want to use unweighted data, please use the function psm_analysis() instead.")
+    stop("The \"survey\" package is needed for the psm_analysis_weighted() function. Please install it. If you want to use unweighted data, please use the function psm_analysis() instead.")
   }
 
   # input check 1a: validate is required and must be boolean
@@ -56,8 +58,76 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     colnames(psm_data_w$variables)[col_expensive] <- "expensive"
     colnames(psm_data_w$variables)[col_tooexpensive] <- "tooexpensive"
 
+
+    #---
+    # 2) Input Check: Newton Miller Smith extension
+    #---
+
+    NMS <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
+
+    # NMS - check for matching variable names
+    if(isTRUE(NMS)) {
+      col_pi_cheap <- match(pi_cheap, colnames(design$variables))
+      col_pi_expensive <- match(pi_expensive, colnames(design$variables))
+
+      if(is.na(col_pi_cheap) | is.na(col_pi_expensive)) {
+        stop("Could not find all variable names of the purchase intent variables (pi_cheap, pi_expensive) in the design object")
+      }
+
+      psm_data_w$variables$pi_cheap <- design$variables[, col_pi_cheap]
+      psm_data_w$variables$pi_expensive <- design$variables[, col_pi_expensive]
+    }
+
+    # NMS - for each value on the purchase intent scale, there must be a corresponding calibration value
+    stopifnot(length(pi_scale) == length(pi_calibrated))
+
+    # NMS - purchase intent data must only contain values from the pre-defined scale
+    if(isTRUE(NMS)) {
+      # check that purchase intent data and scale have the same class (special handling for integer vs. numeric vs. double)
+      if(!identical(x = class(psm_data_w$variables$pi_cheap), y = class(pi_scale)) &
+         !(is.numeric(psm_data_w$variables$pi_cheap) & is.numeric(pi_scale))) {
+        stop("pi_cheap and pi_scale must both be numeric")
+      }
+
+      if(!identical(x = class(psm_data_w$variables$pi_expensive), y = class(pi_scale)) &
+         !(is.numeric(psm_data_w$variables$pi_expensive) & is.numeric(pi_scale))) {
+        stop("pi_expensive and pi_scale must both be numeric")
+      }
+
+      # check that all purchase intent data only includes values from the pre-defined scale
+      if(!all(unique(psm_data_w$variables$pi_cheap) %in% unique(pi_scale))) {
+        stop("pi_cheap contains values which are not defined in the pi_scale variable")
+      }
+
+      if(!all(unique(psm_data_w$variables$pi_expensive) %in% unique(pi_scale))) {
+        stop("pi_expensive contains values which are not defined in the pi_scale variable")
+      }
+
+      # NMS -  calibration values must be numeric
+      if(any(!is.numeric(pi_calibrated))) {
+        stop("All calibrated purchase intent values must be numeric")
+      }
+
+      # NMS -  calibration values must be between 0 and 1 - only warning if this is not the case...
+      if(any(pi_calibrated < 0)) {
+        warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      }
+
+      if(any(pi_calibrated > 1)) {
+        warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      }
+
+      if(any(is.nan(pi_calibrated))) {
+        stop("Some of the purchase intent calibration values are not a number (NaN)")
+      }
+
+      if(any(is.infinite(pi_calibrated))) {
+        stop("Some of the purchase intent calibration values are infinite (-Inf, Inf).")
+      }
+    }
+
     #-----
-    # 2) Validation of response patterns answers and optional cleaning of data set
+    # 3) Validation of response patterns answers and optional cleaning of data set
     #-----
 
     # validation: "too cheap < cheap < expensive < too expensive" for each case. if not, drop from the data
@@ -90,10 +160,10 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   #-----
 
   # new data set: 1st variable shows all prices, other variables show the respective cumulative density
-  data_ecdf <- data.frame(price = sort(unique(c(psm_data_w$variables$toocheap,
-                                                psm_data_w$variables$cheap,
-                                                psm_data_w$variables$expensive,
-                                                psm_data_w$variables$tooexpensive))))
+    data_ecdf <- data.frame(price = sort(unique(c(round(psm_data_w$variables$toocheap, digits = 2),
+                                                  round(psm_data_w$variables$cheap, digits = 2),
+                                                  round(psm_data_w$variables$expensive, digits = 2),
+                                                  round(psm_data_w$variables$tooexpensive, digits = 2)))))
 
   # empirical cumulative density for "too cheap" (ignore if no "too cheap" values provided)
   if(!all(is.na(psm_data_w$variables$toocheap))) { # if there are values: first as a function
@@ -129,10 +199,10 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
                               all.x = TRUE)
 
     # linear interpolation with the approx function for all empirical cumulative density functions
-    data_ecdf_smooth$ecdf_toocheap <- approx(x = data_ecdf$price,
+    data_ecdf_smooth$ecdf_toocheap <- try(approx(x = data_ecdf$price,
                                              y = data_ecdf$ecdf_toocheap,
                                              xout = data_ecdf_smooth$price,
-                                             method = "linear")$y
+                                             method = "linear")$y)
 
     data_ecdf_smooth$ecdf_cheap <- approx(x = data_ecdf$price,
                                           y = data_ecdf$ecdf_cheap,
@@ -158,7 +228,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   data_ecdf$ecdf_not_cheap <-  1 - data_ecdf$ecdf_cheap
   data_ecdf$ecdf_not_expensive <-  1 - data_ecdf$ecdf_expensive
 
-  
+
   #-----
   # 5) Identifying the price points
   #-----
@@ -182,7 +252,103 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   opp <- data_ecdf$price[which(data_ecdf$ecdf_tooexpensive >= data_ecdf$ecdf_toocheap)[1]]
 
   #-----
-  # 6) Construct the object to be returned
+  # 6) Newton Miller Smith Extension with weighted data
+  #-----
+
+
+  if(isTRUE(NMS)) {
+    # assign each respondent the calibrated probability of purchase
+    psm_data_w$variables$pi_cheap_cal <- NA
+    psm_data_w$variables$pi_expensive_cal <- NA
+
+    for (i in 1:length(pi_scale)) {
+      psm_data_w$variables$pi_cheap_cal[which(psm_data_w$variables$pi_cheap == pi_scale[i])] <- pi_calibrated[i]
+      psm_data_w$variables$pi_expensive_cal[which(psm_data_w$variables$pi_expensive == pi_scale[i])] <- pi_calibrated[i]
+    }
+
+
+    # set up respondent-level data for the price steps
+    nms_prices <- data_ecdf$price
+
+
+    # create a matrix: each row is one respondent, each column is one (unique) price
+    nms_matrix <- matrix(nrow = nrow(psm_data_w$variables), ncol = length(nms_prices),
+                         dimnames = list(rownames(psm_data_w$variables), nms_prices))
+
+    # fill matrix with known values:
+    # 1) purchase probability of 0 for "too cheap" and "too expensive"
+    # 2) weighted purchase probability for "cheap" and "expensive"
+
+    pos_toocheap <- sapply(as.character(round(psm_data_w$variables$toocheap, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_toocheap))] <- 0
+
+    pos_tooexpensive <- sapply(as.character(round(psm_data_w$variables$tooexpensive, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_tooexpensive))] <- 0
+
+    pos_cheap <- sapply(as.character(round(psm_data_w$variables$cheap, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_cheap))] <- psm_data_w$variables$pi_cheap_cal
+
+    pos_expensive <- sapply(as.character(round(psm_data_w$variables$expensive, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_expensive))] <- psm_data_w$variables$pi_expensive_cal
+
+
+    # gradual interpolation of purchase probabilities
+    for (i in 1:nrow(nms_matrix)) {
+      interpolate_prob <- NA
+
+      # try linear interpolation between three pairs of values
+      interpolate_prob <- try(c(
+        # linear interpolation between first pair of values (usually: "too cheap" and "cheap")
+        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
+                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
+        # linear interpolation between second pair of values (usually: "cheap" to "expensive")
+        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1],
+        # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
+        seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[4]],
+                length.out = which(!is.na(nms_matrix[i, ]))[4] - which(!is.na(nms_matrix[i, ]))[3] + 1)[-1]),
+        silent = TRUE)
+
+      # if try() function throws a silent error, perform interpolation between two pairs of values instead
+      if(inherits(interpolate_prob, "try-error")) {
+        # linear interpolation between first pair of values (usually: "too cheap"/"cheap" OR "cheap"/"expensive")
+        interpolate_prob <- c(
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
+          # linear interpolation between second pair of values (usually: "cheap"/"expensive" OR "expensive"/"too expensive")
+          seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
+                  to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
+                  length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1])
+      }
+
+      # write vector with interpolated values to matrix
+      nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- interpolate_prob
+    }
+
+    # purchase probabilities outside of the individual's personal price range must be set to zero
+    nms_matrix[is.na(nms_matrix)] <- 0
+
+    # extract weights from survey design
+    nms_weights <- weights(psm_data_w)
+
+    # analysis of trial and revenue (mean trial for each price)
+    # ... via weighted.mean() from base R
+    data_nms <- data.frame(price = nms_prices,
+                           trial = apply(nms_matrix, 2, stats::weighted.mean, w = nms_weights, na.rm = TRUE),
+                           row.names = 1:length(nms_prices))
+
+    data_nms$revenue <- data_nms$price * data_nms$trial
+
+    price_optimal_trial <- data_nms$price[which.max(data_nms$trial)]
+    price_optimal_revenue <- data_nms$price[which.max(data_nms$revenue)]
+  }
+
+  #-----
+  # 7) Construct the object to be returned
   #-----
 
   output_psm <- list(data_input = psm_data_w$variables,
@@ -196,7 +362,15 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
                      opp = opp,
                      weighted = TRUE,
                      survey_design = psm_data_w,
-                     NMS = FALSE)
+                     NMS = NMS)
+
+  # if NMS analysis was run: amend additional NMS outputs
+  if(isTRUE(NMS)) {
+    output_psm$data_nms <- data_nms
+    output_psm$pi_scale <- data.frame(pi_scale, pi_calibrated)
+    output_psm$price_optimal_trial <- price_optimal_trial
+    output_psm$price_optimal_revenue <- price_optimal_revenue
+  }
 
   class(output_psm) <- "psm"
 

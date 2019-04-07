@@ -151,7 +151,7 @@ test_that("Data Input: NMS - match between answers and defined pattern", {
                             pi_scale = 2:5, pi_calibrated = seq(0, 1, length.out = 4)))
   expect_error(psm_analysis(data = data_psm_test, toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex",
                             pi_cheap = "pi_cheap", pi_expensive = "pi_expensive",
-                            pi_scale = c(1.1, 2:5)))
+                            pi_scale = c(1.1, 2:5), pi_calibrated = seq(0, 1, length.out = 5)))
 }
 )
 

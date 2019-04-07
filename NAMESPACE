@@ -1,9 +1,13 @@
-exportPattern("^[[:alpha:]]+")
+export("psm_analysis")
+export("psm_analysis_weighted")
+exportClasses("psm")
+
 S3method(summary, psm)
 
 importFrom("methods", "new")
 importFrom("stats", "ecdf")
 importFrom("stats", "approx")
+importFrom("stats", "weighted.mean", "weights")
 
 importFrom("survey", "svycdf")
 importFrom("survey", "svydesign")

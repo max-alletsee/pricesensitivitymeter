@@ -23,7 +23,10 @@ psm_analysis_weighted(
   toocheap, cheap, expensive, tooexpensive,
   design,
   validate = TRUE,
-  interpolate = FALSE)
+  interpolate = FALSE,
+  pi_cheap = NA, pi_expensive = NA,
+  pi_scale = 5:1,
+  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
 }
 
 \arguments{
@@ -53,6 +56,25 @@ psm_analysis_weighted(
   less bumpy in regions with sparse price information. If the
   sample size is sufficiently large, interpolation should not
   be necessary.}
+
+  \item{pi_cheap, pi_expensive}{Only required for the Newton
+  Miller Smith extension. Names of the variables in the data
+  that contain the survey data on the respondents' purchase
+  intent at their individual cheap/expensive price.}
+  \item{pi_scale}{Only required for the Newton Miller Smith
+  extension. Scale of the purchase intent variables pi_cheap and
+  pi_expensive. By default assuming a five-point scale with 5
+  indicating the highest purchase intent.}
+  \item{pi_calibrated}{Only required for the Newton Miller Smith
+  extension. Calibrated purchase probabilities that are assumed
+  for each value of the purchase intent scale. Must be the same
+  order as the pi_scale variable so that the first value of
+  pi_calibrated corresponds to the first value in the pi_scale
+  variable. Default values are taken from the Sawtooth Software
+  PSM implementation in Excel: 70\% for the best value of the
+  purchase intent scale, 50\% for the second best value,
+  30\% for the third best value (middle of the scale), 10\%
+  for the fourth best value and 0\% for the worst value.}
 }
 
 

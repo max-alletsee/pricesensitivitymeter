@@ -1,5 +1,5 @@
 ---
-title: "Using weighted survey data"
+title: "Using Weighted Survey Data"
 author: "Max Alletsee"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -25,7 +25,7 @@ The *pricesensitivitymeter* package includes a function that allows to use *weig
 
 This vignette will show a simple workflow with simulated (random) data.
 
-## Using weighting to correct for a biased sample
+## Using Weighting to Correct for a Biased Sample
 
 The following paragraphs will show the benefits of weighting in case of a biased sample. Let's consider the following example:
 
@@ -88,7 +88,7 @@ output_weighted_psm <- psm_analysis_weighted(toocheap = "tch",
 summary(output_weighted_psm)
 ```
 
-## Identical results when weights are identical
+## Identical Results When Weights Are Identical
 
 If the sample is a perfect representation of the target population, the results of the Price Sensitivity Meter analysis will be the same regardless if the *psm_analysis()* function or the *psm_analysis_weighted()* function is used - under the condition that there are no respondents with intransitive price preferences.
 
@@ -206,7 +206,7 @@ The example above has been carefully chosen to show this effect. In real life ex
 
 If any of those conditions is not fulfilled, any difference in the price estimates due to removing cases with intransitive preferences will be very small and unsystematic.
 
-## Missing "too cheap" data
+## Missing "too cheap" Data
 
 It is also possible to run a weighted Price Sensitivity Meter analysis if there is no "too cheap" price (like for certain services like a drawing account, access to a sports match, ...).  The *psm_analysis_weighted()* function handles this in the same way as the *psm_analysis()* function: The "toocheap" variable should be set to NA for all cases. Having no "too cheap" price means that the lower bound of the price range and the optimal price point cannot be estimated, whereas the upper end of the price range and the indifference price point are estimated.  
 
@@ -224,7 +224,49 @@ input_design_2 <- survey::svydesign(ids = ~ 1, # no clusters
 
 library(pricesensitivitymeter)
 
-test_2 <- psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design_2)
+test_2 <- psm_analysis_weighted(toocheap = "tch",
+                                cheap = "ch",
+                                expensive = "ex",
+                                tooexpensive = "tex",
+                                design = input_design_2)
 summary(test_2)
 
 ```
+
+## Using Weighting in the Newton Miller Smith Extension
+
+The *psm_analysis_weighted()* function also allows to include an estimate for the price with optimal trial or optimal revenue via the Newton Miller Smith extension. This option can be used in the same way as in the unweighted *psm_analysis()* function.
+
+```{r}
+# setting up dataset with purchase intent information
+input_data_3 <- input_data
+
+input_data_3$pi_ch <- sample(x = c(1:5), size = nrow(input_data_3),
+                             replace = TRUE, prob = c(0.1, 0.1, 0.2, 0.3, 0.3))
+
+input_data_3$pi_ex <- sample(x = c(1:5), size = nrow(input_data_3),
+                             replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1, 0.1))
+
+
+# re-creating the survey design object
+input_design_3 <- survey::svydesign(ids = ~ 1,
+                                    probs = NULL,
+                                    strata = input_data_3$gender,
+                                    fpc = input_data_3$gender_pop,
+                                    data = input_data_3) 
+
+# running the weighted Price Sensitivity Meter analysis
+test_3 <- psm_analysis_weighted(toocheap = "tch",
+                                cheap = "ch",
+                                expensive = "ex",
+                                tooexpensive = "tex",
+                                design = input_design_3,
+                                pi_cheap = "pi_ch",
+                                pi_expensive = "pi_ex",
+                                pi_scale = 5:1,
+                                pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
+
+summary(test_3)
+
+```
+
