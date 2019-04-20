@@ -24,6 +24,7 @@ psm_analysis_weighted(
   design,
   validate = TRUE,
   interpolate = FALSE,
+  intersection_method = "min",
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
   pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
@@ -56,7 +57,14 @@ psm_analysis_weighted(
   less bumpy in regions with sparse price information. If the
   sample size is sufficiently large, interpolation should not
   be necessary.}
-
+    \item{intersection_method}{"min" (default), "max", "mean" or
+  "median". defines the method how to determine the price
+  points (range, indifference price, optimal price) if there
+  are multiple possible intersections of the price curves.
+  "min" uses the lowest possible prices, "max" uses the
+  highest possible prices, "mean" calculates the mean among
+  all intersections and "median" uses the median of all
+  possible intersections}
   \item{pi_cheap, pi_expensive}{Only required for the Newton
   Miller Smith extension. Names of the variables in the data
   that contain the survey data on the respondents' purchase

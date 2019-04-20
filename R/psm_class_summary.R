@@ -1,8 +1,9 @@
 #---------------------
-# Meta: psm class definition and summary function
+# Meta: PSM Class Definition, Summary Function and Internal Helpers
 #---------------------
 
-# Definition of psm class
+#-------
+# Definition of PSM Class
 
 setOldClass("survey.design2")
 psm.class <- setClass("psm", slots = c(data_input = "data.frame",
@@ -22,7 +23,8 @@ psm.class <- setClass("psm", slots = c(data_input = "data.frame",
                                        price_optimal_trial = "numeric",
                                        price_optimal_revenue = "numeric"))
 
-# summary function for psm class
+#-------
+# Summary Function for PSM Class
 
 summary.psm <- function(object, ...) {
   cat("Van Westendorp Price Sensitivity Meter Analysis\n\n")
@@ -50,4 +52,27 @@ summary.psm <- function(object, ...) {
       cat("Consider re-running the analysis with option 'validate = TRUE' to exclude all cases with invalid price preferences (n = ", object$invalid_cases, ")", sep = "")
     }
   } # end of "invalid cases" section
+}
+
+#-------
+# Internal Helper Function: Identify Intersection Point
+# (with possibility to specify method in case there are multiple intersection points)
+
+identify_intersection <- function(data, var1, var2, method) {
+  first_intersection_pos <- which(data[, var1] >= data[, var2])[1]
+
+  if(is.na(first_intersection_pos)) { # if no intersection: return NA
+    return(NA)
+  } else { # otherwise, run the actual function
+  all_intersections_pos <- which(data[, var1] == data[first_intersection_pos, var1] &
+                                   data[, var2] == data[first_intersection_pos, var2])
+
+  all_intersections_prices <- data[all_intersections_pos, "price"]
+
+  switch(method,
+         min = {min(all_intersections_prices)},
+         max = {max(all_intersections_prices)},
+         mean = {mean(all_intersections_prices)},
+         median = {median(all_intersections_prices)})
+  }
 }

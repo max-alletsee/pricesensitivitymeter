@@ -97,6 +97,22 @@ test_that("Data Input - Weighted Analysis: interpolate must be logical vector of
   expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = FALSE))
 })
 
+#----
+# Detecting invalid input data: "intersection_method" must be one of the pre-defined values
+#----
+
+test_that("Data Input: intersection_method must be one of the pre-defined values", {
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method =  c("min", "max")))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method = 1))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method = TRUE))
+
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method = "min"))
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method = "max"))
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method = "mean"))
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, intersection_method = "median"))
+}
+)
+
 #---
 # General NMS Options (length of PI scale and calibration scale, match between answers and defined pattern, numeric calibration values, warning if calibration out of bounds)
 #---

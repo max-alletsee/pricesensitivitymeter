@@ -4,6 +4,7 @@
 
 psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
                          validate = TRUE, interpolate = FALSE,
+                         intersection_method = "min",
                          pi_cheap = NA, pi_expensive = NA,
                          pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
 
@@ -19,6 +20,15 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   # input check 1b: interpolation is required and must be boolean
   if(any(is.na(interpolate)) | !is.logical(interpolate) | length(interpolate) != 1) {
     stop("interpolate requires one logical value")
+  }
+
+  # input check 1c: intersection_method must have length 1 and one of the pre-defined terms
+  if(length(intersection_method) != 1) {
+    stop("intersection_method must have length 1")
+  }
+
+  if(!intersection_method %in% c("min", "max", "mean", "median")) {
+    stop("intersection_method must be one of the pre-defined values: min, max, mean, median")
   }
 
   # input check 2: if data is provided in a dataset, structure and format must be correct
@@ -278,22 +288,30 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   #-----
 
   # price range, lower bound: intersection of "too cheap" and "not cheap"
-  # first value where the CDF of the "not cheap" curve is at least as large as the CDF of the "too cheap" curve
-  pricerange_lower <- data_ecdf$price[which(data_ecdf$ecdf_not_cheap >= data_ecdf$ecdf_toocheap)[1]]
+  pricerange_lower <- identify_intersection(data = data_ecdf,
+                                            var1 = "ecdf_not_cheap",
+                                            var2 = "ecdf_toocheap",
+                                            method = intersection_method)
 
   # price range, upper bound: intersection of "not expensive" and "too expensive"
-  # first value where the CDF of the "too expensive" curve is at least as large as the the CDF of the "not expensive" curve
-  pricerange_upper <- data_ecdf$price[which(data_ecdf$ecdf_tooexpensive >= data_ecdf$ecdf_not_expensive)[1]]
+  pricerange_upper <- identify_intersection(data = data_ecdf,
+                                            var1 = "ecdf_tooexpensive",
+                                            var2 = "ecdf_not_expensive",
+                                            method = intersection_method)
 
   # indifference price point IDP: intersection of "expensive" and "cheap"
-  # equal number of people experience product as "cheap" and "expensive"
   # interpretation: a) median price paid by consumer or b) price of the product of an important market leader
-  idp <- data_ecdf$price[which(data_ecdf$ecdf_expensive >= data_ecdf$ecdf_cheap)[1]]
+  idp <- identify_intersection(data = data_ecdf,
+                               var1 = "ecdf_expensive",
+                               var2 = "ecdf_cheap",
+                               method = intersection_method)
 
   # optimal price point OPP: intersection of "too expensive" and "too cheap"
-  # equal number of people regard the product as "too cheap" and "too expensive"
   # interpretation: resistance against the price of a product is very low
-  opp <- data_ecdf$price[which(data_ecdf$ecdf_tooexpensive >= data_ecdf$ecdf_toocheap)[1]]
+  opp <- identify_intersection(data = data_ecdf,
+                               var1 = "ecdf_tooexpensive",
+                               var2 = "ecdf_toocheap",
+                               method = intersection_method)
 
   #-----
   # 6) Newton/Miller/Smith extension

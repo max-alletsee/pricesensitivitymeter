@@ -75,6 +75,22 @@ test_that("Data Input: interpolate must be logical vector of length 1", {
 )
 
 #----
+# Detecting invalid input data: "intersection_method" must be one of the pre-defined values
+#----
+
+test_that("Data Input: intersection_method must be one of the pre-defined values", {
+  expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method =  c("min", "max")))
+  expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method = 1))
+  expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method = TRUE))
+
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method = "min"))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method = "max"))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method = "mean"))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, intersection_method = "median"))
+}
+)
+
+#----
 # Detecting invalid input data: NMS using vectors
 #----
 

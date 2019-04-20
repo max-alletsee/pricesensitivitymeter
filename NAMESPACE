@@ -8,6 +8,8 @@ importFrom("methods", "new")
 importFrom("stats", "ecdf")
 importFrom("stats", "approx")
 importFrom("stats", "weighted.mean", "weights")
+importFrom("stats", "median")
+
 
 importFrom("survey", "svycdf")
 importFrom("survey", "svydesign")
