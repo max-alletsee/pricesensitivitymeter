@@ -1,6 +1,13 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+
+version 1.0.1 (Release date: 2019-04-29)
+==============
+
+Changes:
+* makes some tests slightly more lenient to account for rounding differences
+
 version 1.0.0 (Release date: 2019-04-28)
 ==============
 
@@ -9,7 +16,7 @@ Changes:
 * adds the argument intersection_method to define how to calculate the price points in case there are multiple intersections (should be a rare case)
 * amends the psm class definition and the summary function for the psm class to account for weighted/unweighted data
 * bug fix: if a respondent has the same answer for both the "cheap" and the "expensive" price, the interpolation of purchase probabilities in the Newton Miller Smith extension now returns non-empty answers
-* bug fix: if "too cheap" information is missing, skip
+* bug fix: if "too cheap" information is missing, skip some calculations
 
 
 version 0.4.1 (Release date: 2018-10-21)

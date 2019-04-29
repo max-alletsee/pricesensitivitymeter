@@ -289,10 +289,10 @@ test_that("Data Output - Plausibility: If data is misbalanced, weighted analysis
 test_that("Data Output - Plausibility: If data is not misbalanced, weighted analysis and unweighted analysis should result in the same results", {
   # Internal Note: Checking for absence of invalid cases is necessary as the survey package re-weights directly *after* removing the invalid cases, meaning that all weights will not be equal anymore. This would lead to cases where the point estimates are not equal anymore, which is driven by the adjustment of weights after removing the invalid cases.
   if(psm_results_w2$invalid_cases == 0) {
-    expect_equal(round(psm_results_w2$pricerange_lower, digits = 2), round(psm_results_unw$pricerange_lower, digits = 2))
-    expect_equal(round(psm_results_w2$pricerange_upper, digits = 2), round(psm_results_unw$pricerange_upper, digits = 2))
-    expect_equal(round(psm_results_w2$idp, digits = 2), round(psm_results_unw$idp, digits = 2))
-    expect_equal(round(psm_results_w2$opp, digits = 2), round(psm_results_unw$opp, digits = 2))
+    expect_lte(abs(psm_results_w2$pricerange_lower - psm_results_unw$pricerange_lower), 0.05)
+    expect_lte(abs(psm_results_w2$pricerange_upper - psm_results_unw$pricerange_upper), 0.05)
+    expect_lte(abs(psm_results_w2$idp - psm_results_unw$idp), 0.05)
+    expect_lte(abs(psm_results_w2$opp - psm_results_unw$opp), 0.05)
   }
 })
 
