@@ -61,42 +61,42 @@ library(ggplot2)
 
 # Plot with price steps
 psmplot_steps <-  ggplot(data = psm_steps$data_vanwestendorp, aes(x = price)) +
-  geom_line(aes(y = ecdf_cheap, # line: cheap
-                colour = "cheap"),
+  geom_line(aes(y = ecdf_not_cheap, # line: not cheap
+                colour = "not cheap"),
             size = 1) +
-  geom_line(aes(y = ecdf_expensive, # line: expensive
-                colour = "expensive"),
+  geom_line(aes(y = ecdf_not_expensive, # line: not expensive
+                colour = "not expensive"),
             size = 1) +
   geom_rug() +
-  annotate(geom = "point", # Indifference Price Point (intersection of "cheap" and "expensive")
+  annotate(geom = "point", # Indifference Price Point (intersection of "not cheap" and "not expensive")
            x = psm_steps$idp,
-           y = psm_steps$data_vanwestendorp$ecdf_cheap[psm_steps$data_vanwestendorp$price == psm_steps$idp],
+           y = psm_steps$data_vanwestendorp$ecdf_not_expensive[psm_steps$data_vanwestendorp$price == psm_steps$idp],
            size = 5,
            shape = 18,
-           colour = "#009E73")
+           colour = "#D55E00")
 
 psmplot_steps +
   labs(x = "Price",
        y = "Share of Respondents (0-1)",
        title = "Price Sensitivity Meter Plot (without interpolation)")  +
   scale_colour_manual(name = "Legend",
-                      values = c("cheap" = "#009E73",
-                                 "expensive" = "#D55E00")) +
+                      values = c("not cheap" = "#009E73",
+                                 "not expensive" = "#D55E00")) +
   annotate(geom = "text", # Label of Indifference Price Point
            x = psm_steps$idp + 1,
-           y = psm_steps$data_vanwestendorp$ecdf_cheap[psm_steps$data_vanwestendorp$price == psm_steps$idp],
+           y = psm_steps$data_vanwestendorp$ecdf_not_expensive[psm_steps$data_vanwestendorp$price == psm_steps$idp] - 0.05,
            label = paste("IDP: ", psm_steps$idp)) +
   coord_cartesian(xlim = c(10, 20)) +
   theme_minimal()
 ```
 
-The Indifference Price Point (IDP) in this plot is not at the actual intersection of the "cheap" and the "expensive" curve. This is due to the data structure: We have sparse information for prices between 14 and 15. This can be seen in the rug plot close to the x-axis: Each vertical line indicates a price for which we have information in our data - however, there is a considerable gap around 14-15 (caused by the initial data manipulation that added price steps). The combination of price steps (as can be seen in the steep slope of the curves in this area) and sparse data points creates this problem. If the *interpolate* argument is set to *FALSE*, the *psm_analysis* function uses the first price for which the "expensive" curve is higher than the "cheap" curve, which is the case for a price of `r psm_steps$idp` in our example.
+The Indifference Price Point (IDP) in this plot is not at the actual intersection of the "not cheap" and the "not expensive" curve. This is due to the data structure: We have sparse information for prices between 14 and 15. This can be seen in the rug plot close to the x-axis: Each vertical line indicates a price for which we have information in our data - however, there is a considerable gap around 14-15 (caused by the initial data manipulation that added price steps). The combination of price steps (as can be seen in the steep slope of the curves in this area) and sparse data points creates this problem. If the *interpolate* argument is set to *FALSE*, the *psm_analysis* function uses the first price for which the "not expensive" curve is higher than the "not cheap" curve, which is the case for a price of `r psm_steps$idp` in our example.
 
 A larger sample size is usually sufficient to overcome this issue. However, this might not always be possible. Therefore, the *psm_analysis* function has an optional argument which helps to interpolate the pricing curve in cases of sparse information.
 
 ## Using the *interpolate* Argument
 
-The *psm_analysis* function includes an optional argument *interpolate*. If this argument is set to *TRUE*, the function uses linear interpolation to estimate the price curves between the price points that are provided by the respondents. Consider an easy example: If the "cheap" function is at 20% for a price of 5.99 and at 21% for a price of 6.01, the function would estimate that it is at 20.5% for a price of 6.00. The function uses fixed price steps of 0.01 units between the smallest and the largest price for which the respondents provide information.^[This might not always be practical, for instance in currencies where such a subdivision does not exist (such as the Chilean peso or the Tanzanian shilling).]
+The *psm_analysis* function includes an optional argument *interpolate*. If this argument is set to *TRUE*, the function uses linear interpolation to estimate the price curves between the price points that are provided by the respondents. Consider an easy example: If the "not cheap" function is at 20% for a price of 5.99 and at 21% for a price of 6.01, the function would estimate that it is at 20.5% for a price of 6.00. The function uses fixed price steps of 0.01 units between the smallest and the largest price for which the respondents provide information.^[This might not always be practical, for instance in currencies where such a subdivision does not exist (such as the Chilean peso or the Tanzanian shilling).]
 
 Below are the results for the same data when the *interpolate* function is set to *TRUE*.
 
@@ -112,30 +112,30 @@ psm_interpolated <- psm_analysis(toocheap = toocheap,
 # Plot with interpolated price steps
 
 psmplot_interpolated <-  ggplot(data = psm_interpolated$data_vanwestendorp, aes(x = price)) +
-  geom_line(aes(y = ecdf_cheap, # line: cheap
-                colour = "cheap"),
+  geom_line(aes(y = ecdf_not_cheap, # line: not cheap
+                colour = "not cheap"),
             size = 1) +
-  geom_line(aes(y = ecdf_expensive, # line: expensive
-                colour = "expensive"),
+  geom_line(aes(y = ecdf_not_expensive, # line: not expensive
+                colour = "not expensive"),
             size = 1) +
   geom_rug() +
   annotate(geom = "point", # Indifference Price Point (intersection of "cheap" and "expensive")
            x = psm_interpolated$idp,
-           y = psm_interpolated$data_vanwestendorp$ecdf_cheap[psm_interpolated$data_vanwestendorp$price == psm_interpolated$idp],
+           y = psm_interpolated$data_vanwestendorp$ecdf_not_expensive[psm_interpolated$data_vanwestendorp$price == psm_interpolated$idp],
            size = 5,
            shape = 18,
-           colour = "#009E73")
+           colour = "#D55E00")
 
 psmplot_interpolated +
   labs(x = "Price",
        y = "Share of Respondents (0-1)",
        title = "Price Sensitivity Meter Plot (with interpolation)")  +
   scale_colour_manual(name = "Legend",
-                      values = c("cheap" = "#009E73",
-                                 "expensive" = "#D55E00")) +
+                      values = c("not cheap" = "#009E73",
+                                 "not expensive" = "#D55E00")) +
   annotate(geom = "text", # Label of Indifference Price Point
            x = psm_interpolated$idp + 1,
-           y = psm_interpolated$data_vanwestendorp$ecdf_cheap[psm_interpolated$data_vanwestendorp$price == psm_interpolated$idp],
+           y = psm_interpolated$data_vanwestendorp$ecdf_not_expensive[psm_interpolated$data_vanwestendorp$price == psm_interpolated$idp],
            label = paste("IDP: ", psm_interpolated$idp)) +
   coord_cartesian(xlim = c(10, 20)) +
   theme_minimal()
@@ -143,23 +143,23 @@ psmplot_interpolated +
 
 The rug plot demonstrates now that the data includes information for more pricing steps due to the interpolation.
 
-The following plot demonstrates the close relationship between the original data and the interpolated data: The thicker semi-transparent line shows the interpolated values of the "cheap" and "expensive" curves. The thinner solid lines are the original data.
+The following plot demonstrates the close relationship between the original data and the interpolated data: The thicker semi-transparent line shows the interpolated values of the "not cheap" and "not expensive" curves. The thinner solid lines are the original data.
 
 ```{r, fig.width=7, fig.height=4.5, echo = FALSE}
 psmplot_comparison <-  ggplot(data = psm_interpolated$data_vanwestendorp, aes(x = price)) +
-  geom_line(aes(y = ecdf_cheap, # line: cheap, interpolated
-                colour = "cheap"),
+  geom_line(aes(y = ecdf_not_cheap, # line: not cheap, interpolated
+                colour = "not cheap"),
             size = 4, alpha = 0.25) +
-  geom_line(aes(y = ecdf_expensive, # line: expensive, interpolated
-                colour = "expensive"),
+  geom_line(aes(y = ecdf_not_expensive, # line: not expensive, interpolated
+                colour = "not expensive"),
             size = 4, alpha = 0.25) +
-  geom_line(data = psm_steps$data_vanwestendorp, # line: cheap, not interpolated
-            aes(y = ecdf_cheap, 
-                colour = "cheap"),
+  geom_line(data = psm_steps$data_vanwestendorp, # line: not cheap, not interpolated
+            aes(y = ecdf_not_cheap, 
+                colour = "not cheap"),
             size = 1) +
-  geom_line(data = psm_steps$data_vanwestendorp, # line: expensive, not interpolated
-            aes(y = ecdf_expensive, 
-                colour = "expensive"),
+  geom_line(data = psm_steps$data_vanwestendorp, # line: not expensive, not interpolated
+            aes(y = ecdf_not_expensive, 
+                colour = "not expensive"),
             size = 1)
 
 psmplot_comparison +
@@ -167,8 +167,8 @@ psmplot_comparison +
        y = "Share of Respondents (0-1)",
        title = "Price Sensitivity Meter Plot: with vs. without interpolation")  +
   scale_colour_manual(name = "Legend",
-                      values = c("cheap" = "#009E73",
-                                 "expensive" = "#D55E00")) +
+                      values = c("not cheap" = "#009E73",
+                                 "not expensive" = "#D55E00")) +
   coord_cartesian(xlim = c(10, 20)) +
   theme_minimal()
 ```

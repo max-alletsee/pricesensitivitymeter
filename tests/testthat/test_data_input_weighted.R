@@ -63,6 +63,13 @@ test_that("Data Input - Weighted Analysis: Structure and Variable Names", {
 
 })
 
+#----
+# Ensure that survey package is available
+#----
+
+test_that("Survey Package is installed", {
+  expect_true("survey" %in% rownames(installed.packages()))
+  })
 
 #----
 # Variable Format inside data frame

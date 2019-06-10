@@ -1,6 +1,12 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 1.0.2 (Release date: 2019-xx-xx)
+==============
+
+Changes:
+* corrects the "Interpolation in Small Samples": now shows correctly "not cheap" instead of "cheap" and "not expensive" instead of "expensive"
+* improves test coverage
 
 version 1.0.1 (Release date: 2019-04-29)
 ==============
