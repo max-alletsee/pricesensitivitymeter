@@ -22,5 +22,6 @@ Imports: survey (>= 3.23-1)
 Suggests: knitr,
     rmarkdown,
     testthat,
-    ggplot2
+    ggplot2,
+    codecov
 VignetteBuilder: knitr
