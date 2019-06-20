@@ -35,15 +35,15 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
 
   if(!is.data.frame(data) & !is.matrix(data) & !all(is.na(data))) {
     stop("If the data argument is used, it must provide a data frame (or matrix) object")
-
-    if(!is.character(toocheap) | !is.character(cheap) | !is.character(expensive) | !is.character(tooexpensive) |
-       length(toocheap) != 1 | length(cheap) != 1 | length(expensive) != 1 | length(tooexpensive) != 1) {
-      stop("If the data argument is used, all price arguments (toocheap, cheap, expensive, tooexpensive) must be character values that contain the name of the respective price variable in the data object")
-    }
   }
 
 
   if(is.data.frame(data) | is.matrix(data)) {
+    if(!is.character(toocheap) | !is.character(cheap) | !is.character(expensive) | !is.character(tooexpensive) |
+       length(toocheap) != 1 | length(cheap) != 1 | length(expensive) != 1 | length(tooexpensive) != 1) {
+      stop("If the data argument is used, all price arguments (toocheap, cheap, expensive, tooexpensive) must be character values that contain the name of the respective price variable in the data object")
+    }
+
     # identify columns in data object that are supposed to contain the price variables
     if(length(toocheap) == 1 & length(cheap) == 1 & length(expensive) == 1 & length(tooexpensive) == 1) {
     col_toocheap <- match(toocheap, colnames(data))
@@ -159,20 +159,20 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     }
 
     # input check 9: calibration values must be between 0 and 1 - only warning if this is not the case...
-    if(any(pi_calibrated < 0)) {
-      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
-    }
-
-    if(any(pi_calibrated > 1)) {
-      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
-    }
-
     if(any(is.nan(pi_calibrated))) {
       stop("Some of the purchase intent calibration values are not a number (NaN)")
     }
 
     if(any(is.infinite(pi_calibrated))) {
       stop("Some of the purchase intent calibration values are infinite (-Inf, Inf).")
+    }
+
+        if(any(pi_calibrated < 0)) {
+      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+    }
+
+    if(any(pi_calibrated > 1)) {
+      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
     }
   }
 

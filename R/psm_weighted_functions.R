@@ -94,14 +94,11 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     # NMS - purchase intent data must only contain values from the pre-defined scale
     if(isTRUE(NMS)) {
       # check that purchase intent data and scale have the same class (special handling for integer vs. numeric vs. double)
-      if(!identical(x = class(psm_data_w$variables$pi_cheap), y = class(pi_scale)) &
-         !(is.numeric(psm_data_w$variables$pi_cheap) & is.numeric(pi_scale))) {
-        stop("pi_cheap and pi_scale must both be numeric")
-      }
-
-      if(!identical(x = class(psm_data_w$variables$pi_expensive), y = class(pi_scale)) &
-         !(is.numeric(psm_data_w$variables$pi_expensive) & is.numeric(pi_scale))) {
-        stop("pi_expensive and pi_scale must both be numeric")
+      if(!identical(x = class(psm_data_w$variables$pi_cheap), y = class(pi_scale)) & # for pi_cheap
+         !(is.numeric(psm_data_w$variables$pi_cheap) & is.numeric(pi_scale)) & # for pi_cheap
+         !identical(x = class(psm_data_w$variables$pi_expensive), y = class(pi_scale)) & # for pi_expensive
+         !(is.numeric(psm_data_w$variables$pi_expensive) & is.numeric(pi_scale))) { # for pi_expensive
+        stop("pi_cheap, pi_expensive and pi_scale must all be numeric")
       }
 
       # check that all purchase intent data only includes values from the pre-defined scale
@@ -119,13 +116,6 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
       }
 
       # NMS -  calibration values must be between 0 and 1 - only warning if this is not the case...
-      if(any(pi_calibrated < 0)) {
-        warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
-      }
-
-      if(any(pi_calibrated > 1)) {
-        warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
-      }
 
       if(any(is.nan(pi_calibrated))) {
         stop("Some of the purchase intent calibration values are not a number (NaN)")
@@ -133,6 +123,15 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
 
       if(any(is.infinite(pi_calibrated))) {
         stop("Some of the purchase intent calibration values are infinite (-Inf, Inf).")
+      }
+
+
+      if(any(pi_calibrated < 0)) {
+        warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      }
+
+      if(any(pi_calibrated > 1)) {
+        warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
       }
     }
 

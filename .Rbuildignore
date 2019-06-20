@@ -4,4 +4,3 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^build_package\.R$
-^\.travis\.yml$
