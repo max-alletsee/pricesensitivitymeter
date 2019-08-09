@@ -38,7 +38,7 @@ This is of course an extreme example because the same variable (gender) is direc
 The R code below creates this example data set with the gender bias and creates the survey design object with the *survey* package (assuming simple random sampling and a population of 10k people).
 
 ```{r, echo=TRUE}
-set.seed(20)
+set.seed(1976)
 library(survey)
 
 # Creating dataset with price acceptance and biased gender variable

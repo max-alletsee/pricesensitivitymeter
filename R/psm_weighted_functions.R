@@ -164,6 +164,16 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
       stop("All respondents have intransitive preference structures (i.e. different from too cheap < cheap < expensive < too expensive).")
     }
 
+
+    # if cases with invalid price preferences:
+    # store the full dataset into a new object and
+    # create a subset with only valid cases that overwrites the initial "psm_data_w" object
+    # (do NOT simply remove rows from psm_data_w, as this means that the other survey metadata in other slots of the psm_data_w does not line up: number of respondents, respondent weight, ...)
+    if (isTRUE(validate)) {
+      psm_data_w_incl_invalid <- psm_data_w
+      psm_data_w <- subset(psm_data_w_incl_invalid, psm_data_w_incl_invalid$variables$valid)
+    }
+
   #-----
   # 4) Creating the empirical cumulative density per price
   #-----

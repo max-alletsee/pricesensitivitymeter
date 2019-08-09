@@ -305,6 +305,14 @@ test_that("Data Output - Plausibility: If data is misbalanced, weighting should 
   expect_gt(psm_results_w1$opp, psm_results_unw$opp)
 })
 
+#----
+# Structure of Output Object
+#----
+
+test_that("Ensuring that cases with invalid cases are removed", {
+  expect_equal(nrow(psm_results_w1$data_input), psm_results_w1$total_sample - psm_results_w1$invalid_cases)
+})
+
 # clean up workspace after test
 rm(input_data, input_data_2, input_design_1, input_design_2, psm_results_w1, psm_results_w2, psm_results_unw, psm_results_w3)
 

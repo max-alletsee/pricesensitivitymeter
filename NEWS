@@ -5,7 +5,8 @@ version 1.0.2 (Release date: 2019-xx-xx)
 ==============
 
 Changes:
-* corrects the "Interpolation in Small Samples": now shows correctly "not cheap" instead of "cheap" and "not expensive" instead of "expensive"
+* fixes a bug that caused respondents with intransitive price preferences to be used in the analysis when using psm_analysis_weighted() (and adds some unit testing to check this in the future)
+* corrects the "Interpolation in Small Samples" vignette: now shows correctly "not cheap" instead of "cheap" and "not expensive" instead of "expensive"
 * extends unit test coverage
 
 version 1.0.1 (Release date: 2019-04-29)
