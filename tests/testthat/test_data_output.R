@@ -6,7 +6,7 @@ context("Data Output Checks")
 
 data_psm_test <- data.frame(
   tch = round(rnorm(n = 20, mean = 5, sd = 0.5), digits = 2),
-  ch = round(rnorm(n = 20, mean = 8.5, sd = 0.5), digits = 2),
+  ch = round(rnorm(n = 20, mean = 6, sd = 1), digits = 2),
   ex = round(rnorm(n = 20, mean = 13, sd = 0.75), digits = 2),
   tex = round(rnorm(n = 20, mean = 17, sd = 1), digits = 2),
   pi_cheap = sample(x = c(1:5), size = 20, replace = TRUE, prob = c(0.0, 0.1, 0.2, 0.3, 0.5)),
@@ -277,6 +277,15 @@ test_that("Data Output - Plausibility: Consistent price esimations across models
   expect_equal(psm_result1$pricerange_upper, psm_result2$pricerange_upper)
   expect_equal(psm_result1$idp, psm_result2$idp)
   expect_equal(psm_result1$opp, psm_result2$opp)
+})
+
+
+#----
+# Structure of Output Object
+#----
+
+test_that("Ensuring that cases with invalid cases are removed", {
+  expect_equal(nrow(psm_result1$data_input), psm_result1$total_sample - psm_result1$invalid_cases)
 })
 
 # clean up workspace after test

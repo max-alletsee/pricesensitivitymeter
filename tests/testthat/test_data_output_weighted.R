@@ -8,7 +8,7 @@ library(survey)
 
 input_data <- data.frame(tch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits = 2),
                          ch = round(rnorm(n = 250, mean = 13, sd = 0.5), digits = 2),
-                         ex = round(rnorm(n = 250, mean = 16, sd = 0.5), digits = 2),
+                         ex = round(rnorm(n = 250, mean = 15, sd = 1), digits = 2),
                          tex = round(rnorm(n = 250, mean = 20, sd = 0.5), digits = 2),
                          pi_cheap = sample(x = c(1:5), size = 250,
                                            replace = TRUE, prob = c(0.1, 0.1, 0.2, 0.3, 0.3)),
@@ -303,6 +303,14 @@ test_that("Data Output - Plausibility: If data is misbalanced, weighting should 
   expect_gt(psm_results_w1$pricerange_upper, psm_results_unw$pricerange_upper)
   expect_gt(psm_results_w1$idp, psm_results_unw$idp)
   expect_gt(psm_results_w1$opp, psm_results_unw$opp)
+})
+
+#----
+# Structure of Output Object
+#----
+
+test_that("Ensuring that cases with invalid cases are removed", {
+  expect_equal(nrow(psm_results_w1$data_input), psm_results_w1$total_sample - psm_results_w1$invalid_cases)
 })
 
 # clean up workspace after test
