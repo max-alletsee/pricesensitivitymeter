@@ -108,6 +108,22 @@ test_that("Data Input - Weighted Analysis: interpolate must be logical vector of
   expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = FALSE))
 })
 
+
+#----
+# Detecting invalid input data: "interpolation_steps" must be valid if interpolate == TRUE
+# (but can be off when interpolate == FALSE)
+#----
+test_that("Data Input: interpolatation_steps must be numeric vector of length 1", {
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = TRUE, interpolation_steps = c(0, 1)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = TRUE, interpolation_steps = "default"))
+
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = TRUE, interpolation_steps = 1))
+
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = FALSE, interpolation_steps = c(0, 1)))
+  expect_silent(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, interpolate = FALSE, interpolation_steps = "default"))
+}
+)
+
 #----
 # Detecting invalid input data: "intersection_method" must be one of the pre-defined values
 #----

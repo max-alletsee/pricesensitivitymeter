@@ -82,6 +82,20 @@ test_that("Data Input: interpolate must be logical vector of length 1", {
 )
 
 #----
+# Detecting invalid input data: "interpolation_steps" must be valid if interpolate == TRUE
+# (but can be off when interpolate == FALSE)
+#----
+test_that("Data Input: interpolatation_steps must be numeric vector of length 1", {
+  expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = TRUE, interpolation_steps = c(0, 1)))
+  expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = TRUE, interpolation_steps = "default"))
+
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = TRUE, interpolation_steps = 1))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = FALSE, interpolation_steps = c(0, 1)))
+  expect_silent(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = FALSE, interpolation_steps = "default"))
+}
+)
+
+#----
 # Detecting invalid input data: "intersection_method" must be one of the pre-defined values
 #----
 

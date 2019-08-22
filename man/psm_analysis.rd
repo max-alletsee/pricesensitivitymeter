@@ -20,6 +20,7 @@ psm_analysis(
   data = NA,
   validate = TRUE,
   interpolate = FALSE,
+  interpolation_steps = 0.01,
   intersection_method = "min",
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
@@ -62,6 +63,10 @@ psm_analysis(
   less bumpy in regions with sparse price information. If the
   sample size is sufficiently large, interpolation should not
   be necessary.}
+  \item{interpolation_steps}{numeric. if \code{interpolate} is
+  \code{TRUE}: the size of the interpolation steps. Set by
+  default to 0.01, which should be appropriate for most goods
+  in a price range of 0-50 USD/Euro.}
   \item{intersection_method}{"min" (default), "max", "mean" or
   "median". defines the method how to determine the price
   points (range, indifference price, optimal price) if there

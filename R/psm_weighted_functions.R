@@ -4,7 +4,8 @@
 #---------------------
 
 psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, design,
-                                  validate = TRUE, interpolate = FALSE,
+                                  validate = TRUE,
+                                  interpolate = FALSE, interpolation_steps = 0.01,
                                   intersection_method = "min",
                                   pi_cheap = NA, pi_expensive = NA,
                                   pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
@@ -35,6 +36,11 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
 
   if(!intersection_method %in% c("min", "max", "mean", "median")) {
     stop("intersection_method must be one of the pre-defined values: min, max, mean, median")
+  }
+
+  # input check 1d: if interpolate == TRUE, interpolation steps must be numeric vector of length 1
+  if(interpolate & (length(interpolation_steps) != 1 | !is.numeric(interpolation_steps))) {
+    stop("interpolatation_steps must be numeric value (vector of length 1)")
   }
 
   # input check 2: design must be provided as an object of class "survey.design" (which is the default export of the svydesign function in the survey package)
@@ -205,11 +211,11 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   data_ecdf$ecdf_expensive <- ecdf_psm$expensive(data_ecdf$price)
   data_ecdf$ecdf_tooexpensive <- ecdf_psm$tooexpensive(data_ecdf$price)
 
-    # if interpolation is enabled: create bigger dataframe that contains all the actual price information plus fixed price steps of 0.01 between those values
+    # if interpolation is enabled: create bigger dataframe that contains all the actual price information plus fixed price steps according to interpolation steps
   if(isTRUE(interpolate)) {
     data_ecdf_smooth <- data.frame(price = seq(from = min(data_ecdf$price),
                                                to = max(data_ecdf$price),
-                                               by = 0.01))
+                                               by = abs(interpolation_steps)))
 
     # merge with existing dataframe incl. information on empirical cumulative density functions
     data_ecdf_smooth <- merge(x = data_ecdf_smooth,

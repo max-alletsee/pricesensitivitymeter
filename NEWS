@@ -1,10 +1,11 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
-version 1.0.2 (Release date: 2019-xx-xx)
+version 1.1.0 (Release date: 2019-08-22)
 ==============
 
 Changes:
+* adds the parameter interpolation_steps that lets users define the granularity of the interpolation between the observed prices
 * fixes a bug that caused respondents with intransitive price preferences to be used in the analysis when using psm_analysis_weighted() (and adds some unit testing to check this in the future)
 * corrects the "Interpolation in Small Samples" vignette: now shows correctly "not cheap" instead of "cheap" and "not expensive" instead of "expensive"
 * extends unit test coverage
