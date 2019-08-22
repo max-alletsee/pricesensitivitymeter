@@ -12,8 +12,8 @@ estimate prices that maximize the trial rate and the revenue.
 
 ## Installation
 
-As of version 0.2.1, this package is
-[https://cran.r-project.org/package=pricesensitivitymeter](hosted%20on%20CRAN).
+As of version 0.2.1, this package is [available on
+CRAN](https://cran.r-project.org/package=pricesensitivitymeter).
 
 ``` r
 # install the stable release from CRAN

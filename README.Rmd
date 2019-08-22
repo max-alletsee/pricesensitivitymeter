@@ -22,7 +22,7 @@ pricesensitivitymeter is an implementation of the van Westendorp Price Sensitivi
 
 ## Installation
 
-As of version 0.2.1, this package is [https://cran.r-project.org/package=pricesensitivitymeter](hosted on CRAN).
+As of version 0.2.1, this package is [available on CRAN](https://cran.r-project.org/package=pricesensitivitymeter).
 
 ```{r installation, eval = FALSE}
 # install the stable release from CRAN
