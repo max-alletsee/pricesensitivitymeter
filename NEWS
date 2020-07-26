@@ -1,6 +1,13 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 1.2 (Release date: 2020-MM-DD)
+==============
+Changes:
+* fix in plotting vignette: fix position of indifference price point
+* fixes in vignette formatting to emphasize function names
+* changing URLs due to change of Github username
+
 version 1.1.1 (Release date: 2019-08-23)
 ==============
 Changes:

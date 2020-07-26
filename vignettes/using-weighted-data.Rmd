@@ -21,7 +21,7 @@ Like all survey-based analyses, the Price Sensitivity Meter analysis is usually 
 
 Weighting the survey data is one potential solution to dealing with the shortcomings from an imbalanced sample. This imbalance is sometimes a deliberate choice (for instance when using cluster sampling) and sometimes the result of systematic problems of the fieldwork. It is important to note that weighting is often a rather pragmatic solution to a problem, but not necessarily the best solution from a methodological standpoint. It can certainly help, but it is not the miracle cure that finds reliable insights in a crappy sample.
 
-The *pricesensitivitymeter* package includes a function that allows to use *weighted* survey data. This vignette explains the use of this function. For a general overview of the main function for unweighted data, please read the help of th *psm_analysis()* function. The function that uses weighted data uses the *survey* package to calculate the weights; please read its documentation if you need to find out how to specify your sample design. The author of the *survey* package has also published a very helpful book^[Lumley, T (2010) *Complex Surveys: A Guide to Analysis Using R*] that offers guidance on weighting in general and the R package in particular.
+The *pricesensitivitymeter* package includes a function that allows to use *weighted* survey data. This vignette explains the use of this function. For a general overview of the main function for unweighted data, please read the help of th `psm_analysis()` function. The function that uses weighted data uses the *survey* package to calculate the weights; please read its documentation if you need to find out how to specify your sample design. The author of the *survey* package has also published a very helpful book^[Lumley, T (2010) *Complex Surveys: A Guide to Analysis Using R*] that offers guidance on weighting in general and the R package in particular.
 
 This vignette will show a simple workflow with simulated (random) data.
 
@@ -74,9 +74,9 @@ input_design <- survey::svydesign(ids = ~ 1, # no clusters
                           data = input_data) # data object used as input
 ```
 
-After those preparations, we can run the weighted Price Sensitivity Meter Analysis using the *psm_analysis_weighted()* function. Its basic inputs are the names of the variables with the price information ("too cheap", "cheap", "expensive" and "too expensive") and the survey design object that we have just created using the *svydesign()* function of the *survey* package. To emphasize the difference to unweighted data, the input for this survey design object is called "design" instead of "data". Please note that the *psm_analysis_weighted()* function requires a "design" input and cannot cope with just four vectors that contain the price information.
+After those preparations, we can run the weighted Price Sensitivity Meter Analysis using the `psm_analysis_weighted()` function. Its basic inputs are the names of the variables with the price information ("too cheap", "cheap", "expensive" and "too expensive") and the survey design object that we have just created using the `svydesign()` function of the *survey* package. To emphasize the difference to unweighted data, the input for this survey design object is called "design" instead of "data". Please note that the `psm_analysis_weighted()` function requires a "design" input and cannot cope with just four vectors that contain the price information.
 
-The resulting object and the *summary()* function use the same template as the function for the unweighted PSM analysis.
+The resulting object and the `summary()` function use the same template as the function for the unweighted PSM analysis.
 
 ```{r, echo=TRUE}
 library(pricesensitivitymeter)
@@ -90,7 +90,7 @@ summary(output_weighted_psm)
 
 ## Identical Results When Weights Are Identical
 
-If the sample is a perfect representation of the target population, the results of the Price Sensitivity Meter analysis will be the same regardless if the *psm_analysis()* function or the *psm_analysis_weighted()* function is used - under the condition that there are no respondents with intransitive price preferences.
+If the sample is a perfect representation of the target population, the results of the Price Sensitivity Meter analysis will be the same regardless if the `psm_analysis()` function or the `psm_analysis_weighted()` function is used - under the condition that there are no respondents with intransitive price preferences.
 
 The code below demonstrates first what happens if there are indeed only respondents with transitive preferences. I will discuss the special case of respondents with intransitive price preferences afterwards.
 
@@ -208,7 +208,7 @@ If any of those conditions is not fulfilled, any difference in the price estimat
 
 ## Missing "too cheap" Data
 
-It is also possible to run a weighted Price Sensitivity Meter analysis if there is no "too cheap" price (like for certain services like a drawing account, access to a sports match, ...).  The *psm_analysis_weighted()* function handles this in the same way as the *psm_analysis()* function: The "toocheap" variable should be set to NA for all cases. Having no "too cheap" price means that the lower bound of the price range and the optimal price point cannot be estimated, whereas the upper end of the price range and the indifference price point are estimated.  
+It is also possible to run a weighted Price Sensitivity Meter analysis if there is no "too cheap" price (like for certain services like a drawing account, access to a sports match, ...).  The `psm_analysis_weighted()` function handles this in the same way as the `psm_analysis()` function: The "toocheap" variable should be set to NA for all cases. Having no "too cheap" price means that the lower bound of the price range and the optimal price point cannot be estimated, whereas the upper end of the price range and the indifference price point are estimated.  
 
 ```{r}
 # setting up data with NAs in "too cheap" variable
@@ -235,7 +235,7 @@ summary(test_2)
 
 ## Using Weighting in the Newton Miller Smith Extension
 
-The *psm_analysis_weighted()* function also allows to include an estimate for the price with optimal trial or optimal revenue via the Newton Miller Smith extension. This option can be used in the same way as in the unweighted *psm_analysis()* function.
+The `psm_analysis_weighted()` function also allows to include an estimate for the price with optimal trial or optimal revenue via the Newton Miller Smith extension. This option can be used in the same way as in the unweighted `psm_analysis()` function.
 
 ```{r}
 # setting up dataset with purchase intent information

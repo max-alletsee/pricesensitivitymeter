@@ -17,9 +17,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Sparse price information can become a problem when running Price Sensitivity Meter Analyses, particularly in small samples. In order to deal with this issue, the *pricesensitivitymeter* package has an option *interpolate* to approximate values on the price curves for all values where the actual information from respondents is missing.
+Sparse price information can become a problem when running Price Sensitivity Meter Analyses, particularly in small samples. In order to deal with this issue, the *pricesensitivitymeter* package has an option `interpolate` to approximate values on the price curves for all values where the actual information from respondents is missing.
 
-This vignette illustrates the underlying problem and explains how the *interpolate* argument provides a solution.
+This vignette illustrates the underlying problem and explains how the `interpolate` argument provides a solution.
 
 ## Illustrating the Problem
 
@@ -44,7 +44,7 @@ expensive_alt <- expensive
 expensive_alt[pricestep_expensive] <- round(mean(expensive_alt[pricestep_expensive]), digits = 2)
 ```
 
-When we run a Price Sensitivity Meter Analysis on the data and visualize it, we get the following result. (The plot is slightly simplified: It does not show the "too cheap" and "too expensive curves", as they are not relevant for the example. Moreover, it is slightly zoomed in.)
+When we run a Price Sensitivity Meter Analysis on the data and visualize it, we get the following result. (The plot is slightly simplified: It does not show the "too cheap" and "too expensive" curves, as they are not relevant for the example. Moreover, it is slightly zoomed in.)
 
 ```{r, fig.width = 7, fig.height = 4.5}
 library(pricesensitivitymeter)
@@ -90,15 +90,15 @@ psmplot_steps +
   theme_minimal()
 ```
 
-The Indifference Price Point (IDP) in this plot is not at the actual intersection of the "not cheap" and the "not expensive" curve. This is due to the data structure: We have sparse information for prices between 14 and 15. This can be seen in the rug plot close to the x-axis: Each vertical line indicates a price for which we have information in our data - however, there is a considerable gap around 14-15 (caused by the initial data manipulation that added price steps). The combination of price steps (as can be seen in the steep slope of the curves in this area) and sparse data points creates this problem. If the *interpolate* argument is set to *FALSE*, the *psm_analysis* function uses the first price for which the "not expensive" curve is higher than the "not cheap" curve, which is the case for a price of `r psm_steps$idp` in our example.
+The Indifference Price Point (IDP) in this plot is not at the actual intersection of the "not cheap" and the "not expensive" curve. This is due to the data structure: We have sparse information for prices between 14 and 15. This can be seen in the rug plot close to the x-axis: Each vertical line indicates a price for which we have information in our data - however, there is a considerable gap around 14-15 (caused by the initial data manipulation that added price steps). The combination of price steps (as can be seen in the steep slope of the curves in this area) and sparse data points creates this problem. If the `interpolate` argument is set to `FALSE`, the `psm_analysis()` function uses the first price for which the "not expensive" curve is higher than the "not cheap" curve, which is the case for a price of `r psm_steps$idp` in our example.
 
-A larger sample size is usually sufficient to overcome this issue. However, this might not always be possible. Therefore, the *psm_analysis* function has an optional argument which helps to interpolate the pricing curve in cases of sparse information.
+A larger sample size is usually sufficient to overcome this issue. However, this might not always be possible. Therefore, the `psm_analysis()` function has an optional argument which helps to interpolate the pricing curve in cases of sparse information.
 
-## Using the *interpolate* Argument
+## Using the `interpolate` Argument
 
-The *psm_analysis* function includes an optional argument *interpolate*. If this argument is set to *TRUE*, the function uses linear interpolation to estimate the price curves between the price points that are provided by the respondents. Consider an easy example: If the "not cheap" function is at 20% for a price of 5.99 and at 21% for a price of 6.01, the function would estimate that it is at 20.5% for a price of 6.00. The function uses price steps as defined in the *interpolation_steps* argument, which has a default value of 0.01.^[It may make sense to set a higher value when this subdivision is not practical in the currency - e.g. for Japanese Yen or Chilean Pesos - or when the product for which the price is assessed is quite expensive. In both cases, a reduced granularity will not affect the results, but increase the computational efficiency.]
+The `psm_analysis` function includes an optional argument `interpolate`. If this argument is set to `TRUE`, the function uses linear interpolation to estimate the price curves between the price points that are provided by the respondents. Consider an easy example: If the "not cheap" function is at 20% for a price of 5.99 and at 21% for a price of 6.01, the function would estimate that it is at 20.5% for a price of 6.00. The function uses price steps as defined in the `interpolation_steps` argument, which has a default value of 0.01.^[It may make sense to set a higher value when this subdivision is not practical in the currency - e.g. for Japanese Yen or Chilean Pesos - or when the product for which the price is assessed is quite expensive. In both cases, a reduced granularity will not affect the results, but increase the computational efficiency.]
 
-Below are the results for the same data when the *interpolate* function is set to *TRUE*.
+Below are the results for the same data when the `interpolate` function is set to `TRUE`.
 
 ```{r, fig.width=7, fig.height=4.5}
 # Running the analysis with interpolation

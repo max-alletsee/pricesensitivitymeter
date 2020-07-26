@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 The interpretation of the Price Sensitivity Meter analysis in its original publication^[Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://rwconnect.esomar.org/a-new-approach-to-study-consumer-perception-of-price/).] focuses on a graphical inspection of the results. All relevant price points are defined by the intersection of two distribution functions, which are identified by visualizing the results. Even if this package provides a summary of the main results, most users will probably also be interested in visualizing them.
 
-This vignette provides a short overview of efficient ways to provide visualizations of the results, both using R's base graphics as well as the ggplot2 package. The plots are designed to show all main outcomes and can serve as a reference visualization, which may be reused for the purpose of a particular project.
+This vignette provides a short overview of efficient ways to provide visualizations of the results, both using R's base graphics as well as the *ggplot2* package. The plots are designed to show all main outcomes and can serve as a reference visualization, which may be reused for the purpose of a particular project.
 
 ## Example Data
 
@@ -54,7 +54,7 @@ output.psm <- psm_analysis(toocheap = "toocheap",
                            validate = TRUE)
 ```
 
-The resulting *output.psm* object contains the results which will be used for plotting. In particular, the slot *data_vanwestendorp* includes a dataframe with all prices that are included in the input data and the corresponding values of the cumulative distribution functions for the different price levels. Let's have a quick look at one row in this dataset (row 260):
+The resulting `output.psm` object contains the results which will be used for plotting. In particular, the slot `data_vanwestendorp` includes a dataframe with all prices that are included in the input data and the corresponding values of the cumulative distribution functions for the different price levels. Let's have a quick look at one row in this dataset (row 260):
 
 ```{r, echo=TRUE}
 output.psm$data_vanwestendorp[260, ]
@@ -65,8 +65,8 @@ This means the following: For the price of `r output.psm$data_vanwestendorp[260,
 * `r round(output.psm$data_vanwestendorp[260, "ecdf_cheap"], digits = 2) * 100`% of respondents think that this price is cheap
 * `r round(output.psm$data_vanwestendorp[260, "ecdf_expensive"], digits = 2) * 100`% of respondents think that this price is expensive
 * `r round(output.psm$data_vanwestendorp[260, "ecdf_tooexpensive"], digits = 2) * 100`% of respondents think that this price (or more) is too expensive
-* `r round(output.psm$data_vanwestendorp[260, "ecdf_not_cheap"], digits = 2) * 100`% of respondents think that this price is *not* cheap - this is the inverse of edfc_cheap (so both values always add up to 100%)
-* `r round(output.psm$data_vanwestendorp[260, "ecdf_not_expensive"], digits = 2) * 100`% of respondents think that this price is *not* expensive - this is the inverse of edfc_expensive (so both values always add up to 100%)
+* `r round(output.psm$data_vanwestendorp[260, "ecdf_not_cheap"], digits = 2) * 100`% of respondents think that this price is *not* cheap - this is the inverse of `edfc_cheap` (so both values always add up to 100%)
+* `r round(output.psm$data_vanwestendorp[260, "ecdf_not_expensive"], digits = 2) * 100`% of respondents think that this price is *not* expensive - this is the inverse of `edfc_expensive` (so both values always add up to 100%)
 
 We can now visualize this information for all the different price points.
 
@@ -213,7 +213,7 @@ points(x = output.psm$idp,
        col = "#009E73")
 
 text(x = output.psm$idp,
-     y = output.psm$data_vanwestendorp$ecdf_cheap[which(output.psm$data_vanwestendorp$price == output.psm$idp)],
+     y = output.psm$data_vanwestendorp$ecdf_not_cheap[which(output.psm$data_vanwestendorp$price == output.psm$idp)],
      labels = paste("IDP:", output.psm$idp),
      pos = 4)
 
@@ -278,7 +278,7 @@ ggplot(data = output.psm$data_nms, aes(x = price)) +
 
 ## Base Plot: Optimal Trial and Revenue (based on Newton Miller Smith Extension)
 
-Below are versions of the same plots with R's base plot function instead of ggplot. For those simpler plots, the differences between ggplot and base plot are less pronounced.
+Below are versions of the same plots with R's base plot function instead of *ggplot2*. For those simpler plots, the differences between ggplot and base plot are less pronounced.
 
 ```{r, fig.width=7, fig.height=4.5}
 par(cex.sub = 0.66) # reducing the font size of the subtitle

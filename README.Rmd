@@ -29,12 +29,12 @@ As of version 0.2.1, this package is [available on CRAN](https://cran.r-project.
 install.packages("pricesensitivitymeter")
 
 # install the development version from Github
-devtools::install_github("alletsee/pricesensitivitymeter")
+devtools::install_github("max-alletsee/pricesensitivitymeter")
 ```
 
 ## Usage
 
-The main function of the package is psm_analysis() which performs all necessary analyses. 
+The main function of the package is `psm_analysis()` which performs all necessary analyses. 
 
 ```{r example, eval = FALSE}
 ## creating example data
@@ -58,7 +58,7 @@ summary(output.psm.demo)
 
 ## Additional Information
 
-* Please [report any issues or bugs](https://github.com/alletsee/pricesensitivitymeter/issues).
+* Please [report any issues or bugs](https://github.com/max-alletsee/pricesensitivitymeter/issues).
 * License: MIT
 
 ## References 
