@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The interpretation of the Price Sensitivity Meter analysis in its original publication^[Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://rwconnect.esomar.org/a-new-approach-to-study-consumer-perception-of-price/).] focuses on a graphical inspection of the results. All relevant price points are defined by the intersection of two distribution functions, which are identified by visualizing the results. Even if this package provides a summary of the main results, most users will probably also be interested in visualizing them.
+The interpretation of the Price Sensitivity Meter analysis in its original publication^[Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/).] focuses on a graphical inspection of the results. All relevant price points are defined by the intersection of two distribution functions, which are identified by visualizing the results. Even if this package provides a summary of the main results, most users will probably also be interested in visualizing them.
 
 This vignette provides a short overview of efficient ways to provide visualizations of the results, both using R's base graphics as well as the *ggplot2* package. The plots are designed to show all main outcomes and can serve as a reference visualization, which may be reused for the purpose of a particular project.
 

@@ -56,7 +56,7 @@ showClass("psm")
   Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) --
   A new approach to study consumer perception of price"
   \emph{Proceedings of the 29th ESOMAR Congress}, 139--167. Online
-  available at \url{https://rwconnect.esomar.org/a-new-approach-to-study-consumer-perception-of-price/}.
+  available at \url{https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/}.
 
   Newton, D, Miller, J, Smith, P, (1993) "A market acceptance
   extension to traditional price sensitivity measurement"

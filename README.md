@@ -60,7 +60,7 @@ summary(output.psm.demo)
 Van Westendorp, P (1976) “NSS-Price Sensitivity Meter (PSM) – A new
 approach to study consumer perception of price” *Proceedings of the
 ESOMAR Congress*, 139–167. Online available at [the ESOMAR
-website](https://rwconnect.esomar.org/a-new-approach-to-study-consumer-perception-of-price/).
+website](https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/).
 
 Newton, D, Miller, J, Smith, P, (1993) “A market acceptance extension to
 traditional price sensitivity measurement” *Proceedings of the American
