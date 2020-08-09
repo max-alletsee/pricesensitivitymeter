@@ -31,11 +31,6 @@ random_row <- sample(x = nrow(input_data), size = 1)
 input_data$ch_invalid[random_row] <- input_data$ex[random_row] + 0.5
 
 
-# input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 1.5
-# input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender == "female"] * 1.5
-# input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 1.5
-# input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 1.5
-
 input_data$gender_pop <- 5000
 
 input_design <- survey::svydesign(ids = ~ 1, # no clusters
@@ -168,7 +163,7 @@ test_that("Data Input - Weighted NMS: length of PI scale and calibration scale",
 
 test_that("Data Input: NMS - match between answers and defined pattern", {
   expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = 2:5, pi_calibrated = seq(0, 1, length.out = 4)))
-  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = c(1.1,2:5), pi_calibrated = seq(0, 1, length.out = 5)))
+  expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = c(1.1, 2:5), pi_calibrated = seq(0, 1, length.out = 5)))
   expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive", pi_scale = as.character(1:5), pi_calibrated = seq(0, 1, length.out = 5)))
   expect_error(psm_analysis_weighted(toocheap = "tch", cheap = "ch", expensive = "ex", tooexpensive = "tex", design = input_design, pi_cheap = "pi_cheap", pi_expensive = "pi_expensive_errors", pi_scale = 1:5, pi_calibrated = seq(0, 1, length.out = 5)))
 }

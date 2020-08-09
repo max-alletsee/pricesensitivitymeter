@@ -199,10 +199,10 @@ test_that("Data Output: When interpolating, have the full numeric price matrix w
 
 # Creating a lagged variable of the empirical cumulative densities
 
-psm_result3$data_vanwestendorp$ecdf_toocheap_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_toocheap[1:(length(psm_result3$data_vanwestendorp$ecdf_toocheap)-1)])
-psm_result3$data_vanwestendorp$ecdf_cheap_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_cheap[1:(length(psm_result3$data_vanwestendorp$ecdf_cheap)-1)])
-psm_result3$data_vanwestendorp$ecdf_expensive_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_expensive[1:(length(psm_result3$data_vanwestendorp$ecdf_expensive)-1)])
-psm_result3$data_vanwestendorp$ecdf_tooexpensive_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_tooexpensive[1:(length(psm_result3$data_vanwestendorp$ecdf_tooexpensive)-1)])
+psm_result3$data_vanwestendorp$ecdf_toocheap_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_toocheap[1:(length(psm_result3$data_vanwestendorp$ecdf_toocheap) - 1)])
+psm_result3$data_vanwestendorp$ecdf_cheap_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_cheap[1:(length(psm_result3$data_vanwestendorp$ecdf_cheap) - 1)])
+psm_result3$data_vanwestendorp$ecdf_expensive_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_expensive[1:(length(psm_result3$data_vanwestendorp$ecdf_expensive) - 1)])
+psm_result3$data_vanwestendorp$ecdf_tooexpensive_lagged <- c(NA, psm_result3$data_vanwestendorp$ecdf_tooexpensive[1:(length(psm_result3$data_vanwestendorp$ecdf_tooexpensive) - 1)])
 
 # Calculate the difference between the empirical cumulative density and the lagged variant
 psm_result3$data_vanwestendorp$ecdf_toocheap_diff <- psm_result3$data_vanwestendorp$ecdf_toocheap - psm_result3$data_vanwestendorp$ecdf_toocheap_lagged
@@ -290,5 +290,3 @@ test_that("Ensuring that cases with invalid cases are removed", {
 
 # clean up workspace after test
 rm(data_psm_test, psm_result1, psm_result2, psm_result3)
-
-

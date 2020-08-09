@@ -29,8 +29,8 @@ psm.class <- setClass("psm", slots = c(data_input = "data.frame",
 summary.psm <- function(object, ...) {
   cat("Van Westendorp Price Sensitivity Meter Analysis\n\n")
 
-  cat("Accepted Price Range:", round(object$pricerange_lower, digits = 2), "-", round(object$pricerange_upper, digits = 2),"\n")
-  cat("Indifference Price Point:", object$idp,"\n")
+  cat("Accepted Price Range:", round(object$pricerange_lower, digits = 2), "-", round(object$pricerange_upper, digits = 2), "\n")
+  cat("Indifference Price Point:", object$idp, "\n")
   cat("Optimal Price Point:", object$opp, "\n\n")
 
   if(object$NMS == TRUE) {

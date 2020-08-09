@@ -121,7 +121,7 @@ test_that("Data Input: NMS using vectors", {
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = 1, pi_expensive = matrix(2)))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = TRUE, pi_expensive = 2))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = 1, pi_expensive = rep.int(2, 2)))
-  expect_error(psm_analysis(toocheap = c(1,1), cheap = c(2,2), expensive = c(3,3), tooexpensive = c(4,4), pi_cheap = 1, pi_expensive = rep.int(2, 2)))
+  expect_error(psm_analysis(toocheap = c(1, 1), cheap = c(2, 2), expensive = c(3, 3), tooexpensive = c(4, 4), pi_cheap = 1, pi_expensive = rep.int(2, 2)))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = -1, pi_expensive = 2))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = 1, pi_expensive = -2))
   expect_error(psm_analysis(toocheap = c(5, 6), cheap = c(8, 9), expensive = c(12, 14), tooexpensive = c(16, 18), pi_cheap = 3, pi_expensive = 2))

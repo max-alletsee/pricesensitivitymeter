@@ -315,5 +315,3 @@ test_that("Ensuring that cases with invalid cases are removed", {
 
 # clean up workspace after test
 rm(input_data, input_data_2, input_design_1, input_design_2, psm_results_w1, psm_results_w2, psm_results_unw, psm_results_w3)
-
-
