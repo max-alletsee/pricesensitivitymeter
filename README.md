@@ -1,9 +1,12 @@
-# pricesensitivitymeter
+pricesensitivitymeter
+=====================
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 [![CRAN\_Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
+[![R-CMD-check](https://github.com/max-alletsee/pricesensitivitymeter/workflows/R-CMD-check/badge.svg)](https://github.com/max-alletsee/pricesensitivitymeter/actions)
 
-## Overview
+Overview
+--------
 
 pricesensitivitymeter is an implementation of the van Westendorp Price
 Sensitivity Meter (PSM) in R, which is a popular method in market
@@ -11,51 +14,51 @@ research to analyze consumer price preferences and price sensitivity. It
 also covers the so-called Newton Miller Smith Extension which allows to
 estimate prices that maximize the trial rate and the revenue.
 
-## Installation
+Installation
+------------
 
 As of version 0.2.1, this package is [available on
 CRAN](https://cran.r-project.org/package=pricesensitivitymeter).
 
-``` r
-# install the stable release from CRAN
-install.packages("pricesensitivitymeter")
+    # install the stable release from CRAN
+    install.packages("pricesensitivitymeter")
 
-# install the development version from Github
-devtools::install_github("max-alletsee/pricesensitivitymeter")
-```
+    # install the development version from Github
+    devtools::install_github("max-alletsee/pricesensitivitymeter")
 
-## Usage
+Usage
+-----
 
 The main function of the package is `psm_analysis()` which performs all
 necessary analyses.
 
-``` r
-## creating example data
+    ## creating example data
 
-tch <- round(rnorm(n = 250, mean = 5, sd = 0.5), digits = 2)
-ch <- round(rnorm(n = 250, mean = 8.5, sd = 0.5), digits = 2)
-ex <- round(rnorm(n = 250, mean = 13, sd = 0.75), digits = 2)
-tex <- round(rnorm(n = 250, mean = 17, sd = 1), digits = 2)
+    tch <- round(rnorm(n = 250, mean = 5, sd = 0.5), digits = 2)
+    ch <- round(rnorm(n = 250, mean = 8.5, sd = 0.5), digits = 2)
+    ex <- round(rnorm(n = 250, mean = 13, sd = 0.75), digits = 2)
+    tex <- round(rnorm(n = 250, mean = 17, sd = 1), digits = 2)
 
-data.psm.demo <- data.frame(tch, ch, ex, tex)
+    data.psm.demo <- data.frame(tch, ch, ex, tex)
 
-## running the analysis
-output.psm.demo <- psm_analysis(toocheap = "tch",
-  cheap = "ch",
-  expensive = "ex",
-  tooexpensive = "tex",
-  data = data.psm.demo)
+    ## running the analysis
+    output.psm.demo <- psm_analysis(toocheap = "tch",
+      cheap = "ch",
+      expensive = "ex",
+      tooexpensive = "tex",
+      data = data.psm.demo)
 
-summary(output.psm.demo)
-```
+    summary(output.psm.demo)
 
-## Additional Information
+Additional Information
+----------------------
 
-  - Please [report any issues or
+-   Please [report any issues or
     bugs](https://github.com/max-alletsee/pricesensitivitymeter/issues).
-  - License: MIT
+-   License: MIT
 
-## References
+References
+----------
 
 Van Westendorp, P (1976) “NSS-Price Sensitivity Meter (PSM) – A new
 approach to study consumer perception of price” *Proceedings of the
