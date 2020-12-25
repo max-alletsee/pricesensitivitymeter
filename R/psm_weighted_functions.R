@@ -294,7 +294,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     psm_data_w$variables$pi_cheap_cal <- NA
     psm_data_w$variables$pi_expensive_cal <- NA
 
-    for (i in seq_len(pi_scale)) {
+    for (i in 1:length(pi_scale)) {
       psm_data_w$variables$pi_cheap_cal[which(psm_data_w$variables$pi_cheap == pi_scale[i])] <- pi_calibrated[i]
       psm_data_w$variables$pi_expensive_cal[which(psm_data_w$variables$pi_expensive == pi_scale[i])] <- pi_calibrated[i]
     }
@@ -313,16 +313,16 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     # 2) weighted purchase probability for "cheap" and "expensive"
 
     pos_toocheap <- sapply(as.character(round(psm_data_w$variables$toocheap, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nms_matrix), as.numeric(pos_toocheap))] <- 0
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_toocheap))] <- 0
 
     pos_tooexpensive <- sapply(as.character(round(psm_data_w$variables$tooexpensive, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nms_matrix), as.numeric(pos_tooexpensive))] <- 0
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_tooexpensive))] <- 0
 
     pos_cheap <- sapply(as.character(round(psm_data_w$variables$cheap, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nms_matrix), as.numeric(pos_cheap))] <- psm_data_w$variables$pi_cheap_cal
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_cheap))] <- psm_data_w$variables$pi_cheap_cal
 
     pos_expensive <- sapply(as.character(round(psm_data_w$variables$expensive, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nms_matrix), as.numeric(pos_expensive))] <- psm_data_w$variables$pi_expensive_cal
+    nms_matrix[cbind(1:nrow(nms_matrix), as.numeric(pos_expensive))] <- psm_data_w$variables$pi_expensive_cal
 
 
     # gradual interpolation of purchase probabilities
@@ -336,7 +336,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     # ... via weighted.mean() from base R
     data_nms <- data.frame(price = nms_prices,
                            trial = apply(nms_matrix, 2, stats::weighted.mean, w = nms_weights, na.rm = TRUE),
-                           row.names = seq_len(nms_prices))
+                           row.names = 1:length(nms_prices))
 
     data_nms$revenue <- data_nms$price * data_nms$trial
 

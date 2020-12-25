@@ -1,8 +1,11 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
-version 1.2 (Release date: 2020-08-DD)
+version 1.2 (Release date: 2021-MM-DD)
 ==============
+
+under development, not yet on CRAN
+
 Changes:
 * fix in plotting vignette: fix position of indifference price point
 * fixes in vignette formatting to emphasize function names

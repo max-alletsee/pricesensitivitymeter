@@ -6,7 +6,7 @@
 
 interpolate_nms_matrix <- function(nms_matrix) {
 
-for (i in seq_len(nms_matrix)) {
+for (i in 1:nrow(nms_matrix)) {
   interpolate_prob <- NA
 
   # try linear interpolation between three pairs of values
