@@ -34,13 +34,13 @@ psm_plot(psm_result,
          line_type = c("too cheap" = "dotted",
                        "not cheap" = "solid",
                        "not expensive" = "solid",
-                       "too expensive" = "dotted")
+                       "too expensive" = "dotted"))
 }
 
 \arguments{
   \item{psm_result}{Result of a Price Sensitivity Meter analysis,
   created by running \code{psm_analysis()} or
-  \code{psm_analysis_weighted}. (Object of class \code{"psm"}.)}
+  \code{psm_analysis_weighted()}. (Object of class \code{"psm"})}
   \item{shade_pricerange}{logical value. Determines if the
   acceptable price range is shown as a shaded area or not.}
   \item{line_toocheap}{logical value. Determines if the line
@@ -57,7 +57,6 @@ psm_plot(psm_result,
   the Indifference Price Point is shown or not.}
   \item{point_opp}{logical value. Determines if the Optimal
   Price Point is shown or not.}
-  Indifference Price Point is shown or not.}
   \item{label_opp}{logical value. Determines if the label for
   the Optimal Price Point is shown or not.}
   \item{pricerange_color}{character, specifying the
@@ -85,7 +84,6 @@ psm_plot(psm_result,
   twodash), or a string with an even number (up to eight) of
   hexadecimal digits which give the lengths in consecutive
   positions in the string.}
-
 }
 
 \value{
@@ -119,10 +117,10 @@ output_psm_demo <- psm_analysis(toocheap = tch,
 
 # create the plot (note that ggplot's convention
 # is to *not* show it by default)
-psm_result_plot <- psm_plot(psm_result = output_psm_demo)
+\dontrun{psm_result_plot <- psm_plot(output_psm_demo)}
 
 # to show the plot, call the object (and maybe
 # additional ggplot functions if you like)
-psm_result_plot + theme_minimal()
+\dontrun{psm_result_plot}
 }
 
