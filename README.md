@@ -4,6 +4,7 @@ pricesensitivitymeter
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 [![CRAN\_Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 [![R-CMD-check](https://github.com/max-alletsee/pricesensitivitymeter/workflows/R-CMD-check/badge.svg)](https://github.com/max-alletsee/pricesensitivitymeter/actions)
+[![codecov](https://codecov.io/gh/max-alletsee/pricesensitivitymeter/branch/master/graph/badge.svg?token=W1JHNAMMEB)](https://codecov.io/gh/max-alletsee/pricesensitivitymeter)
 
 Overview
 --------
