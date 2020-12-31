@@ -117,10 +117,10 @@ output_psm_demo <- psm_analysis(toocheap = tch,
 
 # create the plot (note that ggplot's convention
 # is to *not* show it by default)
-\dontrun{psm_result_plot <- psm_plot(output_psm_demo)}
+psm_result_plot <- psm_plot(output_psm_demo)
 
 # to show the plot, call the object (and maybe
 # additional ggplot functions if you like)
-\dontrun{psm_result_plot}
+psm_result_plot + ggplot2::theme_minimal()
 }
 

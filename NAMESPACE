@@ -1,5 +1,6 @@
 export("psm_analysis")
 export("psm_analysis_weighted")
+export("psm_plot")
 exportClasses("psm")
 
 S3method(summary, psm)

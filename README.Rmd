@@ -46,16 +46,18 @@ ch <- round(rnorm(n = 250, mean = 8.5, sd = 0.5), digits = 2)
 ex <- round(rnorm(n = 250, mean = 13, sd = 0.75), digits = 2)
 tex <- round(rnorm(n = 250, mean = 17, sd = 1), digits = 2)
 
-data.psm.demo <- data.frame(tch, ch, ex, tex)
+data_psm_demo <- data.frame(tch, ch, ex, tex)
 
 ## running the analysis
-output.psm.demo <- psm_analysis(toocheap = "tch",
+output_psm_demo <- psm_analysis(
+  toocheap = "tch",
   cheap = "ch",
   expensive = "ex",
   tooexpensive = "tex",
-  data = data.psm.demo)
+  data = data.data_psm_demo.demo
+)
 
-summary(output.psm.demo)
+summary(output_psm_demo)
 ```
 
 ## Additional Information
