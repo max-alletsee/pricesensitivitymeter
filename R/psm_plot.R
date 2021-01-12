@@ -122,20 +122,24 @@ psm_plot <- function(psm_result,
 
   if (isTRUE(label_idp)) {
     plot_object <- plot_object + ggplot2::annotate(
-      geom = "text",
-      x = psm_result$idp + 1.5,
+      geom = "label",
+      x = psm_result$idp,
       y = psm_result$data_vanwestendorp$ecdf_not_cheap[psm_result$data_vanwestendorp$price == psm_result$idp],
-      label = paste("IDP: ", psm_result$idp)
+      label = paste("IDP: ", psm_result$idp),
+      fill = "white",
+      alpha = 0.5
     )
   }
 
 
   if (isTRUE(label_opp)) {
     plot_object <- plot_object + ggplot2::annotate(
-      geom = "text",
-      x = psm_result$opp + 1.5,
+      geom = "label",
+      x = psm_result$opp,
       y = psm_result$data_vanwestendorp$ecdf_toocheap[psm_result$data_vanwestendorp$price == psm_result$opp],
-      label = paste("OPP: ", psm_result$opp)
+      label = paste("OPP: ", psm_result$opp),
+      fill = "white",
+      alpha = 0.5
     )
   }
 

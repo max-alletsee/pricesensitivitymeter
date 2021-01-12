@@ -61,17 +61,17 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
       stop("Could not find all variable names of the price variables (toocheap, cheap, expensive, tooexpensive) in the data object")
     }
 
-    if (ifelse(!is.numeric(data[, col_toocheap]), !all(is.na(data[, col_toocheap])), FALSE) | !is.numeric(data[, col_cheap]) |
-      !is.numeric(data[, col_expensive]) | !is.numeric(data[, col_tooexpensive])) {
+    if (ifelse(!is.numeric(data[, toocheap]), !all(is.na(data[, toocheap])), FALSE) | !is.numeric(data[, cheap]) |
+      !is.numeric(data[, expensive]) | !is.numeric(data[, tooexpensive])) {
       stop("All price variables (toocheap, cheap, expensive, tooexpensive) must contain only numeric values\n(toocheap is also tolerated if all values are NA)")
     }
 
     # if input structure of data is valid, create internal dataframe for PSM function
     psmdata <- data.frame(
-      toocheap = data[, col_toocheap],
-      cheap = data[, col_cheap],
-      expensive = data[, col_expensive],
-      tooexpensive = data[, col_tooexpensive]
+      toocheap = data[, toocheap],
+      cheap = data[, cheap],
+      expensive = data[, expensive],
+      tooexpensive = data[, tooexpensive]
     )
   }
 

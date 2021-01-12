@@ -54,11 +54,27 @@ output_psm_demo <- psm_analysis(
   cheap = "ch",
   expensive = "ex",
   tooexpensive = "tex",
-  data = data.data_psm_demo.demo
+  data = data_psm_demo
 )
 
 summary(output_psm_demo)
 ```
+
+The package also has a function `psm_analysis_weighted()` that deals with weighted survey data where the survey design for the weighting is coming from the `survey` package. (Please see the documentation and the vignette for more details.) Moreover, there is a convenience function `psm_plot()` that creates the layout for the standard Price Sensitivity Meter plot via `ggplot2`. Below is a simple example, using the analysis result created above.
+
+```{r}
+library(ggplot2)
+
+psm_plot(output_psm_demo) +
+  labs(
+    x = "Price",
+    y = "Share of Respondents (0-1)",
+    title = "Example Price Sensitivity Meter Plot",
+    caption = "Shaded area: range of acceptable prices\nData: Randomly generated") + 
+  theme_minimal()
+
+```
+
 
 ## Additional Information
 

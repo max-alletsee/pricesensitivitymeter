@@ -135,14 +135,20 @@ psmplot +
                                    "not cheap" = "solid",
                                    "not expensive" = "solid",
                                    "too expensive" = "dotted")) + 
-  annotate(geom = "text", # Label of Indifference Price Point
+  annotate(geom = "label", # Label of Indifference Price Point
            x = output.psm$idp + 1.5, 
            y = output.psm$data_vanwestendorp$ecdf_not_cheap[output.psm$data_vanwestendorp$price == output.psm$idp],
-           label = paste("IDP: ", output.psm$idp)) + 
-  annotate(geom = "text", # Label of Optimal Price Point
-           x = output.psm$opp + 1.5,
+           nudge_x = 1.5,
+           label = paste("IDP: ", output.psm$idp),
+           fill = "white",
+           alpha = 0.5) + 
+  annotate(geom = "label", # Label of Optimal Price Point
+           x = output.psm$opp,
            y = output.psm$data_vanwestendorp$ecdf_toocheap[output.psm$data_vanwestendorp$price == output.psm$opp],
-           label = paste("OPP: ", output.psm$opp)) +
+           nudge_x = 1.5,
+           label = paste("OPP: ", output.psm$opp),
+           fill = "white",
+           alpha = 0.5) +
   theme_minimal()
 ```
 
