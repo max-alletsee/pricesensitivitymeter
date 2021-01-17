@@ -29,12 +29,12 @@ psm_analysis(
 
 \arguments{
   \item{toocheap, cheap, expensive, tooexpensive}{If a
-  data.frame/matrix is provided in the \code{data} argument:
-  names of the variables in the data.frame/matrix that contain
-  the survey data on the respondents' "too cheap", "cheap",
-  "expensive" and "too expensive" price preferences.
+  data.frame/matrix/tibble is provided in the \code{data}
+  argument: names of the variables in the data.frame/matrix
+  that contain the survey data on the respondents' "too cheap",
+  "cheap", "expensive" and "too expensive" price preferences.
 
-  If no data.frame/matrix is provided in the \code{data}
+  If no data.frame/matrix/tibble is provided in the \code{data}
   argument: numeric vectors that directly include this
   information. If numeric vectors are provided, it is assumed
   that they are sorted by respondent ID (the preferences for
@@ -49,11 +49,12 @@ psm_analysis(
   Expensiveness and the Indifference Price Point, but it is
   impossible to calculate the Point of Marginal Cheapness and
   the Optimal Price Point.}
-  \item{data}{data.frame or matrix that contains the function's
-  input data. \code{data} input is not mandatory: Instead of
-  using one data.frame/matrix as an input, it is also possible
-  to provide the data directly as vectors in the "too cheap",
-  "cheap", "expensive" and "too expensive" arguments.}
+  \item{data}{data.frame, matrix or tibble that contains the
+  function's input data. \code{data} input is not mandatory:
+  Instead of using a data.frame/matrix/tibble as an input, it
+  is also possible to provide the data directly as vectors in
+  the "too cheap", "cheap", "expensive" and "too expensive"
+  arguments.}
   \item{validate}{logical. should only respondents with
   consistent price preferences (too cheap < cheap < expensive
   < too expensive) be considered in the analysis?}
@@ -77,9 +78,9 @@ psm_analysis(
   possible intersections}
   \item{pi_cheap, pi_expensive}{Only required for the Newton
   Miller Smith extension. If \code{data} argument is provided:
-  names of the variables in the data.frame/matrix that contain
-  the survey data on the respondents' purchase intent at their
-  individual cheap/expensive price.}
+  names of the variables in the data.frame/matrix/tibble that
+  contain the survey data on the respondents' purchase intent
+  at their individual cheap/expensive price.}
   \item{pi_scale}{Only required for the Newton Miller Smith
   extension. Scale of the purchase intent variables pi_cheap and
   pi_expensive. By default assuming a five-point scale with 5

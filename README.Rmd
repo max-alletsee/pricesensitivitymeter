@@ -38,15 +38,17 @@ devtools::install_github("max-alletsee/pricesensitivitymeter")
 
 The main function of the package is `psm_analysis()` which performs all necessary analyses. 
 
-```{r example, eval = FALSE}
+```{r example}
 ## creating example data
 
-tch <- round(rnorm(n = 250, mean = 5, sd = 0.5), digits = 2)
-ch <- round(rnorm(n = 250, mean = 8.5, sd = 0.5), digits = 2)
-ex <- round(rnorm(n = 250, mean = 13, sd = 0.75), digits = 2)
-tex <- round(rnorm(n = 250, mean = 17, sd = 1), digits = 2)
+tch <- round(rnorm(n = 250, mean = 8.5, sd = 1), digits = 2)
+ch <- round(rnorm(n = 250, mean = 10, sd = 1), digits = 2)
+ex <- round(rnorm(n = 250, mean = 12, sd = 0.75), digits = 2)
+tex <- round(rnorm(n = 250, mean = 13, sd = 1), digits = 2)
 
 data_psm_demo <- data.frame(tch, ch, ex, tex)
+
+library(pricesensitivitymeter)
 
 ## running the analysis
 output_psm_demo <- psm_analysis(
@@ -62,7 +64,7 @@ summary(output_psm_demo)
 
 The package also has a function `psm_analysis_weighted()` that deals with weighted survey data where the survey design for the weighting is coming from the `survey` package. (Please see the documentation and the vignette for more details.) Moreover, there is a convenience function `psm_plot()` that creates the layout for the standard Price Sensitivity Meter plot via `ggplot2`. Below is a simple example, using the analysis result created above.
 
-```{r}
+```{r example_plot}
 library(ggplot2)
 
 psm_plot(output_psm_demo) +

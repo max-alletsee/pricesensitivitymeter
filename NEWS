@@ -7,11 +7,12 @@ version 1.2 (Release date: 2021-MM-DD)
 under development, not yet on CRAN
 
 Changes:
+* package now also supports input in tibble format
 * fix in plotting vignette: fix position of indifference price point
 * fixes in vignette formatting to emphasize function names
 * change of Github URLS due to change of Github username
 * fix of external URLs that have changed
-* re-factoring: interpolating of purchase probabilities for Newton Miller Smith extension transferred to utility function
+* housekeeping: re-factoring code
 
 version 1.1.1 (Release date: 2019-08-23)
 ==============
