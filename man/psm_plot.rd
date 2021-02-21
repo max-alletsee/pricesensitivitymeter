@@ -98,8 +98,7 @@ The function output is a ggplot2 object.
 }
 
 \seealso{
-The vignette "Visualizing PSM Results" shows a similar way function \code{psm_analysis_weighted()} performs the same
-analyses for weighted data.
+The vignette "Visualizing PSM Results" shows a similar way and more custom way to plot the data.
 }
 
 \examples{
@@ -117,10 +116,10 @@ output_psm_demo <- psm_analysis(toocheap = tch,
 
 # create the plot (note that ggplot's convention
 # is to *not* show it by default)
-psm_result_plot <- psm_plot(output_psm_demo)
+\dontrun{psm_result_plot <- psm_plot(output_psm_demo)
 
 # to show the plot, call the object (and maybe
 # additional ggplot functions if you like)
-psm_result_plot + ggplot2::theme_minimal()
+psm_result_plot + ggplot2::theme_minimal()}
 }
 

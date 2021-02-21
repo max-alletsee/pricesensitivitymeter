@@ -7,10 +7,11 @@ version 1.2 (Release date: 2021-MM-DD)
 under development, not yet on CRAN
 
 Changes:
+* new function psm_plot() for automatic plotting of the result
 * package now also supports input in tibble format
 * fix in plotting vignette: fix position of indifference price point
 * fixes in vignette formatting to emphasize function names
-* change of Github URLS due to change of Github username
+* change of Github URLs due to change of Github username
 * fix of external URLs that have changed
 * housekeeping: re-factoring code
 

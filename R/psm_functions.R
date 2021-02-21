@@ -381,8 +381,6 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     pos_expensive <- sapply(as.character(psmdata$expensive), FUN = function(x) which(colnames(nms_matrix) == x))
     nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_expensive))] <- psmdata$pi_expensive_cal
 
-    # table(nms_matrix[1,])
-
     # gradual interpolation of purchase probabilities
 
     nms_matrix <- interpolate_nms_matrix(nms_matrix)

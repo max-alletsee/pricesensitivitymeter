@@ -298,7 +298,7 @@ test_that("Data Output - Plausibility: If data is not misbalanced, weighted anal
 
 test_that("Data Output - Plausibility: If data is misbalanced, weighting should pull the results in the direction of the underrepresented group", {
   # In the example "input_data"/"input_design1", women are underrepresented and have a higher price tolerance.
-  # When using a weighted PSM analysis, the overall price points should be higher as we correct for the underrepresentation of women
+  # When using a weighted PSM analysis, the overall price points should be higher as we correct for the under-representation of women
   expect_gt(psm_results_w1$pricerange_lower, psm_results_unw$pricerange_lower)
   expect_gt(psm_results_w1$pricerange_upper, psm_results_unw$pricerange_upper)
   expect_gt(psm_results_w1$idp, psm_results_unw$idp)
