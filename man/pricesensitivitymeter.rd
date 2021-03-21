@@ -38,8 +38,8 @@ Max Alletsee \email{max.alletsee@gmail.com}
 \seealso{
 Useful links:
 \itemize{
-\item \url{https://github.com/alletsee/pricesensitivitymeter}
+\item \url{https://github.com/max-alletsee/pricesensitivitymeter}
 \item Report bugs at
-  \url{https://github.com/alletsee/pricesensitivitymeter/issues}
+  \url{https://github.com/max-alletsee/pricesensitivitymeter/issues}
 }
 }

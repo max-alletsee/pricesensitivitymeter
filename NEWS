@@ -1,10 +1,15 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
-version 1.2 (Release date: 2021-03-21)
+version 1.2.1 (Release date: 2021-03-21)
 ==============
 
-under development, not yet on CRAN
+Changes:
+* fixes URL in package description
+* fixes date formatting in DESCRIPTION
+
+version 1.2 (Release date: 2021-03-21)
+==============
 
 Changes:
 * new function psm_plot() for automatic plotting of the result
