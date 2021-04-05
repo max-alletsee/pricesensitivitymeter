@@ -1,6 +1,13 @@
 NEWS pricesensitivitymeter
 ==========================================================================
 
+version 1.2.2 (Release date: 2021-MM-DD)
+==============
+
+Changes:
+* psm_plot(): flexible color for Indifference Price Point and Optimal Price Point
+* psm_plot(): enforcing digits for Indifference Price Point and Optimal Price Point labels
+
 version 1.2.1 (Release date: 2021-03-21)
 ==============
 

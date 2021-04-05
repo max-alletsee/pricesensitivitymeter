@@ -22,8 +22,10 @@ psm_plot(psm_result,
          line_notcheap = TRUE,
          line_notexpensive = TRUE,
          point_idp = TRUE,
+         point_color_idp = "#009E73",
          label_idp = TRUE,
          point_opp = TRUE,
+         point_color_opp = "#009E73",
          label_opp= TRUE,
          pricerange_color = "grey50",
          pricerange_alpha = 0.3,
@@ -53,10 +55,16 @@ psm_plot(psm_result,
   line for the "not expensive" price curve is shown or not.}
   \item{point_idp}{logical value. Determines if the
   Indifference Price Point is shown or not.}
+  \item{point_color_idp}{character vector, specifying the
+  color of the Optimal Price Point. Can be a hex color (e.g.
+  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").}
   \item{label_idp}{logical value. Determines if the label for
   the Indifference Price Point is shown or not.}
   \item{point_opp}{logical value. Determines if the Optimal
   Price Point is shown or not.}
+  \item{point_color_opp}{character vector, specifying the
+  color of the Optimal Price Point. Can be a hex color (e.g.
+  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").}
   \item{label_opp}{logical value. Determines if the label for
   the Optimal Price Point is shown or not.}
   \item{pricerange_color}{character, specifying the

@@ -9,8 +9,10 @@ psm_plot <- function(psm_result,
                      line_notcheap = TRUE,
                      line_notexpensive = TRUE,
                      point_idp = TRUE,
+                     point_color_idp = "#009E73",
                      label_idp = TRUE,
                      point_opp = TRUE,
+                     point_color_opp = "#009E73",
                      label_opp = TRUE,
                      pricerange_color = "grey50",
                      pricerange_alpha = 0.3,
@@ -96,7 +98,7 @@ psm_plot <- function(psm_result,
       y = psm_result$data_vanwestendorp$ecdf_not_cheap[psm_result$data_vanwestendorp$price == psm_result$idp],
       size = 5,
       shape = 18,
-      colour = "#009E73"
+      colour = point_color_idp
     )
   }
 
@@ -108,7 +110,7 @@ psm_plot <- function(psm_result,
       y = psm_result$data_vanwestendorp$ecdf_toocheap[psm_result$data_vanwestendorp$price == psm_result$opp],
       size = 3,
       shape = 17,
-      colour = "#009E73"
+      colour = point_color_opp
     )
   }
 
@@ -125,7 +127,7 @@ psm_plot <- function(psm_result,
       geom = "label",
       x = psm_result$idp,
       y = psm_result$data_vanwestendorp$ecdf_not_cheap[psm_result$data_vanwestendorp$price == psm_result$idp],
-      label = paste("IDP: ", psm_result$idp),
+      label = paste("IDP: ", format(psm_result$idp, nsmall = 2)),
       fill = "white",
       alpha = 0.5
     )
@@ -137,7 +139,7 @@ psm_plot <- function(psm_result,
       geom = "label",
       x = psm_result$opp,
       y = psm_result$data_vanwestendorp$ecdf_toocheap[psm_result$data_vanwestendorp$price == psm_result$opp],
-      label = paste("OPP: ", psm_result$opp),
+      label = paste("OPP: ", format(psm_result$opp, nsmall = 2)),
       fill = "white",
       alpha = 0.5
     )
