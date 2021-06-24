@@ -4,7 +4,7 @@ author: "Max Alletsee"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using weighted survey data}
+  %\VignetteIndexEntry{Using Weighted Survey Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
   
