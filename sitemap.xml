@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/index.html</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/pricesensitivitymeter.rd</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/psm-class.html</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/psm_analysis.rd</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/psm_analysis_weighted.rd</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/psm_plot.rd</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/summary.psm.html</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/interpolation-in-small-samples.html</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/using-weighted-data.html</loc>
+  </url>
+  <url>
+    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/visualizing-psm-results.html</loc>
+  </url>
+</urlset>
