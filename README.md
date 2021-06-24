@@ -1,3 +1,4 @@
+
 # pricesensitivitymeter
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
@@ -55,14 +56,14 @@ output_psm_demo <- psm_analysis(
 summary(output_psm_demo)
 #> Van Westendorp Price Sensitivity Meter Analysis
 #> 
-#> Accepted Price Range: 9.11 - 12.52 
-#> Indifference Price Point: 11.07 
-#> Optimal Price Point: 11.14 
+#> Accepted Price Range: 9.45 - 12.6 
+#> Indifference Price Point: 11.13 
+#> Optimal Price Point: 11.19 
 #> 
 #> ---
-#> 156 cases with individual price preferences were analyzed (unweighted data).
+#> 150 cases with individual price preferences were analyzed (unweighted data).
 #> Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.
-#> (Removed: n = 94 / 38% of data)
+#> (Removed: n = 100 / 40% of data)
 ```
 
 The package also has a function `psm_analysis_weighted()` that deals
@@ -85,7 +86,7 @@ psm_plot(output_psm_demo) +
   theme_minimal()
 ```
 
-![](README-example_plot-1.png)<!-- -->
+![](man/figures/example_plot-1.png)<!-- -->
 
 ## Additional Information
 

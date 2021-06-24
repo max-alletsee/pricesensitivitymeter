@@ -1,14 +1,13 @@
 ---
 output:
-  md_document:
-    variant: gfm
+  github_document
 ---
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/"
 )
 ```
 
