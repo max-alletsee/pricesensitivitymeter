@@ -5,3 +5,6 @@
 ^README-.*\.png$
 ^build_package\.R$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
