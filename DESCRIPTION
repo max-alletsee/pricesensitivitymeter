@@ -10,7 +10,7 @@ Description: An implementation of the van Westendorp Price
 	to analyze consumer price preferences and sensitivity
     (van Westendorp 1976, isbn:9789283100386).
 License: MIT + file LICENSE
-LazyData: true
+LazyData: false
 Encoding: UTF-8
 BugReports: https://github.com/max-alletsee/pricesensitivitymeter/issues
 URL: https://max-alletsee.github.io/pricesensitivitymeter/, https://github.com/max-alletsee/pricesensitivitymeter

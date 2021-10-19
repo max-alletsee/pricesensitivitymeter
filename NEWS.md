@@ -1,7 +1,8 @@
-# pricesensitivitymeter, v1.2.2 (release date: 2021-MM-DD)
+# pricesensitivitymeter, v1.2.2 (release date: 2021-10-19)
 
 - psm_plot(): flexible color for Indifference Price Point and Optimal Price Point
 - psm_plot(): enforcing digits for Indifference Price Point and Optimal Price Point labels
+- change in DESCRIPTION to address a CRAN note (no need for lazy loading of data)
 
 # pricesensitivitymeter, v1.2.1 (release date: 2021-03-21)
 

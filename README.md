@@ -4,7 +4,7 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 [![CRAN\_Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 [![R-CMD-check](https://github.com/max-alletsee/pricesensitivitymeter/workflows/R-CMD-check/badge.svg)](https://github.com/max-alletsee/pricesensitivitymeter/actions)
-[![codecov](https://codecov.io/gh/max-alletsee/pricesensitivitymeter/branch/master/graph/badge.svg?token=W1JHNAMMEB)](https://codecov.io/gh/max-alletsee/pricesensitivitymeter)
+[![codecov](https://codecov.io/gh/max-alletsee/pricesensitivitymeter/branch/master/graph/badge.svg?token=W1JHNAMMEB)](https://app.codecov.io/gh/max-alletsee/pricesensitivitymeter)
 
 ## Overview
 
@@ -56,9 +56,9 @@ output_psm_demo <- psm_analysis(
 summary(output_psm_demo)
 #> Van Westendorp Price Sensitivity Meter Analysis
 #> 
-#> Accepted Price Range: 9.45 - 12.6 
-#> Indifference Price Point: 11.13 
-#> Optimal Price Point: 11.19 
+#> Accepted Price Range: 9.28 - 12.5 
+#> Indifference Price Point: 11.1 
+#> Optimal Price Point: 10.62 
 #> 
 #> ---
 #> 150 cases with individual price preferences were analyzed (unweighted data).
