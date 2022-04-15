@@ -1,3 +1,7 @@
+# pricesensitivitymeter, v1.2.3 (not yet released on CRAN)
+
+- housekeeping: easier format for some input checks
+
 # pricesensitivitymeter, v1.2.2 (release date: 2021-10-19)
 
 - psm_plot(): flexible color for Indifference Price Point and Optimal Price Point

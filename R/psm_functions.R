@@ -23,14 +23,8 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     stop("interpolate requires one logical value")
   }
 
-  # input check 1c: intersection_method must have length 1 and one of the pre-defined terms
-  if (length(intersection_method) != 1) {
-    stop("intersection_method must have length 1")
-  }
-
-  if (!intersection_method %in% c("min", "max", "mean", "median")) {
-    stop("intersection_method must be one of the pre-defined values: min, max, mean, median")
-  }
+  # input check 1c: intersection_method must be one of the pre-defined terms
+  match.arg(intersection_method, c("min", "max", "mean", "median"))
 
   # input check 1d: if interpolate == TRUE, interpolation steps must be numeric vector of length 1
   if (interpolate & (length(interpolation_steps) != 1 | !is.numeric(interpolation_steps))) {

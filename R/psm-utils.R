@@ -1,6 +1,28 @@
 # Utility Functions for the pricesensitivitymeter package that are *not* exported
 
+#-------
+# Internal Helper Function: Identify Intersection Point
+# (with possibility to specify method in case there are multiple intersection points)
 
+identify_intersection <- function(data, var1, var2, method) {
+  first_intersection_pos <- which(data[, var1] >= data[, var2])[1]
+
+  if (is.na(first_intersection_pos)) { # if no intersection: return NA
+    return(NA)
+  } else { # otherwise, run the actual function
+    all_intersections_pos <- which(data[, var1] == data[first_intersection_pos, var1] &
+                                     data[, var2] == data[first_intersection_pos, var2])
+
+    all_intersections_prices <- data[all_intersections_pos, "price"]
+
+    switch(method,
+           min = {min(all_intersections_prices)},
+           max = {max(all_intersections_prices)},
+           mean = {mean(all_intersections_prices)},
+           median = {median(all_intersections_prices)}
+    )
+  }
+}
 
 # Newton Miller Smith Extension: Interpolating the matrix with purchase probabilities
 
