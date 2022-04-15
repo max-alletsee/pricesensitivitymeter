@@ -91,7 +91,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   # 2) Input check: Newton Miller Smith Extension data
   #---
 
-  NMS <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
+  nms <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
 
   # input check 4: both purchase intent variables must have the same length
   if (length(pi_cheap) != length(pi_expensive)) {
@@ -99,7 +99,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   }
 
   # input check 5a: NMS extension data if no data frame is provided
-  if (all(is.na(data)) & isTRUE(NMS)) {
+  if (all(is.na(data)) & isTRUE(nms)) {
 
     # purchase intent data must have same length as PSM data
     if (length(cheap) != length(pi_cheap)) {
@@ -115,8 +115,8 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     psmdata$pi_expensive <- pi_expensive
   }
 
-  # input check 5b: NMS extension data if data frame is provided - check for matching variable names
-  if (!all(is.na(data)) & isTRUE(NMS)) {
+  # input check 5b: nms extension data if data frame is provided - check for matching variable names
+  if (!all(is.na(data)) & isTRUE(nms)) {
     col_pi_cheap <- match(pi_cheap, colnames(data))
     col_pi_expensive <- match(pi_expensive, colnames(data))
 
@@ -132,7 +132,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   stopifnot(length(pi_scale) == length(pi_calibrated))
 
   # input check 7: purchase intent data must only contain values from the pre-defined scale
-  if (isTRUE(NMS)) {
+  if (isTRUE(nms)) {
     # check that purchase intent data and scale have the same class (special handling for integer vs. numeric vs. double)
     if (!identical(x = class(psmdata$pi_cheap), y = class(pi_scale)) &
       !(is.numeric(psmdata$pi_cheap) & is.numeric(pi_scale))) {
@@ -206,11 +206,11 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     stop("All respondents have intransitive preference structures (i.e. different from too cheap < cheap < expensive < too expensive).")
   }
 
-  if (isTRUE(validate) & !isTRUE(NMS)) {
+  if (isTRUE(validate) & !isTRUE(nms)) {
     psmdata <- subset(psmdata, psmdata$valid, select = c("toocheap", "cheap", "expensive", "tooexpensive"))
   }
 
-  if (isTRUE(validate) & isTRUE(NMS)) {
+  if (isTRUE(validate) & isTRUE(nms)) {
     psmdata <- subset(psmdata, psmdata$valid, select = c("toocheap", "cheap", "expensive", "tooexpensive", "pi_cheap", "pi_expensive"))
   }
 
@@ -337,7 +337,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   # 6) Newton/Miller/Smith extension
   #-----
 
-  # big if clause: run this whole section only if there is actually purchase intent data (which is required for the NMS extension)
+  # big if clause: run this whole section only if there is actually purchase intent data (which is required for the nms extension)
   if (!all(is.na(pi_cheap)) & !all(is.na(pi_expensive))) {
     # assign each respondent the calibrated probability of purchase
     psmdata$pi_cheap_cal <- NA
@@ -408,11 +408,11 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     idp = idp,
     opp = opp,
     weighted = FALSE,
-    NMS = NMS
+    nms = nms
   )
 
-  # if NMS analysis was run: amend additional NMS outputs
-  if (isTRUE(NMS)) {
+  # if nms analysis was run: amend additional nms outputs
+  if (isTRUE(nms)) {
     output_psm$data_nms <- data_nms
     output_psm$pi_scale <- data.frame(pi_scale, pi_calibrated)
     output_psm$price_optimal_trial <- price_optimal_trial

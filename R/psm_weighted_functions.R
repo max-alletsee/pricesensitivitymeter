@@ -79,10 +79,10 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   # 2) Input Check: Newton Miller Smith extension
   #---
 
-  NMS <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
+  nms <- !all(is.na(pi_cheap)) & !all(is.na(pi_expensive))
 
   # NMS - check for matching variable names
-  if (isTRUE(NMS)) {
+  if (isTRUE(nms)) {
     col_pi_cheap <- match(pi_cheap, colnames(design$variables))
     col_pi_expensive <- match(pi_expensive, colnames(design$variables))
 
@@ -94,11 +94,11 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     psm_data_w$variables$pi_expensive <- design$variables[, col_pi_expensive]
   }
 
-  # NMS - for each value on the purchase intent scale, there must be a corresponding calibration value
+  # nms - for each value on the purchase intent scale, there must be a corresponding calibration value
   stopifnot(length(pi_scale) == length(pi_calibrated))
 
-  # NMS - purchase intent data must only contain values from the pre-defined scale
-  if (isTRUE(NMS)) {
+  # nms - purchase intent data must only contain values from the pre-defined scale
+  if (isTRUE(nms)) {
     # check that purchase intent data and scale have the same class (special handling for integer vs. numeric vs. double)
     if (!identical(x = class(psm_data_w$variables$pi_cheap), y = class(pi_scale)) & # for pi_cheap
       !(is.numeric(psm_data_w$variables$pi_cheap) & is.numeric(pi_scale)) & # for pi_cheap
@@ -116,12 +116,12 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
       stop("pi_expensive contains values which are not defined in the pi_scale variable")
     }
 
-    # NMS -  calibration values must be numeric
+    # nms -  calibration values must be numeric
     if (any(!is.numeric(pi_calibrated))) {
       stop("All calibrated purchase intent values must be numeric")
     }
 
-    # NMS -  calibration values must be between 0 and 1 - only warning if this is not the case...
+    # nms -  calibration values must be between 0 and 1 - only warning if this is not the case...
 
     if (any(is.nan(pi_calibrated))) {
       stop("Some of the purchase intent calibration values are not a number (NaN)")
@@ -314,7 +314,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   #-----
 
 
-  if (isTRUE(NMS)) {
+  if (isTRUE(nms)) {
     # assign each respondent the calibrated probability of purchase
     psm_data_w$variables$pi_cheap_cal <- NA
     psm_data_w$variables$pi_expensive_cal <- NA
@@ -389,11 +389,11 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     opp = opp,
     weighted = TRUE,
     survey_design = psm_data_w,
-    NMS = NMS
+    nms = nms
   )
 
-  # if NMS analysis was run: amend additional NMS outputs
-  if (isTRUE(NMS)) {
+  # if nms analysis was run: amend additional nms outputs
+  if (isTRUE(nms)) {
     output_psm$data_nms <- data_nms
     output_psm$pi_scale <- data.frame(pi_scale, pi_calibrated)
     output_psm$price_optimal_trial <- price_optimal_trial

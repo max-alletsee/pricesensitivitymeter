@@ -117,7 +117,6 @@ test_that("Data Input: intersection_method must be one of the pre-defined values
 
 test_that("Data Input: NMS using vectors", {
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = 1, pi_expensive = factor(2)))
-  # expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_expensive = 2)) # does not throw an error, but simply does not run the NMS analysis
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = 1, pi_expensive = matrix(2)))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = TRUE, pi_expensive = 2))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, pi_cheap = 1, pi_expensive = rep.int(2, 2)))

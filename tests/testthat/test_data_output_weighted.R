@@ -17,7 +17,7 @@ input_data <- data.frame(tch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits 
                          gender = sample(x = c("male", "female"),
                                          size = 250,
                                          replace = TRUE,
-                                         prob = c(2/3, 1/3)))
+                                         prob = c(2 / 3, 1 / 3)))
 
 
 input_data$tch[input_data$gender == "female"] <- input_data$tch[input_data$gender == "female"] * 2.5
