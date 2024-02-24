@@ -83,18 +83,19 @@ To run a PSM analysis without weighting, use the function
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre><code>psm_analysis_weighted(
-  toocheap, cheap, expensive, tooexpensive,
-  design,
-  validate = TRUE,
-  interpolate = FALSE,
-  interpolation_steps = 0.01,
-  intersection_method = "min",
-  acceptable_range = "original",
-  pi_cheap = NA, pi_expensive = NA,
-  pi_scale = 5:1,
-  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)),
-  pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">psm_analysis_weighted</span><span class="op">(</span></span>
+<span>  <span class="va">toocheap</span>, <span class="va">cheap</span>, <span class="va">expensive</span>, <span class="va">tooexpensive</span>,</span>
+<span>  <span class="va">design</span>,</span>
+<span>  validate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  interpolate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  interpolation_steps <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  intersection_method <span class="op">=</span> <span class="st">"min"</span>,</span>
+<span>  acceptable_range <span class="op">=</span> <span class="st">"original"</span>,</span>
+<span>  pi_cheap <span class="op">=</span> <span class="cn">NA</span>, pi_expensive <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  pi_scale <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">1</span>,</span>
+<span>  pi_calibrated <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  pi_calibrated_toocheap <span class="op">=</span> <span class="fl">0</span>, pi_calibrated_tooexpensive <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
