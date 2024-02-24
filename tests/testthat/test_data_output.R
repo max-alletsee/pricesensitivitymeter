@@ -41,8 +41,8 @@ psm_result3 <- psm_analysis(toocheap = "tch",
 #----
 
 test_that("Data Output: Length of Output Object", {
-  expect_length(psm_result1, 11)
-  expect_length(psm_result2, 15)
+  expect_length(psm_result1, 12)
+  expect_length(psm_result2, 16)
 })
 
 test_that("Data Output: Class of Output Object", {

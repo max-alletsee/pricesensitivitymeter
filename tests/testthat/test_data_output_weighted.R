@@ -87,8 +87,8 @@ psm_results_w3 <- psm_analysis_weighted(toocheap = "tch",
 #----
 
 test_that("Data Output: Length of Output Object", {
-  expect_length(psm_results_w1, 12)
-  expect_length(psm_results_w2, 12)
+  expect_length(psm_results_w1, 13)
+  expect_length(psm_results_w2, 13)
 })
 
 test_that("Data Output: Class of Output Object", {
