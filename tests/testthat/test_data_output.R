@@ -112,9 +112,9 @@ test_that("Data Output: Rest of Output Object Structure", {
   expect_false(is.nan(psm_result1$opp))
   expect_length(psm_result1$opp, 1)
 
-  expect_true(is.logical(psm_result1$NMS))
-  expect_false(is.nan(psm_result1$NMS))
-  expect_length(psm_result1$NMS, 1)
+  expect_true(is.logical(psm_result1$nms))
+  expect_false(is.nan(psm_result1$nms))
+  expect_length(psm_result1$nms, 1)
 
   # PSM with NMS
   expect_true(is.logical(psm_result2$validated))
@@ -144,9 +144,9 @@ test_that("Data Output: Rest of Output Object Structure", {
   expect_false(is.nan(psm_result2$opp))
   expect_length(psm_result2$opp, 1)
 
-  expect_true(is.logical(psm_result2$NMS))
-  expect_false(is.nan(psm_result2$NMS))
-  expect_length(psm_result2$NMS, 1)
+  expect_true(is.logical(psm_result2$nms))
+  expect_false(is.nan(psm_result2$nms))
+  expect_length(psm_result2$nms, 1)
 
   expect_true(is.numeric(psm_result2$pi_scale$pi_calibrated))
   expect_false(unique(is.nan(psm_result2$pi_scale$pi_calibrated)))
@@ -165,8 +165,8 @@ test_that("Data Output: Rest of Output Object Structure", {
 #----
 
 test_that("Data Output: NMS correctly (not) included in output", {
-  expect_false(psm_result1$NMS)
-  expect_true(psm_result2$NMS)
+  expect_false(psm_result1$nms)
+  expect_true(psm_result2$nms)
 })
 
 test_that("Data Output: All prices included in the empirical cumulative density function data", {

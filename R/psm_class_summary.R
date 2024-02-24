@@ -35,7 +35,7 @@ summary.psm <- function(object, ...) {
   cat("Indifference Price Point:", object$idp, "\n")
   cat("Optimal Price Point:", object$opp, "\n\n")
 
-  if (object$NMS == TRUE) {
+  if (object$nms == TRUE) {
     cat("Newton Miller Smith Extension\n")
     cat("Price with Optimal Trial Rate:", object$price_optimal_trial, "\n")
     cat("Price with Optimal Revenue:", object$price_optimal_revenue, "\n\n")
