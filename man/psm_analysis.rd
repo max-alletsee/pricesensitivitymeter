@@ -25,7 +25,8 @@ psm_analysis(
   acceptable_range = "original",
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
-  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
+  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)),
+  pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0
 }
 
 \arguments{
@@ -117,6 +118,12 @@ psm_analysis(
   purchase intent scale, 50\% for the second best value,
   30\% for the third best value (middle of the scale), 10\%
   for the fourth best value and 0\% for the worst value.}
+  \item{pi_calibrated_toocheap, pi_calibrated_tooexpensive}{
+  Only required for the Newton Miller Smith extension. Calibrated
+  purchase probabilities for the "too cheap" and the "too
+  expensive" price, respectively. Must be a value between 0 and
+  1; by default set to zero following the logic in van
+  Westendorp's paper.}
 }
 
 

@@ -8,7 +8,8 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
                          intersection_method = "min",
                          acceptable_range = "original",
                          pi_cheap = NA, pi_expensive = NA,
-                         pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
+                         pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0),
+                         pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0) {
 
   #---
   # 1) Input Check: Price Sensitivity Meter data
@@ -173,11 +174,11 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     }
 
     if (any(pi_calibrated < 0)) {
-      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the reach/revenue values is not recommended.")
     }
 
     if (any(pi_calibrated > 1)) {
-      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the reach/revenue values is not recommended.")
     }
   }
 
@@ -388,10 +389,10 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
     # 2) weighted purchase probability for "cheap" and "expensive"
 
     pos_toocheap <- sapply(as.character(psmdata$toocheap), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_toocheap))] <- 0
+    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_toocheap))] <- pi_calibrated_toocheap
 
     pos_tooexpensive <- sapply(as.character(psmdata$tooexpensive), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_tooexpensive))] <- 0
+    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_tooexpensive))] <- pi_calibrated_tooexpensive
 
     pos_cheap <- sapply(as.character(psmdata$cheap), FUN = function(x) which(colnames(nms_matrix) == x))
     nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_cheap))] <- psmdata$pi_cheap_cal
@@ -403,17 +404,17 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
 
     nms_matrix <- interpolate_nms_matrix(nms_matrix)
 
-    # analysis of trial and revenue (mean trial for each price)
+    # analysis of reach and revenue (mean reach for each price)
 
     data_nms <- data.frame(
       price = nms_prices,
-      trial = apply(nms_matrix, 2, mean),
+      reach = apply(nms_matrix, 2, mean),
       row.names = seq_len(length(nms_prices))
     )
 
-    data_nms$revenue <- data_nms$price * data_nms$trial
+    data_nms$revenue <- data_nms$price * data_nms$reach
 
-    price_optimal_trial <- data_nms$price[which.max(data_nms$trial)]
+    price_optimal_reach <- data_nms$price[which.max(data_nms$reach)]
     price_optimal_revenue <- data_nms$price[which.max(data_nms$revenue)]
   }
 
@@ -440,7 +441,7 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   if (isTRUE(nms)) {
     output_psm$data_nms <- data_nms
     output_psm$pi_scale <- data.frame(pi_scale, pi_calibrated)
-    output_psm$price_optimal_trial <- price_optimal_trial
+    output_psm$price_optimal_reach <- price_optimal_reach
     output_psm$price_optimal_revenue <- price_optimal_revenue
   }
 

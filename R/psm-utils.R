@@ -64,7 +64,6 @@ for (i in seq_len(nrow(nms_matrix))) {
   nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- interpolate_prob
 }
 
-
   # purchase probabilities outside of the individual's personal price range must be set to zero
   nms_matrix[is.na(nms_matrix)] <- 0
 

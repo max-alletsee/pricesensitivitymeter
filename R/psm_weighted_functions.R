@@ -9,7 +9,8 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
                                   intersection_method = "min",
                                   acceptable_range = "original",
                                   pi_cheap = NA, pi_expensive = NA,
-                                  pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
+                                  pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0),
+                                  pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0) {
 
   #---
   # 1) Input Check: Price Sensitivity Meter data
@@ -363,10 +364,10 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     # 2) weighted purchase probability for "cheap" and "expensive"
 
     pos_toocheap <- sapply(as.character(round(psm_data_w$variables$toocheap, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_toocheap))] <- 0
+    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_toocheap))] <- pi_calibrated_toocheap
 
     pos_tooexpensive <- sapply(as.character(round(psm_data_w$variables$tooexpensive, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
-    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_tooexpensive))] <- 0
+    nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_tooexpensive))] <- pi_calibrated_tooexpensive
 
     pos_cheap <- sapply(as.character(round(psm_data_w$variables$cheap, digits = 2)), FUN = function(x) which(colnames(nms_matrix) == x))
     nms_matrix[cbind(seq_len(nrow(nms_matrix)), as.numeric(pos_cheap))] <- psm_data_w$variables$pi_cheap_cal
