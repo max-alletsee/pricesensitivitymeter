@@ -29,8 +29,9 @@ psm_analysis_weighted(
   acceptable_range = "original",
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
-  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)),
+  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0),
   pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0
+  )
 }
 
 \arguments{
