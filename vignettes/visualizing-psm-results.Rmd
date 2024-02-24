@@ -74,19 +74,21 @@ The options how to adjust this plot, e.g. to show only selected lines or to adju
 
 The built-in `psm_plot()` function offers an easy way for visualizing the results. The remainder of this vignette will show how to built a custom plot from scratch, ignoring the `psm_plot()` and just working with the elements that are stored in the object that is returned by `psm_analysis()`.
 
-The `output_psm` object from the example data at the beginning of this vignette contains the results which will be used for plotting. In particular, the slot `data_vanwestendorp` includes a dataframe with all prices that are included in the input data and the corresponding values of the cumulative distribution functions for the different price levels. Let's have a quick look at one row in this dataset (row 260):
+The `output_psm` object from the example data at the beginning of this vignette contains the results which will be used for plotting. In particular, the slot `data_vanwestendorp` includes a dataframe with all prices that are included in the input data and the corresponding values of the cumulative distribution functions for the different price levels. Let's have a quick look at one row in this dataset (right in the middle):
 
 ```{r, echo=TRUE}
-output_psm$data_vanwestendorp[260, ]
-```
-This means the following: For the price of `r output_psm$data_vanwestendorp[260, "price"]`, ...
+middle_row <- round(nrow(output_psm$data_vanwestendorp) / 2, 0)
 
-* `r round(output_psm$data_vanwestendorp[260, "ecdf_toocheap"], digits = 2) * 100`% of respondents think that this price is not too cheap (*not* too cheap because the function for the "too cheap" answers is reversed in every Price Sensitivity Meter analysis as explained in the original article)
-* `r round(output_psm$data_vanwestendorp[260, "ecdf_cheap"], digits = 2) * 100`% of respondents think that this price is cheap
-* `r round(output_psm$data_vanwestendorp[260, "ecdf_expensive"], digits = 2) * 100`% of respondents think that this price is expensive
-* `r round(output_psm$data_vanwestendorp[260, "ecdf_tooexpensive"], digits = 2) * 100`% of respondents think that this price (or more) is too expensive
-* `r round(output_psm$data_vanwestendorp[260, "ecdf_not_cheap"], digits = 2) * 100`% of respondents think that this price is *not* cheap - this is the inverse of `edfc_cheap` (so both values always add up to 100%)
-* `r round(output_psm$data_vanwestendorp[260, "ecdf_not_expensive"], digits = 2) * 100`% of respondents think that this price is *not* expensive - this is the inverse of `edfc_expensive` (so both values always add up to 100%)
+output_psm$data_vanwestendorp[middle_row, ]
+```
+This means the following: For the price of `r output_psm$data_vanwestendorp[middle_row, "price"]`, ...
+
+* `r round(output_psm$data_vanwestendorp[middle_row, "ecdf_toocheap"], digits = 2) * 100`% of respondents think that this price is not too cheap (*not* too cheap because the function for the "too cheap" answers is reversed in every Price Sensitivity Meter analysis as explained in the original article)
+* `r round(output_psm$data_vanwestendorp[middle_row, "ecdf_cheap"], digits = 2) * 100`% of respondents think that this price is cheap
+* `r round(output_psm$data_vanwestendorp[middle_row, "ecdf_expensive"], digits = 2) * 100`% of respondents think that this price is expensive
+* `r round(output_psm$data_vanwestendorp[middle_row, "ecdf_tooexpensive"], digits = 2) * 100`% of respondents think that this price (or more) is too expensive
+* `r round(output_psm$data_vanwestendorp[middle_row,"ecdf_not_cheap"], digits = 2) * 100`% of respondents think that this price is *not* cheap - this is the inverse of `edfc_cheap` (so both values always add up to 100%)
+* `r round(output_psm$data_vanwestendorp[middle_row, "ecdf_not_expensive"], digits = 2) * 100`% of respondents think that this price is *not* expensive - this is the inverse of `edfc_expensive` (so both values always add up to 100%)
 
 We can now visualize this information for all the different price points.
 
