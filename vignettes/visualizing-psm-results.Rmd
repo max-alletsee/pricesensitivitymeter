@@ -41,7 +41,7 @@ pi_cheap <- sample(x = c(1:5), size = length(cheap),
 pi_expensive <- sample(x = c(1:5), size = length(expensive),
   replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1, 0.1))
 
-data.psm <- data.frame(toocheap, cheap, expensive, tooexpensive,
+data_psm <- data.frame(toocheap, cheap, expensive, tooexpensive,
                        pi_cheap, pi_expensive)
 
 output_psm <- psm_analysis(toocheap = "toocheap",

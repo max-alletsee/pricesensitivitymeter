@@ -1,7 +1,7 @@
 Package: pricesensitivitymeter
 Type: Package
 Title: Van Westendorp Price Sensitivity Meter Analysis
-Version: 1.2.3
+Version: 1.3.0
 Authors@R: person("Max", "Alletsee", email = "max.alletsee@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Max Alletsee <max.alletsee@gmail.com>                  
