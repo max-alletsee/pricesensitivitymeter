@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pricesensitivitymeter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/max-alletsee/pricesensitivitymeter/">
+  <a href="https://github.com/max-alletsee/pricesensitivitymeter/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,330 +81,433 @@
 
       
 
-      </header><script src="using-weighted-data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using Weighted Survey Data</h1>
-                        <h4 class="author">Max Alletsee</h4>
+                        <h4 data-toc-skip class="author">Max
+Alletsee</h4>
             
-            <h4 class="date">2021-10-19</h4>
+            <h4 data-toc-skip class="date">2024-02-24</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/max-alletsee/pricesensitivitymeter/blob/master/vignettes/using-weighted-data.Rmd"><code>vignettes/using-weighted-data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/max-alletsee/pricesensitivitymeter/blob/HEAD/vignettes/using-weighted-data.Rmd" class="external-link"><code>vignettes/using-weighted-data.Rmd</code></a></small>
       <div class="hidden name"><code>using-weighted-data.Rmd</code></div>
 
     </div>
 
     
     
-<p>Like all survey-based analyses, the Price Sensitivity Meter analysis is usually based on data from a sample and not from the full target population. If the analysis should be helpful for making statements about the range of acceptable prices in the target population, it is necessary that the sample is a good representation of this target population. In an ideal world, we have a scenario where each member of the target population has the same likelihood of being included in the sample. In practice, this is often not the case - as participation in surveys is often voluntary and some people might refuse, selection of a surveying technique (for instance online interviewing excludes all members of the population that do not have internet access or use it very rarely) etc. A sample is hardly ever perfect, in particular when it comes to market research where cost and timing constraints come into play.</p>
-<p>Weighting the survey data is one potential solution to dealing with the shortcomings from an imbalanced sample. This imbalance is sometimes a deliberate choice (for instance when using cluster sampling) and sometimes the result of systematic problems of the fieldwork. It is important to note that weighting is often a rather pragmatic solution to a problem, but not necessarily the best solution from a methodological standpoint. It can certainly help, but it is not the miracle cure that finds reliable insights in a crappy sample.</p>
-<p>The <em>pricesensitivitymeter</em> package includes a function that allows to use <em>weighted</em> survey data. This vignette explains the use of this function. For a general overview of the main function for unweighted data, please read the help of th <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function. The function that uses weighted data uses the <em>survey</em> package to calculate the weights; please read its documentation if you need to find out how to specify your sample design. The author of the <em>survey</em> package has also published a very helpful book<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> that offers guidance on weighting in general and the R package in particular.</p>
-<p>This vignette will show a simple workflow with simulated (random) data.</p>
-<div id="using-weighting-to-correct-for-a-biased-sample" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-weighting-to-correct-for-a-biased-sample" class="anchor"></a>Using Weighting to Correct for a Biased Sample</h2>
-<p>The following paragraphs will show the benefits of weighting in case of a biased sample. Let’s consider the following example:</p>
+<p>Like all survey-based analyses, the Price Sensitivity Meter analysis
+is usually based on data from a sample and not from the full target
+population. If the analysis should be helpful for making statements
+about the range of acceptable prices in the target population, it is
+necessary that the sample is a good representation of this target
+population. In an ideal world, we have a scenario where each member of
+the target population has the same likelihood of being included in the
+sample. In practice, this is often not the case - as participation in
+surveys is often voluntary and some people might refuse, selection of a
+surveying technique (for instance online interviewing excludes all
+members of the population that do not have internet access or use it
+very rarely) etc. A sample is hardly ever perfect, in particular when it
+comes to market research where cost and timing constraints come into
+play.</p>
+<p>Weighting the survey data is one potential solution to dealing with
+the shortcomings from an imbalanced sample. This imbalance is sometimes
+a deliberate choice (for instance when using cluster sampling) and
+sometimes the result of systematic problems of the fieldwork. It is
+important to note that weighting is often a rather pragmatic solution to
+a problem, but not necessarily the best solution from a methodological
+standpoint. It can certainly help, but it is not the miracle cure that
+finds reliable insights in a crappy sample.</p>
+<p>The <em>pricesensitivitymeter</em> package includes a function that
+allows to use <em>weighted</em> survey data. This vignette explains the
+use of this function. For a general overview of the main function for
+unweighted data, please read the help of th <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code>
+function. The function that uses weighted data uses the <em>survey</em>
+package to calculate the weights; please read its documentation if you
+need to find out how to specify your sample design. The author of the
+<em>survey</em> package has also published a very helpful book<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> that
+offers guidance on weighting in general and the R package in
+particular.</p>
+<p>This vignette will show a simple workflow with simulated (random)
+data.</p>
+<div class="section level2">
+<h2 id="using-weighting-to-correct-for-a-biased-sample">Using Weighting to Correct for a Biased Sample<a class="anchor" aria-label="anchor" href="#using-weighting-to-correct-for-a-biased-sample"></a>
+</h2>
+<p>The following paragraphs will show the benefits of weighting in case
+of a biased sample. Let’s consider the following example:</p>
 <ol style="list-style-type: decimal">
-<li>We have a sample in which two thirds of the respondents are men and one third of the respondents are women</li>
-<li>We know that we have a gender balance of 50%/50% in our target population (in other words: women are underrepresented in our sample)</li>
-<li>Women are on average willing to pay +50% of the price compared to men</li>
+<li>We have a sample in which two thirds of the respondents are men and
+one third of the respondents are women</li>
+<li>We know that we have a gender balance of 50%/50% in our target
+population (in other words: women are underrepresented in our
+sample)</li>
+<li>Women are on average willing to pay +50% of the price compared to
+men</li>
 </ol>
-<p>This is of course an extreme example because the same variable (gender) is directly linked to <em>both</em> the likelihood to be included in the sample <em>and</em> the price preference.</p>
-<p>The R code below creates this example data set with the gender bias and creates the survey design object with the <em>survey</em> package (assuming simple random sampling and a population of 10k people).</p>
+<p>This is of course an extreme example because the same variable
+(gender) is directly linked to <em>both</em> the likelihood to be
+included in the sample <em>and</em> the price preference.</p>
+<p>The R code below creates this example data set with the gender bias
+and creates the survey design object with the <em>survey</em> package
+(assuming simple random sampling and a population of 10k people).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1976</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-survey.r-forge.r-project.org/survey/">survey</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: grid</span>
-<span class="co">#&gt; Loading required package: Matrix</span>
-<span class="co">#&gt; Loading required package: survival</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'survey'</span>
-<span class="co">#&gt; The following object is masked from 'package:graphics':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     dotchart</span>
-
-<span class="co"># Creating dataset with price acceptance and biased gender variable</span>
-<span class="va">input_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>tch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         ch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">12</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         ex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">13</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         tex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">15</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,
-                                         size <span class="op">=</span> <span class="fl">250</span>,
-                                         replace <span class="op">=</span> <span class="cn">TRUE</span>,
-                                         prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># for women: increasing the price acceptance by +50%</span>
-<span class="va">input_data</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-<span class="va">input_data</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-<span class="va">input_data</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-<span class="va">input_data</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-
-<span class="co"># for survey design object: occurence of each gender in the target population</span>
-<span class="co"># it's only one figure in this example because we assume that gender should be perfectly balanced. </span>
-<span class="co"># if this is not balanced in the population, we would need a vector with the number of occurences in the population.</span>
-<span class="co"># the sum of the strata size across all strata gives the total population size</span>
-<span class="co"># (here: two strata with 5k each = 10k total population) </span>
-<span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span> <span class="op">&lt;-</span> <span class="fl">5000</span>
-
-<span class="co"># creating the survey design object for post-stratification based on gender</span>
-<span class="co"># we assume that the selection of respondents within each gender is biased and...</span>
-<span class="co"># only the gender balance in the sample is problematic</span>
-<span class="va">input_design</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span>
-                          probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster samling probabilities,</span>
-                          strata <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span>
-                          fpc <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span>
-                          data <span class="op">=</span> <span class="va">input_data</span><span class="op">)</span> <span class="co"># data object used as input</span></code></pre></div>
-<p>After those preparations, we can run the weighted Price Sensitivity Meter Analysis using the <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function. Its basic inputs are the names of the variables with the price information (“too cheap”, “cheap”, “expensive” and “too expensive”) and the survey design object that we have just created using the <code><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign()</a></code> function of the <em>survey</em> package. To emphasize the difference to unweighted data, the input for this survey design object is called “design” instead of “data”. Please note that the <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function requires a “design” input and cannot cope with just four vectors that contain the price information.</p>
-<p>The resulting object and the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function use the same template as the function for the unweighted PSM analysis.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1976</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://r-survey.r-forge.r-project.org/survey/" class="external-link">survey</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: grid</span></span>
+<span><span class="co">#&gt; Loading required package: Matrix</span></span>
+<span><span class="co">#&gt; Loading required package: survival</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'survey'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:graphics':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     dotchart</span></span>
+<span></span>
+<span><span class="co"># Creating dataset with price acceptance and biased gender variable</span></span>
+<span><span class="va">input_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>tch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         ch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">12</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         ex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">13</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         tex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">15</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,</span>
+<span>                                         size <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>                                         replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                                         prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># for women: increasing the price acceptance by +50%</span></span>
+<span><span class="va">input_data</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span><span class="va">input_data</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span><span class="va">input_data</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span><span class="va">input_data</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span></span>
+<span><span class="co"># for survey design object: occurrence of each gender in the target population</span></span>
+<span><span class="co"># it's only one figure in this example because we assume that gender should be perfectly balanced. </span></span>
+<span><span class="co"># if this is not balanced in the population, we would need a vector with the number of occurrences in the population.</span></span>
+<span><span class="co"># the sum of the strata size across all strata gives the total population size</span></span>
+<span><span class="co"># (here: two strata with 5k each = 10k total population) </span></span>
+<span><span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span> <span class="op">&lt;-</span> <span class="fl">5000</span></span>
+<span></span>
+<span><span class="co"># creating the survey design object for post-stratification based on gender</span></span>
+<span><span class="co"># we assume that the selection of respondents within each gender is biased and...</span></span>
+<span><span class="co"># only the gender balance in the sample is problematic</span></span>
+<span><span class="va">input_design</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span>
+<span>                          probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span></span>
+<span>                          strata <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
+<span>                          fpc <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
+<span>                          data <span class="op">=</span> <span class="va">input_data</span><span class="op">)</span> <span class="co"># data object used as input</span></span></code></pre></div>
+<p>After those preparations, we can run the weighted Price Sensitivity
+Meter Analysis using the <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function.
+Its basic inputs are the names of the variables with the price
+information (“too cheap”, “cheap”, “expensive” and “too expensive”) and
+the survey design object that we have just created using the
+<code><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign()</a></code> function of the <em>survey</em> package. To
+emphasize the difference to unweighted data, the input for this survey
+design object is called “design” instead of “data”. Please note that the
+<code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function requires a “design” input
+and cannot cope with just four vectors that contain the price
+information.</p>
+<p>The resulting object and the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function use the
+same template as the function for the unweighted PSM analysis.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span>
-<span class="va">output_weighted_psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                             cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                             expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                             tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                             design <span class="op">=</span> <span class="va">input_design</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">output_weighted_psm</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: 11.91 - 15.63 </span>
-<span class="co">#&gt; Indifference Price Point: 13.69 </span>
-<span class="co">#&gt; Optimal Price Point: 13.63 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span>
-<span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span>
-<span class="co">#&gt; (Removed: n = 22 / 9% of data)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
+<span><span class="va">output_weighted_psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                             cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                             expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                             tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                             design <span class="op">=</span> <span class="va">input_design</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">output_weighted_psm</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 11.91 - 15.63 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 13.69 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: 13.63 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span></span>
+<span><span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span></span>
+<span><span class="co">#&gt; (Removed: n = 22 / 9% of data)</span></span></code></pre></div>
 </div>
-<div id="identical-results-when-weights-are-identical" class="section level2">
-<h2 class="hasAnchor">
-<a href="#identical-results-when-weights-are-identical" class="anchor"></a>Identical Results When Weights Are Identical</h2>
-<p>If the sample is a perfect representation of the target population, the results of the Price Sensitivity Meter analysis will be the same regardless if the <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function or the <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function is used - under the condition that there are no respondents with intransitive price preferences.</p>
-<p>The code below demonstrates first what happens if there are indeed only respondents with transitive preferences. I will discuss the special case of respondents with intransitive price preferences afterwards.</p>
-<p>Note that in this example women <em>still</em> have a higher price acceptance than men. The main difference to the example above is the fact that the gender balance in the sample is a perfect representation of the target population (as the data is simulated, I model the target population after the sample - which is obviously impossible in real life). It is important to keep this distinction in mind: Weighting <em>can</em> correct for differences of the likelihood to be included in the sample, but it <em>cannot</em> be used to understand if different strata/groups have a different price acceptance. In this example below, the price acceptance differs quite a lot across genders, but we would need sub-group analyses to understand this.</p>
+<div class="section level2">
+<h2 id="identical-results-when-weights-are-identical">Identical Results When Weights Are Identical<a class="anchor" aria-label="anchor" href="#identical-results-when-weights-are-identical"></a>
+</h2>
+<p>If the sample is a perfect representation of the target population,
+the results of the Price Sensitivity Meter analysis will be the same
+regardless if the <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function or the
+<code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function is used - under the
+condition that there are no respondents with intransitive price
+preferences.</p>
+<p>The code below demonstrates first what happens if there are indeed
+only respondents with transitive preferences. I will discuss the special
+case of respondents with intransitive price preferences afterwards.</p>
+<p>Note that in this example women <em>still</em> have a higher price
+acceptance than men. The main difference to the example above is the
+fact that the gender balance in the sample is a perfect representation
+of the target population (as the data is simulated, I model the target
+population after the sample - which is obviously impossible in real
+life). It is important to keep this distinction in mind: Weighting
+<em>can</em> correct for differences of the likelihood to be included in
+the sample, but it <em>cannot</em> be used to understand if different
+strata/groups have a different price acceptance. In this example below,
+the price acceptance differs quite a lot across genders, but we would
+need sub-group analyses to understand this.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-survey.r-forge.r-project.org/survey/">survey</a></span><span class="op">)</span>
-
-<span class="co"># Creating dataset with price acceptance and unbiased gender variable</span>
-<span class="va">input_data_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>tch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">4</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         ch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         ex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">12</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         tex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">16</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                         gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,
-                                         size <span class="op">=</span> <span class="fl">250</span>,
-                                         replace <span class="op">=</span> <span class="cn">TRUE</span>,
-                                         prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># for women: increasing the price acceptance by +50%</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span>
-
-<span class="co"># now let's create a sample design object (using the survey package)</span>
-<span class="co"># ... assuming that gender is balanced equally in the population of 10000</span>
-
-<span class="co"># for survey design object: occurence of each gender in the target population</span>
-<span class="co"># would usually be information from sampling frame, differs here only for demonstration purposes</span>
-<span class="co"># here: scaling up based on actual sample information (hypothetical population of 250 * 4 = 10k)</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">)</span> <span class="op">*</span> <span class="fl">40</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span> <span class="op">*</span> <span class="fl">40</span>
-
-<span class="co"># creating the survey design object for post-stratification based on gender</span>
-<span class="va">input_design_2</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span>
-                                  probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span>
-                                  strata <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span>
-                                  fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span>
-                                  data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span>
-
-<span class="co"># quick check: there is only one weight for all our strata</span>
-<span class="co"># if we would have different weights per gender, we would see two unique values here</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/weights.html">weights</a></span><span class="op">(</span><span class="va">input_design_2</span>, type <span class="op">=</span> <span class="st">"analysis"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 40</span>
-
-<span class="co"># Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data </span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span>
-
-<span class="va">check_weighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                          tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                          design <span class="op">=</span> <span class="va">input_design_2</span><span class="op">)</span>
-
-<span class="va">check_unweighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                   cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                   expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                   tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                   data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span>
-
-<span class="co"># results should be identical</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">check_weighted_1</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: 7.17 - 16.82 </span>
-<span class="co">#&gt; Indifference Price Point: 12.06 </span>
-<span class="co">#&gt; Optimal Price Point: 8 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 250 cases with individual price preferences were analyzed (weighted data).</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">check_unweighted_1</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: 7.17 - 16.82 </span>
-<span class="co">#&gt; Indifference Price Point: 12.06 </span>
-<span class="co">#&gt; Optimal Price Point: 7.995 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 250 cases with individual price preferences were analyzed (unweighted data).</span></code></pre></div>
-<p>As this example has shown, the results are identical when the weights are identical (meaning that our sample is a perfect representation of the target population) and the information on price acceptance is transitive for all respondents. Let’s now consider an example where we have intransitive price information for some respondents. For a few selected men in the sample, I manipulate the values so that the “cheap” price is larger than the “expensive” price.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://r-survey.r-forge.r-project.org/survey/" class="external-link">survey</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Creating dataset with price acceptance and unbiased gender variable</span></span>
+<span><span class="va">input_data_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>tch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">4</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         ch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         ex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">12</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         tex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">16</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,</span>
+<span>                                         size <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>                                         replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                                         prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># for women: increasing the price acceptance by +50%</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">ex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">1.5</span></span>
+<span></span>
+<span><span class="co"># now let's create a sample design object (using the survey package)</span></span>
+<span><span class="co"># ... assuming that gender is balanced equally in the population of 10000</span></span>
+<span></span>
+<span><span class="co"># for survey design object: occurence of each gender in the target population</span></span>
+<span><span class="co"># would usually be information from sampling frame, differs here only for demonstration purposes</span></span>
+<span><span class="co"># here: scaling up based on actual sample information (hypothetical population of 250 * 4 = 10k)</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"female"</span><span class="op">)</span> <span class="op">*</span> <span class="fl">40</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span><span class="op">[</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span> <span class="op">*</span> <span class="fl">40</span></span>
+<span></span>
+<span><span class="co"># creating the survey design object for post-stratification based on gender</span></span>
+<span><span class="va">input_design_2</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span>
+<span>                                  probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span></span>
+<span>                                  strata <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
+<span>                                  fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
+<span>                                  data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
+<span></span>
+<span><span class="co"># quick check: there is only one weight for all our strata</span></span>
+<span><span class="co"># if we would have different weights per gender, we would see two unique values here</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/weights.html" class="external-link">weights</a></span><span class="op">(</span><span class="va">input_design_2</span>, type <span class="op">=</span> <span class="st">"analysis"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 40</span></span>
+<span></span>
+<span><span class="co"># Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">check_weighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                          tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                          design <span class="op">=</span> <span class="va">input_design_2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">check_unweighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                   cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                   expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                   tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                   data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># results should be identical</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">check_weighted_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 7.17 - 16.82 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.06 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: 8 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 250 cases with individual price preferences were analyzed (weighted data).</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">check_unweighted_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 7.17 - 16.82 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.06 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: 7.995 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 250 cases with individual price preferences were analyzed (unweighted data).</span></span></code></pre></div>
+<p>As this example has shown, the results are identical when the weights
+are identical (meaning that our sample is a perfect representation of
+the target population) and the information on price acceptance is
+transitive for all respondents. Let’s now consider an example where we
+have intransitive price information for some respondents. For a few
+selected men in the sample, I manipulate the values so that the “cheap”
+price is larger than the “expensive” price.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span>
-
-<span class="va">manipulated_men</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="va">input_data_3</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">manipulated_men</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">manipulated_men</span><span class="op">]</span></code></pre></div>
-<p>The survey design object is now re-created and used as an input for the weighted Price Sensitivity Meter analysis. When we compare the results again to an unweighted analysis, we see a slight difference. This is the case because the weighting occurs <strong>after</strong> removing cases with intransitive preferences (at the same time when the weighted empirical cumulative density functions are calculated). At this stage in our example, we still have all women from our original sample, but have removed a few men with intransitive preferences. Therefore, all remaining men have a slightly higher weight in our sample. This affects the results of our analysis.</p>
+<code class="sourceCode R"><span><span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span></span>
+<span></span>
+<span><span class="va">manipulated_men</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">input_data_3</span><span class="op">$</span><span class="va">ch</span><span class="op">[</span><span class="va">manipulated_men</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">tex</span><span class="op">[</span><span class="va">manipulated_men</span><span class="op">]</span></span></code></pre></div>
+<p>The survey design object is now re-created and used as an input for
+the weighted Price Sensitivity Meter analysis. When we compare the
+results again to an unweighted analysis, we see a slight difference.
+This is the case because the weighting occurs <strong>after</strong>
+removing cases with intransitive preferences (at the same time when the
+weighted empirical cumulative density functions are calculated). At this
+stage in our example, we still have all women from our original sample,
+but have removed a few men with intransitive preferences. Therefore, all
+remaining men have a slightly higher weight in our sample. This affects
+the results of our analysis.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># creating the survey design object for post-stratification based on gender</span>
-<span class="va">input_design_3</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span>
-                                  probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span>
-                                  strata <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span>
-                                  fpc <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span>
-                                  data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> <span class="co"># data object used as input</span>
-
-<span class="co"># Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data </span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span>
-
-<span class="va">check_weighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                          tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                          design <span class="op">=</span> <span class="va">input_design_3</span><span class="op">)</span>
-
-<span class="va">check_unweighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                   cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                   expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                   tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                   data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span>
-
-<span class="co"># results should be different now</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">check_weighted_2</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: 7.22 - 17.09 </span>
-<span class="co">#&gt; Indifference Price Point: 12.08 </span>
-<span class="co">#&gt; Optimal Price Point: 8 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 240 cases with individual price preferences were analyzed (weighted data).</span>
-<span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span>
-<span class="co">#&gt; (Removed: n = 10 / 4% of data)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">check_unweighted_2</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: 7.22 - 17.09 </span>
-<span class="co">#&gt; Indifference Price Point: 12.075 </span>
-<span class="co">#&gt; Optimal Price Point: 7.995 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 240 cases with individual price preferences were analyzed (unweighted data).</span>
-<span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span>
-<span class="co">#&gt; (Removed: n = 10 / 4% of data)</span></code></pre></div>
-<p>The example above has been carefully chosen to show this effect. In real life examples, it only occurs when two conditions are fulfilled at the same time:</p>
+<code class="sourceCode R"><span><span class="co"># creating the survey design object for post-stratification based on gender</span></span>
+<span><span class="va">input_design_3</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span>
+<span>                                  probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span></span>
+<span>                                  strata <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
+<span>                                  fpc <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
+<span>                                  data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
+<span></span>
+<span><span class="co"># Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">check_weighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                          tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                          design <span class="op">=</span> <span class="va">input_design_3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">check_unweighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                   cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                   expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                   tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                   data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># results should be different now</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">check_weighted_2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 7.22 - 17.09 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.08 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: 8 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 240 cases with individual price preferences were analyzed (weighted data).</span></span>
+<span><span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span></span>
+<span><span class="co">#&gt; (Removed: n = 10 / 4% of data)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">check_unweighted_2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 7.22 - 17.09 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.075 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: 7.995 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 240 cases with individual price preferences were analyzed (unweighted data).</span></span>
+<span><span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span></span>
+<span><span class="co">#&gt; (Removed: n = 10 / 4% of data)</span></span></code></pre></div>
+<p>The example above has been carefully chosen to show this effect. In
+real life examples, it only occurs when two conditions are fulfilled at
+the same time:</p>
 <ol style="list-style-type: decimal">
-<li>The respondents with intransitive preferences are not distributed proportionally across all strata (in our example: all women have transitive preferences, only men have intransitive preferences)</li>
-<li>The strata which are over-/underrepresented in terms of respondents with intransitive preferences also differ in their price acceptance from the other strata</li>
+<li>The respondents with intransitive preferences are not distributed
+proportionally across all strata (in our example: all women have
+transitive preferences, only men have intransitive preferences)</li>
+<li>The strata which are over-/underrepresented in terms of respondents
+with intransitive preferences also differ in their price acceptance from
+the other strata</li>
 </ol>
-<p>If any of those conditions is not fulfilled, any difference in the price estimates due to removing cases with intransitive preferences will be very small and unsystematic.</p>
+<p>If any of those conditions is not fulfilled, any difference in the
+price estimates due to removing cases with intransitive preferences will
+be very small and unsystematic.</p>
 </div>
-<div id="missing-too-cheap-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#missing-too-cheap-data" class="anchor"></a>Missing “too cheap” Data</h2>
-<p>It is also possible to run a weighted Price Sensitivity Meter analysis if there is no “too cheap” price (like for certain services like a drawing account, access to a sports match, …). The <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function handles this in the same way as the <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function: The “toocheap” variable should be set to NA for all cases. Having no “too cheap” price means that the lower bound of the price range and the optimal price point cannot be estimated, whereas the upper end of the price range and the indifference price point are estimated.</p>
+<div class="section level2">
+<h2 id="missing-too-cheap-data">Missing “too cheap” Data<a class="anchor" aria-label="anchor" href="#missing-too-cheap-data"></a>
+</h2>
+<p>It is also possible to run a weighted Price Sensitivity Meter
+analysis if there is no “too cheap” price (like for certain services
+like a drawing account, access to a sports match, …). The
+<code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function handles this in the same
+way as the <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function: The “toocheap” variable
+should be set to NA for all cases. Having no “too cheap” price means
+that the lower bound of the price range and the optimal price point
+cannot be estimated, whereas the upper end of the price range and the
+indifference price point are estimated.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># setting up data with NAs in "too cheap" variable</span>
-<span class="va">input_data_2</span> <span class="op">&lt;-</span> <span class="va">input_data</span>
-<span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
-
-<span class="co"># create new sample design</span>
-<span class="va">input_design_2</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span>
-                                    probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster samling probabilities,</span>
-                                    strata <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span>
-                                    fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span>
-                                    data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span>
-
-<span class="va">test_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                design <span class="op">=</span> <span class="va">input_design_2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">test_2</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: NA - 15.63 </span>
-<span class="co">#&gt; Indifference Price Point: 13.69 </span>
-<span class="co">#&gt; Optimal Price Point: NA </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span>
-<span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span>
-<span class="co">#&gt; (Removed: n = 22 / 9% of data)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># setting up data with NAs in "too cheap" variable</span></span>
+<span><span class="va">input_data_2</span> <span class="op">&lt;-</span> <span class="va">input_data</span></span>
+<span><span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span><span class="co"># create new sample design</span></span>
+<span><span class="va">input_design_2</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span>
+<span>                                    probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster samling probabilities,</span></span>
+<span>                                    strata <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
+<span>                                    fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
+<span>                                    data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">test_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                design <span class="op">=</span> <span class="va">input_design_2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test_2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: NA - 15.63 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 13.69 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: NA </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span></span>
+<span><span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span></span>
+<span><span class="co">#&gt; (Removed: n = 22 / 9% of data)</span></span></code></pre></div>
 </div>
-<div id="using-weighting-in-the-newton-miller-smith-extension" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-weighting-in-the-newton-miller-smith-extension" class="anchor"></a>Using Weighting in the Newton Miller Smith Extension</h2>
-<p>The <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function also allows to include an estimate for the price with optimal trial or optimal revenue via the Newton Miller Smith extension. This option can be used in the same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function.</p>
+<div class="section level2">
+<h2 id="using-weighting-in-the-newton-miller-smith-extension">Using Weighting in the Newton Miller Smith Extension<a class="anchor" aria-label="anchor" href="#using-weighting-in-the-newton-miller-smith-extension"></a>
+</h2>
+<p>The <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function also allows to
+include an estimate for the price with optimal trial or optimal revenue
+via the Newton Miller Smith extension. This option can be used in the
+same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># setting up dataset with purchase intent information</span>
-<span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data</span>
-
-<span class="va">input_data_3</span><span class="op">$</span><span class="va">pi_ch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">input_data_3</span><span class="op">)</span>,
-                             replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">input_data_3</span><span class="op">$</span><span class="va">pi_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">input_data_3</span><span class="op">)</span>,
-                             replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="co"># re-creating the survey design object</span>
-<span class="va">input_design_3</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>,
-                                    probs <span class="op">=</span> <span class="cn">NULL</span>,
-                                    strata <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender</span>,
-                                    fpc <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender_pop</span>,
-                                    data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> 
-
-<span class="co"># running the weighted Price Sensitivity Meter analysis</span>
-<span class="va">test_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,
-                                cheap <span class="op">=</span> <span class="st">"ch"</span>,
-                                expensive <span class="op">=</span> <span class="st">"ex"</span>,
-                                tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,
-                                design <span class="op">=</span> <span class="va">input_design_3</span>,
-                                pi_cheap <span class="op">=</span> <span class="st">"pi_ch"</span>,
-                                pi_expensive <span class="op">=</span> <span class="st">"pi_ex"</span>,
-                                pi_scale <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">1</span>,
-                                pi_calibrated <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">test_3</span><span class="op">)</span>
-<span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Accepted Price Range: 11.91 - 15.63 </span>
-<span class="co">#&gt; Indifference Price Point: 13.69 </span>
-<span class="co">#&gt; Optimal Price Point: 13.63 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Newton Miller Smith Extension</span>
-<span class="co">#&gt; Price with Optimal Trial Rate: 12.16 </span>
-<span class="co">#&gt; Price with Optimal Revenue: 17.7 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span>
-<span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span>
-<span class="co">#&gt; (Removed: n = 22 / 9% of data)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># setting up dataset with purchase intent information</span></span>
+<span><span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data</span></span>
+<span></span>
+<span><span class="va">input_data_3</span><span class="op">$</span><span class="va">pi_ch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">input_data_3</span><span class="op">)</span>,</span>
+<span>                             replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">input_data_3</span><span class="op">$</span><span class="va">pi_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">input_data_3</span><span class="op">)</span>,</span>
+<span>                             replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># re-creating the survey design object</span></span>
+<span><span class="va">input_design_3</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span>                                    probs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                                    strata <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender</span>,</span>
+<span>                                    fpc <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender_pop</span>,</span>
+<span>                                    data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># running the weighted Price Sensitivity Meter analysis</span></span>
+<span><span class="va">test_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span>                                cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
+<span>                                expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
+<span>                                tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
+<span>                                design <span class="op">=</span> <span class="va">input_design_3</span>,</span>
+<span>                                pi_cheap <span class="op">=</span> <span class="st">"pi_ch"</span>,</span>
+<span>                                pi_expensive <span class="op">=</span> <span class="st">"pi_ex"</span>,</span>
+<span>                                pi_scale <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">1</span>,</span>
+<span>                                pi_calibrated <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test_3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 11.91 - 15.63 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 13.69 </span></span>
+<span><span class="co">#&gt; Optimal Price Point: 13.63 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Newton Miller Smith Extension</span></span>
+<span><span class="co">#&gt; Price with Optimal Trial Rate: </span></span>
+<span><span class="co">#&gt; Price with Optimal Revenue: 17.7 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span></span>
+<span><span class="co">#&gt; Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.</span></span>
+<span><span class="co">#&gt; (Removed: n = 22 / 9% of data)</span></span></code></pre></div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Lumley, T (2010) <em>Complex Surveys: A Guide to Analysis Using R</em><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Lumley, T (2010) <em>Complex Surveys: A Guide to
+Analysis Using R</em><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -424,11 +523,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Max Alletsee.</p>
+  <p></p>
+<p>Developed by Max Alletsee.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -436,6 +537,8 @@
 
   
 
+
+  
 
   </body>
 </html>
