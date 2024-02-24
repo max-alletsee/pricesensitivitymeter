@@ -137,11 +137,11 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
 
 
     if (any(pi_calibrated < 0)) {
-      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      warning("Some of the purchase intent calibration values are smaller than 0. It seems that this is not a probability between 0 and 1. The interpretation of the reach/revenue values is not recommended.")
     }
 
     if (any(pi_calibrated > 1)) {
-      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the trial/revenue values is not recommended.")
+      warning("Some of the purchase intent calibration values are larger than 1. It seems that this is not a probability between 0 and 1. The interpretation of the reach/revenue values is not recommended.")
     }
   }
 
@@ -382,17 +382,17 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     # extract weights from survey design
     nms_weights <- weights(psm_data_w)
 
-    # analysis of trial and revenue (mean trial for each price)
+    # analysis of reach and revenue (mean reach for each price)
     # ... via weighted.mean() from base R
     data_nms <- data.frame(
       price = nms_prices,
-      trial = apply(nms_matrix, 2, stats::weighted.mean, w = nms_weights, na.rm = TRUE),
+      reach = apply(nms_matrix, 2, stats::weighted.mean, w = nms_weights, na.rm = TRUE),
       row.names = seq_len(length(nms_prices))
     )
 
-    data_nms$revenue <- data_nms$price * data_nms$trial
+    data_nms$revenue <- data_nms$price * data_nms$reach
 
-    price_optimal_trial <- data_nms$price[which.max(data_nms$trial)]
+    price_optimal_reach <- data_nms$price[which.max(data_nms$reach)]
     price_optimal_revenue <- data_nms$price[which.max(data_nms$revenue)]
   }
 
@@ -420,7 +420,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   if (isTRUE(nms)) {
     output_psm$data_nms <- data_nms
     output_psm$pi_scale <- data.frame(pi_scale, pi_calibrated)
-    output_psm$price_optimal_trial <- price_optimal_trial
+    output_psm$price_optimal_reach <- price_optimal_reach
     output_psm$price_optimal_revenue <- price_optimal_revenue
   }
 
