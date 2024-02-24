@@ -57,9 +57,9 @@ input_data$ch[input_data$gender == "female"] <- input_data$ch[input_data$gender 
 input_data$ex[input_data$gender == "female"] <- input_data$ex[input_data$gender == "female"] * 1.5
 input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gender == "female"] * 1.5
 
-# for survey design object: occurence of each gender in the target population
+# for survey design object: occurrence of each gender in the target population
 # it's only one figure in this example because we assume that gender should be perfectly balanced. 
-# if this is not balanced in the population, we would need a vector with the number of occurences in the population.
+# if this is not balanced in the population, we would need a vector with the number of occurrences in the population.
 # the sum of the strata size across all strata gives the total population size
 # (here: two strata with 5k each = 10k total population) 
 input_data$gender_pop <- 5000
@@ -68,7 +68,7 @@ input_data$gender_pop <- 5000
 # we assume that the selection of respondents within each gender is biased and...
 # only the gender balance in the sample is problematic
 input_design <- survey::svydesign(ids = ~ 1, # no clusters
-                          probs = NULL, # hence no cluster samling probabilities,
+                          probs = NULL, # hence no cluster sampling probabilities,
                           strata = input_data$gender, # stratified by gender
                           fpc = input_data$gender_pop, # strata size in the population
                           data = input_data) # data object used as input
