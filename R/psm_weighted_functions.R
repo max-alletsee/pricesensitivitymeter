@@ -7,6 +7,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
                                   validate = TRUE,
                                   interpolate = FALSE, interpolation_steps = 0.01,
                                   intersection_method = "min",
+                                  acceptable_range = "original",
                                   pi_cheap = NA, pi_expensive = NA,
                                   pi_scale = 5:1, pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0)) {
 
@@ -42,6 +43,9 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   if (interpolate & (length(interpolation_steps) != 1 | !is.numeric(interpolation_steps))) {
     stop("interpolatation_steps must be numeric value (vector of length 1)")
   }
+
+  # input check 1e: acceptable_range must be one of the pre-defined terms
+  match.arg(acceptable_range, c("original", "narrower"))
 
   # input check 2: design must be provided as an object of class "survey.design" (which is the default export of the svydesign function in the survey package)
   if (!inherits(design, "survey.design")) {
@@ -275,21 +279,40 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
   # 5) Identifying the price points
   #-----
 
-  # price range, lower bound: intersection of "too cheap" and "not cheap"
-  pricerange_lower <- identify_intersection(
-    data = data_ecdf,
-    var1 = "ecdf_not_cheap",
-    var2 = "ecdf_toocheap",
-    method = intersection_method
-  )
+  if (acceptable_range=="original") {
 
-  # price range, upper bound: intersection of "not expensive" and "too expensive"
-  pricerange_upper <- identify_intersection(
-    data = data_ecdf,
-    var1 = "ecdf_tooexpensive",
-    var2 = "ecdf_not_expensive",
-    method = intersection_method
-  )
+    # price range, lower bound: intersection of "too cheap" and "not cheap"
+    pricerange_lower <- identify_intersection(
+      data = data_ecdf,
+      var1 = "ecdf_not_cheap",
+      var2 = "ecdf_toocheap",
+      method = intersection_method
+    )
+
+    # price range, upper bound: intersection of "not expensive" and "too expensive"
+    pricerange_upper <- identify_intersection(
+      data = data_ecdf,
+      var1 = "ecdf_tooexpensive",
+      var2 = "ecdf_not_expensive",
+      method = intersection_method
+    )
+  } else {
+    # price range, lower bound: intersection of "too cheap" and "expensive"
+    pricerange_lower <- identify_intersection(
+      data = data_ecdf,
+      var1 = "ecdf_expensive",
+      var2 = "ecdf_toocheap",
+      method = intersection_method
+    )
+
+    # price range, upper bound: intersection of "cheap" and "too expensive"
+    pricerange_upper <- identify_intersection(
+      data = data_ecdf,
+      var1 = "ecdf_tooexpensive",
+      var2 = "ecdf_cheap",
+      method = intersection_method
+    )
+  }
 
   # indifference price point IDP: intersection of "expensive" and "cheap"
   # interpretation: a) median price paid by consumer or b) price of the product of an important market leader
@@ -387,6 +410,7 @@ psm_analysis_weighted <- function(toocheap, cheap, expensive, tooexpensive, desi
     pricerange_upper = pricerange_upper,
     idp = idp,
     opp = opp,
+    acceptable_range_definition = acceptable_range,
     weighted = TRUE,
     survey_design = psm_data_w,
     nms = nms

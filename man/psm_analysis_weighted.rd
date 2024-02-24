@@ -26,6 +26,7 @@ psm_analysis_weighted(
   interpolate = FALSE,
   interpolation_steps = 0.01,
   intersection_method = "min",
+  acceptable_range = "original",
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
   pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
@@ -62,7 +63,7 @@ psm_analysis_weighted(
   \code{TRUE}: the size of the interpolation steps. Set by
   default to 0.01, which should be appropriate for most goods
   in a price range of 0-50 USD/Euro.}
-    \item{intersection_method}{"min" (default), "max", "mean" or
+  \item{intersection_method}{"min" (default), "max", "mean" or
   "median". defines the method how to determine the price
   points (range, indifference price, optimal price) if there
   are multiple possible intersections of the price curves.
@@ -70,6 +71,27 @@ psm_analysis_weighted(
   highest possible prices, "mean" calculates the mean among
   all intersections and "median" uses the median of all
   possible intersections}
+  \item{acceptable_range}{"original" (default) or "narrower".
+  Defines which intersection is used to calculate the point of
+  marginal cheapness and point of marginal expensiveness, which
+  together form the range of acceptable prices. "original"
+  uses the definition provided in van Westendorp's paper:
+  The lower end of the price range (point of marginal
+  cheapness) is defined as the intersection of "too cheap"
+  and the inverse of the "cheap" curve. The upper end of the
+  price range (point of marginal expensiveness) is defined
+  as the intersection of "too expensive" and the inverse of
+  the "expensive" curve. Alternatively, it is possible to use
+  a "narrower" definition which is applied by some market
+  research companies. Here, the lower end of the price range
+  is defined as the intersection of the "expensive" and the
+  "too cheap" curves and the upper end of the price range is
+  defined as the intersection of the "too expensive" and the
+  "cheap" curves. This leads to a narrower range of acceptable
+  prices. Note that it is possible that the optimal price
+  according to the Newton/Miller/Smith extension is higher
+  than the upper end of the acceptable price range in the
+  "narrower" definition.}
   \item{pi_cheap, pi_expensive}{Only required for the Newton
   Miller Smith extension. Names of the variables in the data
   that contain the survey data on the respondents' purchase

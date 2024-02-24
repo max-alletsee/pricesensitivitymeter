@@ -22,6 +22,7 @@ psm_analysis(
   interpolate = FALSE,
   interpolation_steps = 0.01,
   intersection_method = "min",
+  acceptable_range = "original",
   pi_cheap = NA, pi_expensive = NA,
   pi_scale = 5:1,
   pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0))
@@ -76,6 +77,27 @@ psm_analysis(
   highest possible prices, "mean" calculates the mean among
   all intersections and "median" uses the median of all
   possible intersections}
+  \item{acceptable_range}{"original" (default) or "narrower".
+  Defines which intersection is used to calculate the point of
+  marginal cheapness and point of marginal expensiveness, which
+  together form the range of acceptable prices. "original"
+  uses the definition provided in van Westendorp's paper:
+  The lower end of the price range (point of marginal
+  cheapness) is defined as the intersection of "too cheap"
+  and the inverse of the "cheap" curve. The upper end of the
+  price range (point of marginal expensiveness) is defined
+  as the intersection of "too expensive" and the inverse of
+  the "expensive" curve. Alternatively, it is possible to use
+  a "narrower" definition which is applied by some market
+  research companies. Here, the lower end of the price range
+  is defined as the intersection of the "expensive" and the
+  "too cheap" curves and the upper end of the price range is
+  defined as the intersection of the "too expensive" and the
+  "cheap" curves. This leads to a narrower range of acceptable
+  prices. Note that it is possible that the optimal price
+  according to the Newton/Miller/Smith extension is higher
+  than the upper end of the acceptable price range in the
+  "narrower" definition.}
   \item{pi_cheap, pi_expensive}{Only required for the Newton
   Miller Smith extension. If \code{data} argument is provided:
   names of the variables in the data.frame/matrix/tibble that
@@ -144,12 +166,12 @@ prices (usually via graphical inspection). The original paper
 describes the four intersections as follows:
 
 \itemize{
-\item \bold{Point of Marginal Cheapness (MGP)}: Below this price
+\item \bold{Point of Marginal Cheapness (PMC)}: Below this price
 point, there are more respondents that consider the price as
 "too cheap" than respondents who consider it as "not cheap"
 (intersection of "too cheap" and "not cheap"). This is interpreted
 as the lower limit of the range of acceptable prices.
-\item \bold{Point of Marginal Expensiveness (MEP)}. Above this
+\item \bold{Point of Marginal Expensiveness (PME)}. Above this
 price point, there are more respondent that consider the price
 as "too expensive" than there are respondents who consider it as
 "not expensive" (intersection of "not expensive" and "too
@@ -275,6 +297,12 @@ The function output consists of the following elements:
   Sawtooth Software (2016) "Templates for van Westendorp PSM for
   Lighthouse Studio and Excel". Online available at
   \url{https://sawtoothsoftware.com/resources/software-downloads/tools/van-westendorp-price-sensitivity-meter}
+
+  Examples for companies that use a narrower definition than
+  van Westendorp's original paper include Conjoint.ly
+  (\url{https://conjointly.com/products/van-westendorp/}),
+  Quantilope (\url{https://www.quantilope.com/resources/glossary-how-to-use-van-westendorp-pricing-model-to-inform-pricing-strategy}),
+  and Milieu (\url{https://www.mili.eu/learn/what-is-the-van-westendorp-pricing-study-and-when-to-use-it})
 }
 
 \seealso{
