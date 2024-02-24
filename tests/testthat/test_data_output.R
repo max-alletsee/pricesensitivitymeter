@@ -151,9 +151,9 @@ test_that("Data Output: Rest of Output Object Structure", {
   expect_true(is.numeric(psm_result2$pi_scale$pi_calibrated))
   expect_false(unique(is.nan(psm_result2$pi_scale$pi_calibrated)))
 
-  expect_true(is.numeric(psm_result2$price_optimal_trial))
-  expect_false(is.nan(psm_result2$price_optimal_trial))
-  expect_length(psm_result2$price_optimal_trial, 1)
+  expect_true(is.numeric(psm_result2$price_optimal_revenue))
+  expect_false(is.nan(psm_result2$price_optimal_revenue))
+  expect_length(psm_result2$price_optimal_revenue, 1)
 
   expect_true(is.numeric(psm_result2$price_optimal_revenue))
   expect_false(is.nan(psm_result2$price_optimal_revenue))
@@ -253,8 +253,8 @@ test_that("Data Output - Plausibility: Price estimations must be within range of
   expect_gte(psm_result1$opp, min(psm_result1$data_vanwestendorp$price))
   expect_lte(psm_result1$opp, max(psm_result1$data_vanwestendorp$price))
 
-  expect_gte(psm_result2$price_optimal_trial, min(psm_result2$data_vanwestendorp$price))
-  expect_lte(psm_result2$price_optimal_trial, max(psm_result2$data_vanwestendorp$price))
+  expect_gte(psm_result2$price_optimal_revenue, min(psm_result2$data_vanwestendorp$price))
+  expect_lte(psm_result2$price_optimal_revenue, max(psm_result2$data_vanwestendorp$price))
 
   expect_gte(psm_result2$price_optimal_revenue, min(psm_result2$data_vanwestendorp$price))
   expect_lte(psm_result2$price_optimal_revenue, max(psm_result2$data_vanwestendorp$price))

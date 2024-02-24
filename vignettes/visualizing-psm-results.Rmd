@@ -268,19 +268,19 @@ legend("bottomleft",
 
 ### ggplot: Optimal Trial and Revenue (based on Newton Miller Smith Extension)
 
-When we have information of the purchase intent at the "cheap" and at the "expensive" price point, we can also model the optimal price to maximize trial or revenue based on the Newton Miller Smith Extension
+When we have information of the purchase intent at the "cheap" and at the "expensive" price point, we can also model the optimal price to maximize reach or revenue based on the Newton Miller Smith Extension
 
 ```{r, fig.width=7}
 library(ggplot2)
 
 # Plot for Optimal Trial
 ggplot(data = output_psm$data_nms, aes(x = price)) + 
-  geom_line(aes(y = trial)) + # trial curve
-  geom_vline(xintercept = output_psm$price_optimal_trial,
+  geom_line(aes(y = reach)) + # reach curve
+  geom_vline(xintercept = output_psm$price_optimal_reach,
              linetype = "dotted") + # highlighting the optimal price
-  geom_text(data = subset(output_psm$data_nms, trial == max(trial)),
-            aes(x = price + 0.5, y = trial),
-            label = paste("Optimal Price:", output_psm$price_optimal_trial),
+  geom_text(data = subset(output_psm$data_nms, reach == max(reach)),
+            aes(x = price + 0.5, y = reach),
+            label = paste("Optimal Price:", output_psm$price_optimal_reach),
             hjust = 0) + # labelling the optimal price
   labs(x = "Price", y = "Likelihood to Buy (Trial)",
        title = "Price Sensitivity Meter: Price for Optimal Trial",
@@ -314,7 +314,7 @@ par(cex.sub = 0.66) # reducing the font size of the subtitle
 # a) Plot for Optimal Trial
 # Main plot: Line, axis descriptions
 plot(x = output_psm$data_nms$price,
-     y = output_psm$data_nms$trial,
+     y = output_psm$data_nms$reach,
      type = "l",
      main = "Price Sensitivity Meter: Price for Optimal Trial",
      xlab = "Price",
@@ -330,13 +330,13 @@ par(adj = adj.old) # restore standard (so that next main title is again centered
 
 
 # drawing additional line to highlight optimal price
-abline(v = output_psm$data_nms$price[which.max(output_psm$data_nms$trial)],
+abline(v = output_psm$data_nms$price[which.max(output_psm$data_nms$reach)],
        lty = "dotted")
 
 # annotating the optimal price
-text(x = output_psm$data_nms$price[which.max(output_psm$data_nms$trial)],
-     y = max(output_psm$data_nms$trial),
-     labels = paste("Optimal Price:", output_psm$price_optimal_trial),
+text(x = output_psm$data_nms$price[which.max(output_psm$data_nms$reach)],
+     y = max(output_psm$data_nms$reach),
+     labels = paste("Optimal Price:", output_psm$price_optimal_reach),
      pos = 4)
 
 # b) Plot for Optimal Revenue
