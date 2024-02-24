@@ -125,7 +125,7 @@ test_that("Data Output: Numeric Data in Matrices", {
 
 
 
-test_that("Data Output: Output Object Structure (Analysis without NSM)", {
+test_that("Data Output: Output Object Structure (Analysis without NMS)", {
   expect_true(is.logical(psm_results_w1$validated))
   expect_length(psm_results_w1$validated, 1)
 
@@ -157,13 +157,13 @@ test_that("Data Output: Output Object Structure (Analysis without NSM)", {
   expect_false(is.nan(psm_results_w1$opp))
   expect_length(psm_results_w1$opp, 1)
 
-  expect_true(is.logical(psm_results_w1$NMS))
-  expect_false(is.nan(psm_results_w1$NMS))
-  expect_length(psm_results_w1$NMS, 1)
+  expect_true(is.logical(psm_results_w1$nms))
+  expect_false(is.nan(psm_results_w1$nms))
+  expect_length(psm_results_w1$nms, 1)
 })
 
 
-test_that("Data Output: Output Object Structure (Analysis with NSM)", {
+test_that("Data Output: Output Object Structure (Analysis with NMS)", {
 expect_true(is.logical(psm_results_w3$validated))
 expect_length(psm_results_w3$validated, 1)
 
@@ -191,9 +191,9 @@ expect_true(is.numeric(psm_results_w3$opp))
 expect_false(is.nan(psm_results_w3$opp))
 expect_length(psm_results_w3$opp, 1)
 
-expect_true(is.logical(psm_results_w3$NMS))
-expect_false(is.nan(psm_results_w3$NMS))
-expect_length(psm_results_w3$NMS, 1)
+expect_true(is.logical(psm_results_w3$nms))
+expect_false(is.nan(psm_results_w3$nms))
+expect_length(psm_results_w3$nms, 1)
 
 expect_true(is.numeric(psm_results_w3$pi_scale$pi_calibrated))
 expect_false(unique(is.nan(psm_results_w3$pi_scale$pi_calibrated)))
@@ -213,8 +213,8 @@ expect_length(psm_results_w3$price_optimal_revenue, 1)
 #----
 
 test_that("Data Output: NMS correctly (not) included in output", {
-  expect_false(psm_results_w1$NMS)
-  expect_true(psm_results_w3$NMS)
+  expect_false(psm_results_w1$nms)
+  expect_true(psm_results_w3$nms)
 })
 
 test_that("Data Output: All prices included in the empirical cumulative density function data", {
