@@ -80,11 +80,15 @@ The resulting object and the `summary()` function use the same template as the f
 
 ```{r, echo=TRUE}
 library(pricesensitivitymeter)
+```
+
+```{r, label='c1', echo=TRUE, cache=TRUE}
 output_weighted_psm <- psm_analysis_weighted(toocheap = "tch",
                                              cheap = "ch",
                                              expensive = "ex",
                                              tooexpensive = "tex",
                                              design = input_design)
+
 summary(output_weighted_psm)
 ```
 
@@ -136,10 +140,10 @@ input_design_2 <- survey::svydesign(ids = ~ 1, # no clusters
 # quick check: there is only one weight for all our strata
 # if we would have different weights per gender, we would see two unique values here
 unique(weights(input_design_2, type = "analysis"))
+```
 
-# Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data 
-library(pricesensitivitymeter)
-
+```{r, label='c2', echo=TRUE, cache=TRUE}
+# running both weighted and unweighted analysis on the same data 
 check_weighted_1 <- psm_analysis_weighted(toocheap = "tch",
                                           cheap = "ch",
                                           expensive = "ex",
@@ -169,16 +173,13 @@ input_data_3$ch[manipulated_men] <- input_data_3$tex[manipulated_men]
 
 The survey design object is now re-created and used as an input for the weighted Price Sensitivity Meter analysis. When we compare the results again to an unweighted analysis, we see a slight difference. This is the case because the weighting occurs **after** removing cases with intransitive preferences (at the same time when the weighted empirical cumulative density functions are calculated). At this stage in our example, we still have all women from our original sample, but have removed a few men with intransitive preferences. Therefore, all remaining men have a slightly higher weight in our sample. This affects the results of our analysis.
 
-```{r}
+```{r, label='c3', cache=TRUE}
 # creating the survey design object for post-stratification based on gender
 input_design_3 <- survey::svydesign(ids = ~ 1, # no clusters
                                   probs = NULL, # hence no cluster sampling probabilities,
                                   strata = input_data_3$gender, # stratified by gender
                                   fpc = input_data_3$gender_pop, # strata size in the population
                                   data = input_data_3) # data object used as input
-
-# Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data 
-library(pricesensitivitymeter)
 
 check_weighted_2 <- psm_analysis_weighted(toocheap = "tch",
                                           cheap = "ch",
@@ -210,7 +211,7 @@ If any of those conditions is not fulfilled, any difference in the price estimat
 
 It is also possible to run a weighted Price Sensitivity Meter analysis if there is no "too cheap" price (like for certain services like a drawing account, access to a sports match, ...).  The `psm_analysis_weighted()` function handles this in the same way as the `psm_analysis()` function: The "toocheap" variable should be set to NA for all cases. Having no "too cheap" price means that the lower bound of the price range and the optimal price point cannot be estimated, whereas the upper end of the price range and the indifference price point are estimated.  
 
-```{r}
+```{r, label='c4', cache=TRUE}
 # setting up data with NAs in "too cheap" variable
 input_data_2 <- input_data
 input_data_2$tch <- NA
@@ -221,8 +222,6 @@ input_design_2 <- survey::svydesign(ids = ~ 1, # no clusters
                                     strata = input_data_2$gender, # stratified by gender
                                     fpc = input_data_2$gender_pop, # strata size in the population
                                     data = input_data_2) # data object used as input
-
-library(pricesensitivitymeter)
 
 test_2 <- psm_analysis_weighted(toocheap = "tch",
                                 cheap = "ch",
