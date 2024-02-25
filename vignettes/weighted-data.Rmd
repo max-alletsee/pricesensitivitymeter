@@ -103,7 +103,10 @@ Note that in this example women *still* have a higher price acceptance than men.
 ```{r, echo=TRUE}
 set.seed(20)
 library(survey)
+```
 
+
+```{r, label='c5', echo=TRUE, cache=TRUE}
 # Creating dataset with price acceptance and unbiased gender variable
 input_data_2 <- data.frame(tch = round(rnorm(n = 250, mean = 4, sd = 0.5), digits = 2),
                          ch = round(rnorm(n = 250, mean = 8, sd = 0.5), digits = 2),
