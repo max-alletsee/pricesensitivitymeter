@@ -102,7 +102,7 @@ The function output is a ggplot2 object.
   Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) --
   A new approach to study consumer perception of price"
   \emph{Proceedings of the ESOMAR 29th Congress}, 139--167. Online
-  available at \url{https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/}.
+  available at \url{https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/}.
 }
 
 \seealso{

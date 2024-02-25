@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The interpretation of the Price Sensitivity Meter analysis in its original publication^[Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/).] focuses on a graphical inspection of the results. All relevant price points are defined by the intersection of two distribution functions, which are identified by visualizing the results. Even if this package provides a summary of the main results, most users will probably also be interested in visualizing them.
+The interpretation of the Price Sensitivity Meter analysis in its original publication^[Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/).] focuses on a graphical inspection of the results. All relevant price points are defined by the intersection of two distribution functions, which are identified by visualizing the results. Even if this package provides a summary of the main results, most users will probably also be interested in visualizing them.
 
 This vignette provides a short overview of efficient ways to provide visualizations of the results, both using R's base graphics as well as the *ggplot2* package. The plots are designed to show all main outcomes and can serve as a reference visualization, which may be reused for the purpose of a particular project.
 
@@ -56,7 +56,7 @@ output_psm <- psm_analysis(toocheap = "toocheap",
 
 ## Using the Built-In Function
 
-As of version v1.2, the package includes a built-in function `psm_plot()` that creates the "standard" Price Sensitivity Meter plot as known in the literature^[See for instance figure 5 in the appendix of the original publication: Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/).] The `psm_plot()` function uses the object that is returned by `psm_analysis()` as the main input and has several plotting parameters that mainly can be activated and deactivated via TRUE/FALSE.
+As of version v1.2, the package includes a built-in function `psm_plot()` that creates the "standard" Price Sensitivity Meter plot as known in the literature^[See for instance figure 5 in the appendix of the original publication: Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) -- A new approach to study consumer perception of price" *Proceedings of the ESOMAR Congress*, 139--167. Online available at [the ESOMAR website](https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/).] The `psm_plot()` function uses the object that is returned by `psm_analysis()` as the main input and has several plotting parameters that mainly can be activated and deactivated via TRUE/FALSE.
 
 Below is a simple example of the default plot returned by `psm_plot()`. It is built using `ggplot2` package and can be customized further with `ggplot2`'s plotting framework - in the example below, we simply add a different theme.
 
