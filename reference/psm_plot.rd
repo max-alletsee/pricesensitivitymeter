@@ -199,7 +199,7 @@ It takes the object created by psm_analysis() or
     <p>Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) --
   A new approach to study consumer perception of price"
   <em>Proceedings of the ESOMAR 29th Congress</em>, 139--167. Online
-  available at <a href="https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/" class="external-link">https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/</a>.</p>
+  available at <a href="https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/" class="external-link">https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/</a>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

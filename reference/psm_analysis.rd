@@ -395,7 +395,7 @@ methodological approaches are needed.</p>
     <p>Van Westendorp, P (1976) "NSS-Price Sensitivity Meter (PSM) --
   A new approach to study consumer perception of price"
   <em>Proceedings of the ESOMAR 29th Congress</em>, 139--167. Online
-  available at <a href="https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/" class="external-link">https://www.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/</a>.</p>
+  available at <a href="https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/" class="external-link">https://archive.researchworld.com/a-new-approach-to-study-consumer-perception-of-price/</a>.</p>
 <p>Newton, D, Miller, J, Smith, P, (1993) "A market acceptance
   extension to traditional price sensitivity measurement"
   <em>Proceedings of the American Marketing Association
