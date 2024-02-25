@@ -119,7 +119,7 @@ input_data_2$tex[input_data_2$gender == "female"] <- input_data_2$tex[input_data
 # now let's create a sample design object (using the survey package)
 # ... assuming that gender is balanced equally in the population of 10000
 
-# for survey design object: occurence of each gender in the target population
+# for survey design object: occurrence of each gender in the target population
 # would usually be information from sampling frame, differs here only for demonstration purposes
 # here: scaling up based on actual sample information (hypothetical population of 250 * 4 = 10k)
 input_data_2$gender_pop <- NA
@@ -235,7 +235,7 @@ summary(test_2)
 
 ## Using Weighting in the Newton Miller Smith Extension
 
-The `psm_analysis_weighted()` function also allows to include an estimate for the price with optimal trial or optimal revenue via the Newton Miller Smith extension. This option can be used in the same way as in the unweighted `psm_analysis()` function.
+The `psm_analysis_weighted()` function also allows to include an estimate for the price with optimal reach or optimal revenue via the Newton Miller Smith extension. This option can be used in the same way as in the unweighted `psm_analysis()` function.
 
 ```{r}
 # setting up dataset with purchase intent information

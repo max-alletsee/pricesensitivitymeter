@@ -31,8 +31,8 @@ Objects are usually created as a result of a call of the \code{\link{psm_analysi
     \item{\code{NMS}:}{Object of class \code{"logical"}. Indicates whether the additional analyses of the Newton Miller Smith Extension were performed.}
     \item{\code{data_nms}:}{Object of class \code{"data.frame"}. Output of the Newton Miller Smith extension: calibrated mean purchase probabilities for each price point.}
     \item{\code{pi_scale}:}{Object of class \code{"data.frame"}. Shows the values of the purchase intent variable and the corresponding calibrated purchase probabilities as defined in the function input for the Newton Miller Smith extension.}
-    \item{\code{price_optimal_trial}:}{Object of class \code{"numeric"}. Output of the Newton Miller Smith extension: Estimate for the price with the highest trial rate.}
-    \item{\code{price_optimal_revenue}:}{Object of class \code{"numeric"}. Output of the Newton Miller Smith extension: Estimate for the price with the highest revenue (based on the trial rate).}
+    \item{\code{price_optimal_reach}:}{Object of class \code{"numeric"}. Output of the Newton Miller Smith extension: Estimate for the price with the highest reach (trial rate).}
+    \item{\code{price_optimal_revenue}:}{Object of class \code{"numeric"}. Output of the Newton Miller Smith extension: Estimate for the price with the highest revenue (based on the reach).}
   }
 }
 

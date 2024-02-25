@@ -21,7 +21,7 @@ psm.class <- setClass("psm", slots = c(
   NMS = "logical",
   data_nms = "data.frame",
   pi_scale = "data.frame",
-  price_optimal_trial = "numeric",
+  price_optimal_reach = "numeric",
   price_optimal_revenue = "numeric"
 ))
 
@@ -37,7 +37,7 @@ summary.psm <- function(object, ...) {
 
   if (object$nms == TRUE) {
     cat("Newton Miller Smith Extension\n")
-    cat("Price with Optimal Trial Rate:", object$price_optimal_trial, "\n")
+    cat("Price with Optimal Reach:", object$price_optimal_reach, "\n")
     cat("Price with Optimal Revenue:", object$price_optimal_revenue, "\n\n")
   }
 

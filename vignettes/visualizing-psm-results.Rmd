@@ -266,14 +266,14 @@ legend("bottomleft",
        cex = 0.66)
 ```
 
-### ggplot: Optimal Trial and Revenue (based on Newton Miller Smith Extension)
+### ggplot: Optimal Reach and Revenue (based on Newton Miller Smith Extension)
 
 When we have information of the purchase intent at the "cheap" and at the "expensive" price point, we can also model the optimal price to maximize reach or revenue based on the Newton Miller Smith Extension
 
 ```{r, fig.width=7}
 library(ggplot2)
 
-# Plot for Optimal Trial
+# Plot for Optimal Reach
 ggplot(data = output_psm$data_nms, aes(x = price)) + 
   geom_line(aes(y = reach)) + # reach curve
   geom_vline(xintercept = output_psm$price_optimal_reach,
@@ -282,8 +282,8 @@ ggplot(data = output_psm$data_nms, aes(x = price)) +
             aes(x = price + 0.5, y = reach),
             label = paste("Optimal Price:", output_psm$price_optimal_reach),
             hjust = 0) + # labelling the optimal price
-  labs(x = "Price", y = "Likelihood to Buy (Trial)",
-       title = "Price Sensitivity Meter: Price for Optimal Trial",
+  labs(x = "Price", y = "Likelihood to Buy (Reach)",
+       title = "Price Sensitivity Meter: Price for Optimal Reach",
        caption = "Data: Randomly generated") +
   theme_minimal()
 
@@ -304,21 +304,21 @@ ggplot(data = output_psm$data_nms, aes(x = price)) +
   theme_minimal()
 ```
 
-### Base Plot: Optimal Trial and Revenue (based on Newton Miller Smith Extension)
+### Base Plot: Optimal Reach and Revenue (based on Newton Miller Smith Extension)
 
 Below are versions of the same plots with R's base plot function instead of *ggplot2*. For those simpler plots, the differences between ggplot and base plot are less pronounced.
 
 ```{r, fig.width=7, fig.height=4.5}
 par(cex.sub = 0.66) # reducing the font size of the subtitle
 
-# a) Plot for Optimal Trial
+# a) Plot for Optimal Reach
 # Main plot: Line, axis descriptions
 plot(x = output_psm$data_nms$price,
      y = output_psm$data_nms$reach,
      type = "l",
-     main = "Price Sensitivity Meter: Price for Optimal Trial",
+     main = "Price Sensitivity Meter: Price for Optimal Reach",
      xlab = "Price",
-     ylab = "Likelihood to Buy (Trial)")
+     ylab = "Likelihood to Buy (Reach)")
 
 grid() # adding gridlines
 
