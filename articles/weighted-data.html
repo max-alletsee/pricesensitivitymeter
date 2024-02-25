@@ -53,10 +53,10 @@
       <a href="../articles/interpolation-in-small-samples.html">Interpolation in Small Samples</a>
     </li>
     <li>
-      <a href="../articles/using-weighted-data.html">Using Weighted Survey Data</a>
+      <a href="../articles/visualizing-psm-results.html">Visualizing PSM Results</a>
     </li>
     <li>
-      <a href="../articles/visualizing-psm-results.html">Visualizing PSM Results</a>
+      <a href="../articles/weighted-data.html">Using Weighted Survey Data</a>
     </li>
   </ul>
 </li>
@@ -90,8 +90,8 @@ Alletsee</h4>
             
             <h4 data-toc-skip class="date">2024-02-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/max-alletsee/pricesensitivitymeter/blob/HEAD/vignettes/using-weighted-data.Rmd" class="external-link"><code>vignettes/using-weighted-data.Rmd</code></a></small>
-      <div class="hidden name"><code>using-weighted-data.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/max-alletsee/pricesensitivitymeter/blob/HEAD/vignettes/weighted-data.Rmd" class="external-link"><code>vignettes/weighted-data.Rmd</code></a></small>
+      <div class="hidden name"><code>weighted-data.Rmd</code></div>
 
     </div>
 
@@ -208,12 +208,14 @@ information.</p>
 <p>The resulting object and the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function use the
 same template as the function for the unweighted PSM analysis.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
-<span><span class="va">output_weighted_psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">output_weighted_psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                             cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                             expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                             tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
 <span>                                             design <span class="op">=</span> <span class="va">input_design</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">output_weighted_psm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -249,7 +251,7 @@ the sample, but it <em>cannot</em> be used to understand if different
 strata/groups have a different price acceptance. In this example below,
 the price acceptance differs quite a lot across genders, but we would
 need sub-group analyses to understand this.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://r-survey.r-forge.r-project.org/survey/" class="external-link">survey</a></span><span class="op">)</span></span>
 <span></span>
@@ -289,11 +291,9 @@ need sub-group analyses to understand this.</p>
 <span><span class="co"># quick check: there is only one weight for all our strata</span></span>
 <span><span class="co"># if we would have different weights per gender, we would see two unique values here</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/weights.html" class="external-link">weights</a></span><span class="op">(</span><span class="va">input_design_2</span>, type <span class="op">=</span> <span class="st">"analysis"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 40</span></span>
-<span></span>
-<span><span class="co"># Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data </span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 40</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># running both weighted and unweighted analysis on the same data </span></span>
 <span><span class="va">check_weighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
@@ -332,7 +332,7 @@ transitive for all respondents. Let’s now consider an example where we
 have intransitive price information for some respondents. For a few
 selected men in the sample, I manipulate the values so that the “cheap”
 price is larger than the “expensive” price.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data_2</span></span>
 <span></span>
 <span><span class="va">manipulated_men</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -347,16 +347,13 @@ stage in our example, we still have all women from our original sample,
 but have removed a few men with intransitive preferences. Therefore, all
 remaining men have a slightly higher weight in our sample. This affects
 the results of our analysis.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># creating the survey design object for post-stratification based on gender</span></span>
 <span><span class="va">input_design_3</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span>
 <span>                                  probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span></span>
 <span>                                  strata <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
 <span>                                  fpc <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
 <span>                                  data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
-<span></span>
-<span><span class="co"># Loading pricesensitivitymeter package and running both weighted and unweighted analysis on the same data </span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">check_weighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
@@ -420,7 +417,7 @@ should be set to NA for all cases. Having no “too cheap” price means
 that the lower bound of the price range and the optimal price point
 cannot be estimated, whereas the upper end of the price range and the
 indifference price point are estimated.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># setting up data with NAs in "too cheap" variable</span></span>
 <span><span class="va">input_data_2</span> <span class="op">&lt;-</span> <span class="va">input_data</span></span>
 <span><span class="va">input_data_2</span><span class="op">$</span><span class="va">tch</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
@@ -431,8 +428,6 @@ indifference price point are estimated.</p>
 <span>                                    strata <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
 <span>                                    fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
 <span>                                    data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">test_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
@@ -458,7 +453,7 @@ indifference price point are estimated.</p>
 include an estimate for the price with optimal reach or optimal revenue
 via the Newton Miller Smith extension. This option can be used in the
 same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># setting up dataset with purchase intent information</span></span>
 <span><span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data</span></span>
 <span></span>

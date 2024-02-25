@@ -43,10 +43,10 @@ To read the documentation for the function's syntax,
       <a href="../articles/interpolation-in-small-samples.html">Interpolation in Small Samples</a>
     </li>
     <li>
-      <a href="../articles/using-weighted-data.html">Using Weighted Survey Data</a>
+      <a href="../articles/visualizing-psm-results.html">Visualizing PSM Results</a>
     </li>
     <li>
-      <a href="../articles/visualizing-psm-results.html">Visualizing PSM Results</a>
+      <a href="../articles/weighted-data.html">Using Weighted Survey Data</a>
     </li>
   </ul></li>
 <li>
