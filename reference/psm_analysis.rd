@@ -272,7 +272,7 @@ respondents' resistance against the price is particularly low.</p></li>
 </ul><p>Besides those four intersections, van Westendorp's article
 advises to analyze the cumulative distribution functions for
 steep areas which indicate price steps.</p>
-<p>To analyze trial rates and estimate revenue forecasts,
+<p>To analyze reach (trial rates) and estimate revenue forecasts,
 Newton/Miller/Smith have extended van Westendorp's original
 model by adding two purchase intent questions that are asked for
 the respondent's "cheap" and "expensive" price. The purchase
@@ -286,10 +286,10 @@ two additional purchase intent questions, it becomes possible to
 summarize the purchase probabilities across respondents (using
 linear interpolation for the purchase probabilities between each
 respondent's cornerstone prices). The maximum of this curve is
-then defined as the price point with the highest expected trial
-rate. Moreover, by multiplying the trial rate with the price, it
-also becomes possible to estimate a price with the highest
-expected revenue.</p>
+then defined as the price point with the highest expected reach.
+Moreover, by multiplying the reach with the price, it also
+becomes possible to estimate a price with the highest expected
+revenue.</p>
 <p>It has to be noted that the van Westendorp Price Sensitivity
 Meter is useful in some cases, but does not answer every
 pricing-related question. It may be a good tool to assess very
@@ -378,16 +378,16 @@ methodological approaches are needed.</p>
     in the function input for the Newton Miller Smith
     extension.</p></dd>
 
-    <dt><code>price_optimal_trial</code>:</dt>
+    <dt><code>price_optimal_reach</code>:</dt>
 <dd><p><code>numeric</code> object.
     Output of the Newton Miller Smith extension: Estimate for
-    the price with the highest trial rate.</p></dd>
+    the price with the highest reach (trial rate).</p></dd>
 
     <dt><code>price_optimal_revenue</code>:</dt>
 <dd><p><code>numeric</code> object.
     Output of the Newton Miller Smith extension:
     Estimate for the price with the highest revenue (based on
-    the trial rate).</p></dd>
+    the reach).</p></dd>
 
 </dl></div>
     <div id="references">
@@ -460,7 +460,7 @@ analyses for weighted data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal Price Point: 6.35 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Newton Miller Smith Extension</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Trial Rate: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Reach: 8.72 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Revenue: 11.49 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>

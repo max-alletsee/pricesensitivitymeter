@@ -88,7 +88,7 @@
                         <h4 data-toc-skip class="author">Max
 Alletsee</h4>
             
-            <h4 data-toc-skip class="date">2024-02-24</h4>
+            <h4 data-toc-skip class="date">2024-02-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/max-alletsee/pricesensitivitymeter/blob/HEAD/vignettes/using-weighted-data.Rmd" class="external-link"><code>vignettes/using-weighted-data.Rmd</code></a></small>
       <div class="hidden name"><code>using-weighted-data.Rmd</code></div>
@@ -272,7 +272,7 @@ need sub-group analyses to understand this.</p>
 <span><span class="co"># now let's create a sample design object (using the survey package)</span></span>
 <span><span class="co"># ... assuming that gender is balanced equally in the population of 10000</span></span>
 <span></span>
-<span><span class="co"># for survey design object: occurence of each gender in the target population</span></span>
+<span><span class="co"># for survey design object: occurrence of each gender in the target population</span></span>
 <span><span class="co"># would usually be information from sampling frame, differs here only for demonstration purposes</span></span>
 <span><span class="co"># here: scaling up based on actual sample information (hypothetical population of 250 * 4 = 10k)</span></span>
 <span><span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
@@ -455,7 +455,7 @@ indifference price point are estimated.</p>
 <h2 id="using-weighting-in-the-newton-miller-smith-extension">Using Weighting in the Newton Miller Smith Extension<a class="anchor" aria-label="anchor" href="#using-weighting-in-the-newton-miller-smith-extension"></a>
 </h2>
 <p>The <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function also allows to
-include an estimate for the price with optimal trial or optimal revenue
+include an estimate for the price with optimal reach or optimal revenue
 via the Newton Miller Smith extension. This option can be used in the
 same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -495,7 +495,7 @@ same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm
 <span><span class="co">#&gt; Optimal Price Point: 13.63 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Newton Miller Smith Extension</span></span>
-<span><span class="co">#&gt; Price with Optimal Trial Rate: </span></span>
+<span><span class="co">#&gt; Price with Optimal Reach: 12.16 </span></span>
 <span><span class="co">#&gt; Price with Optimal Revenue: 17.7 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>

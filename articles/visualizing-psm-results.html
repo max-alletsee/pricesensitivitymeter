@@ -88,7 +88,7 @@
                         <h4 data-toc-skip class="author">Max
 Alletsee</h4>
             
-            <h4 data-toc-skip class="date">2024-02-24</h4>
+            <h4 data-toc-skip class="date">2024-02-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/max-alletsee/pricesensitivitymeter/blob/HEAD/vignettes/visualizing-psm-results.Rmd" class="external-link"><code>vignettes/visualizing-psm-results.Rmd</code></a></small>
       <div class="hidden name"><code>visualizing-psm-results.Rmd</code></div>
@@ -402,8 +402,8 @@ the lack of transparency in the shaded range of acceptable prices.</p>
 <p><img src="visualizing-psm-results_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div class="section level3">
-<h3 id="ggplot-optimal-trial-and-revenue-based-on-newton-miller-smith-extension">ggplot: Optimal Trial and Revenue (based on Newton Miller Smith
-Extension)<a class="anchor" aria-label="anchor" href="#ggplot-optimal-trial-and-revenue-based-on-newton-miller-smith-extension"></a>
+<h3 id="ggplot-optimal-reach-and-revenue-based-on-newton-miller-smith-extension">ggplot: Optimal Reach and Revenue (based on Newton Miller Smith
+Extension)<a class="anchor" aria-label="anchor" href="#ggplot-optimal-reach-and-revenue-based-on-newton-miller-smith-extension"></a>
 </h3>
 <p>When we have information of the purchase intent at the “cheap” and at
 the “expensive” price point, we can also model the optimal price to
@@ -411,7 +411,7 @@ maximize reach or revenue based on the Newton Miller Smith Extension</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Plot for Optimal Trial</span></span>
+<span><span class="co"># Plot for Optimal Reach</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">output_psm</span><span class="op">$</span><span class="va">data_nms</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">reach</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># reach curve</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">output_psm</span><span class="op">$</span><span class="va">price_optimal_reach</span>,</span>
@@ -420,8 +420,8 @@ maximize reach or revenue based on the Newton Miller Smith Extension</p>
 <span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span> <span class="op">+</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="va">reach</span><span class="op">)</span>,</span>
 <span>            label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Optimal Price:"</span>, <span class="va">output_psm</span><span class="op">$</span><span class="va">price_optimal_reach</span><span class="op">)</span>,</span>
 <span>            hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labelling the optimal price</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Likelihood to Buy (Trial)"</span>,</span>
-<span>       title <span class="op">=</span> <span class="st">"Price Sensitivity Meter: Price for Optimal Trial"</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Likelihood to Buy (Reach)"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Price Sensitivity Meter: Price for Optimal Reach"</span>,</span>
 <span>       caption <span class="op">=</span> <span class="st">"Data: Randomly generated"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualizing-psm-results_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
@@ -445,8 +445,8 @@ maximize reach or revenue based on the Newton Miller Smith Extension</p>
 <p><img src="visualizing-psm-results_files/figure-html/unnamed-chunk-6-2.png" width="672"></p>
 </div>
 <div class="section level3">
-<h3 id="base-plot-optimal-trial-and-revenue-based-on-newton-miller-smith-extension">Base Plot: Optimal Trial and Revenue (based on Newton Miller Smith
-Extension)<a class="anchor" aria-label="anchor" href="#base-plot-optimal-trial-and-revenue-based-on-newton-miller-smith-extension"></a>
+<h3 id="base-plot-optimal-reach-and-revenue-based-on-newton-miller-smith-extension">Base Plot: Optimal Reach and Revenue (based on Newton Miller Smith
+Extension)<a class="anchor" aria-label="anchor" href="#base-plot-optimal-reach-and-revenue-based-on-newton-miller-smith-extension"></a>
 </h3>
 <p>Below are versions of the same plots with R’s base plot function
 instead of <em>ggplot2</em>. For those simpler plots, the differences
@@ -454,14 +454,14 @@ between ggplot and base plot are less pronounced.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>cex.sub <span class="op">=</span> <span class="fl">0.66</span><span class="op">)</span> <span class="co"># reducing the font size of the subtitle</span></span>
 <span></span>
-<span><span class="co"># a) Plot for Optimal Trial</span></span>
+<span><span class="co"># a) Plot for Optimal Reach</span></span>
 <span><span class="co"># Main plot: Line, axis descriptions</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">output_psm</span><span class="op">$</span><span class="va">data_nms</span><span class="op">$</span><span class="va">price</span>,</span>
 <span>     y <span class="op">=</span> <span class="va">output_psm</span><span class="op">$</span><span class="va">data_nms</span><span class="op">$</span><span class="va">reach</span>,</span>
 <span>     type <span class="op">=</span> <span class="st">"l"</span>,</span>
-<span>     main <span class="op">=</span> <span class="st">"Price Sensitivity Meter: Price for Optimal Trial"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Price Sensitivity Meter: Price for Optimal Reach"</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="st">"Price"</span>,</span>
-<span>     ylab <span class="op">=</span> <span class="st">"Likelihood to Buy (Trial)"</span><span class="op">)</span></span>
+<span>     ylab <span class="op">=</span> <span class="st">"Likelihood to Buy (Reach)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># adding gridlines</span></span>
 <span></span>
