@@ -231,7 +231,11 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   if (!all(is.na(psmdata$toocheap))) { # if there are values: first as a function
     ecdf_psm <- ecdf(psmdata$toocheap)
     # ... apply the function to all prices (1 - f(x) because the function is reversed in the original paper)
-    data_ecdf$ecdf_toocheap <- 1 - ecdf_psm(data_ecdf$price)
+    ecdf_values <- ecdf_psm(data_ecdf$price)
+    # Ensure proper boundary behavior: values beyond max should give 1, beyond min should give 0
+    ecdf_values[data_ecdf$price >= max(psmdata$toocheap, na.rm = TRUE)] <- 1
+    ecdf_values[data_ecdf$price <= min(psmdata$toocheap, na.rm = TRUE)] <- 0
+    data_ecdf$ecdf_toocheap <- 1 - ecdf_values
   } else { # if no "too cheap" values provided: set to NA
     data_ecdf$ecdf_toocheap <- NA
   }
@@ -239,13 +243,25 @@ psm_analysis <- function(toocheap, cheap, expensive, tooexpensive, data = NA,
   # same for "cheap", "expensive", and "too expensive"
   # "cheap" is also reversed in the original paper, "expensive" and "too expensive" are not
   ecdf_psm <- ecdf(psmdata$cheap)
-  data_ecdf$ecdf_cheap <- 1 - ecdf_psm(data_ecdf$price)
+  ecdf_values <- ecdf_psm(data_ecdf$price)
+  # Ensure proper boundary behavior: values beyond max should give 1, beyond min should give 0
+  ecdf_values[data_ecdf$price >= max(psmdata$cheap, na.rm = TRUE)] <- 1
+  ecdf_values[data_ecdf$price <= min(psmdata$cheap, na.rm = TRUE)] <- 0
+  data_ecdf$ecdf_cheap <- 1 - ecdf_values
 
   ecdf_psm <- ecdf(psmdata$expensive)
-  data_ecdf$ecdf_expensive <- ecdf_psm(data_ecdf$price)
+  ecdf_values <- ecdf_psm(data_ecdf$price)
+  # Ensure proper boundary behavior: values beyond max should give 1, beyond min should give 0
+  ecdf_values[data_ecdf$price >= max(psmdata$expensive, na.rm = TRUE)] <- 1
+  ecdf_values[data_ecdf$price <= min(psmdata$expensive, na.rm = TRUE)] <- 0
+  data_ecdf$ecdf_expensive <- ecdf_values
 
   ecdf_psm <- ecdf(psmdata$tooexpensive)
-  data_ecdf$ecdf_tooexpensive <- ecdf_psm(data_ecdf$price)
+  ecdf_values <- ecdf_psm(data_ecdf$price)
+  # Ensure proper boundary behavior: values beyond max should give 1, beyond min should give 0
+  ecdf_values[data_ecdf$price >= max(psmdata$tooexpensive, na.rm = TRUE)] <- 1
+  ecdf_values[data_ecdf$price <= min(psmdata$tooexpensive, na.rm = TRUE)] <- 0
+  data_ecdf$ecdf_tooexpensive <- ecdf_values
 
   # if interpolation is enabled: create bigger dataframe that contains all the actual price information plus price steps according to the interpolation_steps parameter
   if (isTRUE(interpolate)) {
