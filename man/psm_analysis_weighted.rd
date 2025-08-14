@@ -47,7 +47,7 @@ psm_analysis_weighted(
   is impossible to calculate the Point of Marginal Cheapness and
   the Optimal Price Point.}
   \item{design}{A survey design which has been created by the
-  function \code{\link{svydesign}()} from the \pkg{survey}
+  function \code{\link[survey]{svydesign}()} from the \pkg{survey}
   package. The data that is used as an input of \code{svydesign()}
   must include all the variable names for \code{toocheap},
   \code{cheap}, \code{expensive} and \code{tooexpensive} variables
