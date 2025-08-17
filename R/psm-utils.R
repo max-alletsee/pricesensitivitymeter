@@ -29,42 +29,72 @@ identify_intersection <- function(data, var1, var2, method) {
 interpolate_nms_matrix <- function(nms_matrix) {
 
 for (i in seq_len(nrow(nms_matrix))) {
+  # Find all non-NA positions for this row
+  non_na_positions <- which(!is.na(nms_matrix[i, ]))
+  
+  # Skip interpolation if we have fewer than 2 non-NA values
+  if (length(non_na_positions) < 2) {
+    next
+  }
+  
+  # Initialize interpolated probabilities vector
   interpolate_prob <- NA
-
-  # try linear interpolation between three pairs of values
-  interpolate_prob <- try(c(
-    # linear interpolation between first pair of values (usually: "too cheap" and "cheap")
-    seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
-            to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-            length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
-    # linear interpolation between second pair of values (usually: "cheap" to "expensive")
-    seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-            to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-            length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1],
-    # linear interpolation between third pair of values (usually: "expensive" to "too expensive")
-    seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-            to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[4]],
-            length.out = which(!is.na(nms_matrix[i, ]))[4] - which(!is.na(nms_matrix[i, ]))[3] + 1)[-1]),
-    silent = TRUE)
-
-  # if try() function throws a silent error, perform interpolation between two pairs of values instead
-  if(inherits(interpolate_prob, "try-error")) {
-    # linear interpolation between first pair of values (usually: "too cheap"/"cheap" OR "cheap"/"expensive")
-    interpolate_prob <- c(
-      seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[1]],
-              to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-              length.out = which(!is.na(nms_matrix[i, ]))[2] - which(!is.na(nms_matrix[i, ]))[1] + 1),
-      # linear interpolation between second pair of values (usually: "cheap"/"expensive" OR "expensive"/"too expensive")
-      seq.int(from = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[2]],
-              to = nms_matrix[i, which(!is.na(nms_matrix[i, ]))[3]],
-              length.out = which(!is.na(nms_matrix[i, ]))[3] - which(!is.na(nms_matrix[i, ]))[2] + 1)[-1])
+  
+  # Try different interpolation strategies based on number of non-NA values
+  if (length(non_na_positions) >= 4) {
+    # Try linear interpolation between three pairs of values
+    interpolate_prob <- try({
+      pos1 <- non_na_positions[1]
+      pos2 <- non_na_positions[2]
+      pos3 <- non_na_positions[3]
+      pos4 <- non_na_positions[4]
+      
+      # Check if positions are different enough for interpolation
+      if (pos2 > pos1 && pos3 > pos2 && pos4 > pos3) {
+        c(
+          # first pair
+          seq(from = nms_matrix[i, pos1], to = nms_matrix[i, pos2], 
+              length.out = pos2 - pos1 + 1),
+          # second pair (exclude first point to avoid duplication)
+          seq(from = nms_matrix[i, pos2], to = nms_matrix[i, pos3], 
+              length.out = pos3 - pos2 + 1)[-1],
+          # third pair (exclude first point to avoid duplication)
+          seq(from = nms_matrix[i, pos3], to = nms_matrix[i, pos4], 
+              length.out = pos4 - pos3 + 1)[-1]
+        )
+      } else {
+        stop("Positions too close for 4-point interpolation")
+      }
+    }, silent = TRUE)
   }
 
-  # write vector with interpolated values to matrix
-  nms_matrix[i, min(which(!is.na(nms_matrix[i, ]))):max(which(!is.na(nms_matrix[i, ])))] <- interpolate_prob
+  # If 4-point interpolation failed or we have fewer than 4 points, try 2-point interpolation
+  if (inherits(interpolate_prob, "try-error") || length(non_na_positions) < 4) {
+    # Use first and last non-NA positions for simple linear interpolation
+    pos1 <- non_na_positions[1]
+    pos_last <- non_na_positions[length(non_na_positions)]
+    
+    if (pos_last > pos1) {
+      interpolate_prob <- seq(from = nms_matrix[i, pos1], 
+                             to = nms_matrix[i, pos_last], 
+                             length.out = pos_last - pos1 + 1)
+    } else {
+      # If positions are the same, just use the single value
+      interpolate_prob <- nms_matrix[i, pos1]
+    }
+  }
+
+  # Write vector with interpolated values to matrix
+  if (!inherits(interpolate_prob, "try-error") && !any(is.na(interpolate_prob))) {
+    start_pos <- min(non_na_positions)
+    end_pos <- max(non_na_positions)
+    if (length(interpolate_prob) == (end_pos - start_pos + 1)) {
+      nms_matrix[i, start_pos:end_pos] <- interpolate_prob
+    }
+  }
 }
 
-  # purchase probabilities outside of the individual's personal price range must be set to zero
+  # Purchase probabilities outside of the individual's personal price range must be set to zero
   nms_matrix[is.na(nms_matrix)] <- 0
 
   return(nms_matrix)
