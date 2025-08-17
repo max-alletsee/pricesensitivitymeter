@@ -1,3 +1,9 @@
+# pricesensitivitymeter, v1.3.1 (release date: 2025-08-22)
+
+- fixes a bug / edge case where the empirical cumulative density function did not reach 100% for the "too cheap" distribution
+- addresses a CRAN note: proper link to page svydesign
+- refactored code for better code quality and maintainability
+
 # pricesensitivitymeter, v1.3.0 (release date: 2024-02-25)
 
 - new parameter "acceptable_range": allows to switch between van Westendorp's original definition of acceptable price ranges and a narrower definition which is used by some market research companies
