@@ -1,6 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.pytest_cache$
+^\.vscode$
 ^papers$
+^memorybank$
 ^README\.Rmd$
 ^README-.*\.png$
 ^build_package\.R$
