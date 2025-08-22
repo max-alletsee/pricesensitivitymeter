@@ -235,25 +235,25 @@ par(adj = adj.old) # restore standard (so that next main title is again centered
 
 # adding the Indifference Price Point (intersection of "cheap" and "expensive")
 points(x = output_psm$idp,
-       y = output_psm$data_vanwestendorp$ecdf_not_cheap[which(output_psm$data_vanwestendorp$price == output_psm$idp)],
+       y = output_psm$data_vanwestendorp$ecdf_not_cheap[which.min(abs(output_psm$data_vanwestendorp$price - output_psm$idp))],
        cex = 2,
        pch = 18,
        col = "#009E73")
 
 text(x = output_psm$idp,
-     y = output_psm$data_vanwestendorp$ecdf_not_cheap[which(output_psm$data_vanwestendorp$price == output_psm$idp)],
+     y = output_psm$data_vanwestendorp$ecdf_not_cheap[which.min(abs(output_psm$data_vanwestendorp$price - output_psm$idp))],
      labels = paste("IDP:", output_psm$idp),
      pos = 4)
 
 # adding the Optimal Price Point (intersection of "too cheap" and "too expensive")
 points(x = output_psm$opp,
-       y = output_psm$data_vanwestendorp$ecdf_toocheap[which(output_psm$data_vanwestendorp$price == output_psm$opp)],
+       y = output_psm$data_vanwestendorp$ecdf_toocheap[which.min(abs(output_psm$data_vanwestendorp$price - output_psm$opp))],
        cex = 2,
        pch = 17,
        col = "#009E73")
 
 text(x = output_psm$opp,
-     y = output_psm$data_vanwestendorp$ecdf_toocheap[which(output_psm$data_vanwestendorp$price == output_psm$opp)],
+     y = output_psm$data_vanwestendorp$ecdf_toocheap[which.min(abs(output_psm$data_vanwestendorp$price - output_psm$opp))],
      labels = paste("OPP:", output_psm$opp),
      pos = 4)
 

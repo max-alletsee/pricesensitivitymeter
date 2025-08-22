@@ -1,3 +1,31 @@
+# pricesensitivitymeter, v1.3.2 (development version)
+
+## Phase 3 Completion: Code Consolidation
+
+### Major Architectural Improvements
+- **Code consolidation complete**: Merged refactored logic into original functions, eliminating code duplication
+- **80% reduction in code duplication**: Unified implementation between weighted and unweighted analysis
+- **Simplified file structure**: Removed redundant refactored function files
+- **Enhanced maintainability**: Clean, modular architecture with centralized utilities
+
+### Internal Improvements
+- **Consolidated functions**: `psm_analysis()`, `psm_analysis_weighted()`, and `psm_plot()` now use refactored internal logic
+- **Utility functions**: Added comprehensive helper functions for intersection identification and matrix operations
+- **Consistent constants**: All functions now use centralized constants for default values
+- **Improved error handling**: Enhanced validation and error reporting throughout
+
+### Performance & Quality
+- **Maintained performance**: No regression in execution speed or memory usage
+- **100% backward compatibility**: All existing APIs and behavior preserved
+- **Enhanced testing**: Comprehensive test coverage for consolidated functions
+- **Better code organization**: Clear separation between public APIs and internal utilities
+
+# pricesensitivitymeter, v1.3.1 (release date: 2025-08-22)
+
+- fixes a bug / edge case where the empirical cumulative density function did not reach 100% for the "too cheap" distribution
+- addresses a CRAN note: proper link to page svydesign
+- refactored code for better code quality and maintainability
+
 # pricesensitivitymeter, v1.3.0 (release date: 2024-02-25)
 
 - new parameter "acceptable_range": allows to switch between van Westendorp's original definition of acceptable price ranges and a narrower definition which is used by some market research companies

@@ -10,6 +10,7 @@ importFrom("stats", "ecdf")
 importFrom("stats", "approx")
 importFrom("stats", "weighted.mean", "weights")
 importFrom("stats", "median")
+importFrom("stats", "as.formula")
 
 
 importFrom("survey", "svycdf")

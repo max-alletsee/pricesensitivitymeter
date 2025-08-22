@@ -24,13 +24,14 @@ psm_analysis_weighted(
   design,
   validate = TRUE,
   interpolate = FALSE,
-  interpolation_steps = 0.01,
+  interpolation_steps = get_psm_constant("DEFAULT_INTERPOLATION_STEPS"),
   intersection_method = "min",
   acceptable_range = "original",
   pi_cheap = NA, pi_expensive = NA,
-  pi_scale = 5:1,
-  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0),
-  pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0
+  pi_scale = get_psm_constant("NMS_DEFAULTS.PI_SCALE"),
+  pi_calibrated = get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED"),
+  pi_calibrated_toocheap = get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP"), 
+  pi_calibrated_tooexpensive = get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE")
   )
 }
 
@@ -47,7 +48,7 @@ psm_analysis_weighted(
   is impossible to calculate the Point of Marginal Cheapness and
   the Optimal Price Point.}
   \item{design}{A survey design which has been created by the
-  function \code{\link{svydesign}()} from the \pkg{survey}
+  function \code{\link[survey]{svydesign}()} from the \pkg{survey}
   package. The data that is used as an input of \code{svydesign()}
   must include all the variable names for \code{toocheap},
   \code{cheap}, \code{expensive} and \code{tooexpensive} variables
@@ -63,7 +64,7 @@ psm_analysis_weighted(
   be necessary.}
   \item{interpolation_steps}{numeric. if \code{interpolate} is
   \code{TRUE}: the size of the interpolation steps. Set by
-  default to 0.01, which should be appropriate for most goods
+  default to \code{get_psm_constant("DEFAULT_INTERPOLATION_STEPS")}, which should be appropriate for most goods
   in a price range of 0-50 USD/Euro.}
   \item{intersection_method}{"min" (default), "max", "mean" or
   "median". defines the method how to determine the price
@@ -100,14 +101,14 @@ psm_analysis_weighted(
   intent at their individual cheap/expensive price.}
   \item{pi_scale}{Only required for the Newton Miller Smith
   extension. Scale of the purchase intent variables pi_cheap and
-  pi_expensive. By default assuming a five-point scale with 5
+  pi_expensive. By default using \code{get_psm_constant("NMS_DEFAULTS.PI_SCALE")}, assuming a five-point scale with 5
   indicating the highest purchase intent.}
   \item{pi_calibrated}{Only required for the Newton Miller Smith
   extension. Calibrated purchase probabilities that are assumed
   for each value of the purchase intent scale. Must be the same
   order as the pi_scale variable so that the first value of
   pi_calibrated corresponds to the first value in the pi_scale
-  variable. Default values are taken from the Sawtooth Software
+  variable. Default values are \code{get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED")}, taken from the Sawtooth Software
   PSM implementation in Excel: 70\% for the best value of the
   purchase intent scale, 50\% for the second best value,
   30\% for the third best value (middle of the scale), 10\%
@@ -116,7 +117,7 @@ psm_analysis_weighted(
   Only required for the Newton Miller Smith extension. Calibrated
   purchase probabilities for the "too cheap" and the "too
   expensive" price, respectively. Must be a value between 0 and
-  1; by default set to zero following the logic in van
+  1; by default set to \code{get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP")} and \code{get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE")}, respectively, following the logic in van
   Westendorp's paper.}
 }
 
@@ -217,7 +218,7 @@ input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gende
 input_data$gender_pop <- 5000
 
 input_design <- survey::svydesign(ids = ~ 1, # no clusters
-                          probs = NULL, # hence no cluster samling probabilities,
+                          probs = NULL, # hence no cluster sampling probabilities,
                           strata = input_data$gender, # stratified by gender
                           fpc = input_data$gender_pop, # strata size in the population
                           data = input_data)
@@ -232,4 +233,3 @@ output_weighted_psm <- psm_analysis_weighted(toocheap = "tch",
 
 summary(output_weighted_psm)
 }
-

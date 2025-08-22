@@ -221,7 +221,7 @@ input_data_2$tch <- NA
 
 # create new sample design
 input_design_2 <- survey::svydesign(ids = ~ 1, # no clusters
-                                    probs = NULL, # hence no cluster samling probabilities,
+                                    probs = NULL, # hence no cluster sampling probabilities,
                                     strata = input_data_2$gender, # stratified by gender
                                     fpc = input_data_2$gender_pop, # strata size in the population
                                     data = input_data_2) # data object used as input
