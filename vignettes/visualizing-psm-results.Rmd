@@ -114,28 +114,32 @@ psmplot <-  ggplot(data = output_psm$data_vanwestendorp, aes(x = price)) +
   geom_line(aes(y = ecdf_toocheap, # line: too cheap
                 colour = "too cheap",
                 linetype = "too cheap"),
-            size= 1) +
+            linewidth = 1) +
   geom_line(aes(y = ecdf_tooexpensive, # line: too expensive
                 colour = "too expensive",
                 linetype = "too expensive"),
-            size = 1) + 
+            linewidth = 1) + 
   geom_line(aes(y = ecdf_not_cheap, # line: not cheap
                 colour = "not cheap",
                 linetype = "not cheap"),
-            size = 1) +
+            linewidth = 1) +
   geom_line(aes(y = ecdf_not_expensive, # line: not expensive
                 colour = "not expensive",
                 linetype = "not expensive"),
-            size = 1) + 
+            linewidth = 1) + 
   annotate(geom = "point", # Indifference Price Point (intersection of "cheap" and "expensive")
            x = output_psm$idp, 
-           y = output_psm$data_vanwestendorp$ecdf_not_cheap[output_psm$data_vanwestendorp$price == output_psm$idp],
+           y = approx(x = output_psm$data_vanwestendorp$price, 
+                      y = output_psm$data_vanwestendorp$ecdf_not_cheap, 
+                      xout = output_psm$idp)$y,
            size = 5,
            shape = 18,
            colour = "#009E73") + 
   annotate(geom = "point", # Optimal Price Point (intersection of "too cheap" and "too expensive")
            x = output_psm$opp, 
-           y = output_psm$data_vanwestendorp$ecdf_toocheap[output_psm$data_vanwestendorp$price == output_psm$opp],
+           y = approx(x = output_psm$data_vanwestendorp$price, 
+                      y = output_psm$data_vanwestendorp$ecdf_toocheap, 
+                      xout = output_psm$opp)$y,
            size = 3,
            shape = 17,
            colour = "#009E73")
@@ -159,14 +163,18 @@ psmplot +
                                    "too expensive" = "dotted")) + 
   annotate(geom = "label", # Label of Indifference Price Point
            x = output_psm$idp + 1.5, 
-           y = output_psm$data_vanwestendorp$ecdf_not_cheap[output_psm$data_vanwestendorp$price == output_psm$idp],
+           y = approx(x = output_psm$data_vanwestendorp$price, 
+                      y = output_psm$data_vanwestendorp$ecdf_not_cheap, 
+                      xout = output_psm$idp)$y,
            nudge_x = 1.5,
            label = paste("IDP: ", output_psm$idp),
            fill = "white",
            alpha = 0.5) + 
   annotate(geom = "label", # Label of Optimal Price Point
            x = output_psm$opp,
-           y = output_psm$data_vanwestendorp$ecdf_toocheap[output_psm$data_vanwestendorp$price == output_psm$opp],
+           y = approx(x = output_psm$data_vanwestendorp$price, 
+                      y = output_psm$data_vanwestendorp$ecdf_toocheap, 
+                      xout = output_psm$opp)$y,
            nudge_x = 1.5,
            label = paste("OPP: ", output_psm$opp),
            fill = "white",
@@ -368,4 +376,3 @@ text(x = output_psm$data_nms$price[which.max(output_psm$data_nms$revenue)],
      labels = paste("Optimal Price:", output_psm$price_optimal_revenue),
      pos = 4)
 ```
-
