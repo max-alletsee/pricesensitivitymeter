@@ -50,7 +50,7 @@ psm_plot <- function(psm_result,
       colour = "too cheap",
       linetype = "too cheap"
     ),
-    size = line_size
+    linewidth = line_size
     )
   }
   
@@ -61,7 +61,7 @@ psm_plot <- function(psm_result,
       colour = "too expensive",
       linetype = "too expensive"
     ),
-    size = line_size
+    linewidth = line_size
     )
   }
   
@@ -72,7 +72,7 @@ psm_plot <- function(psm_result,
       colour = "not cheap",
       linetype = "not cheap"
     ),
-    size = line_size
+    linewidth = line_size
     )
   }
   
@@ -83,7 +83,7 @@ psm_plot <- function(psm_result,
       colour = "not expensive",
       linetype = "not expensive"
     ),
-    size = line_size
+    linewidth = line_size
     )
   }
   

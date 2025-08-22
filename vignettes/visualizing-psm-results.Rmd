@@ -114,19 +114,19 @@ psmplot <-  ggplot(data = output_psm$data_vanwestendorp, aes(x = price)) +
   geom_line(aes(y = ecdf_toocheap, # line: too cheap
                 colour = "too cheap",
                 linetype = "too cheap"),
-            size= 1) +
+            linewidth = 1) +
   geom_line(aes(y = ecdf_tooexpensive, # line: too expensive
                 colour = "too expensive",
                 linetype = "too expensive"),
-            size = 1) + 
+            linewidth = 1) + 
   geom_line(aes(y = ecdf_not_cheap, # line: not cheap
                 colour = "not cheap",
                 linetype = "not cheap"),
-            size = 1) +
+            linewidth = 1) +
   geom_line(aes(y = ecdf_not_expensive, # line: not expensive
                 colour = "not expensive",
                 linetype = "not expensive"),
-            size = 1) + 
+            linewidth = 1) + 
   annotate(geom = "point", # Indifference Price Point (intersection of "cheap" and "expensive")
            x = output_psm$idp, 
            y = output_psm$data_vanwestendorp$ecdf_not_cheap[output_psm$data_vanwestendorp$price == output_psm$idp],

@@ -63,10 +63,10 @@ library(ggplot2)
 psmplot_steps <-  ggplot(data = psm_steps$data_vanwestendorp, aes(x = price)) +
   geom_line(aes(y = ecdf_not_cheap, # line: not cheap
                 colour = "not cheap"),
-            size = 1) +
+            linewidth = 1) +
   geom_line(aes(y = ecdf_not_expensive, # line: not expensive
                 colour = "not expensive"),
-            size = 1) +
+            linewidth = 1) +
   geom_rug() +
   annotate(geom = "point", # Indifference Price Point (intersection of "not cheap" and "not expensive")
            x = psm_steps$idp,
@@ -114,10 +114,10 @@ psm_interpolated <- psm_analysis(toocheap = toocheap,
 psmplot_interpolated <-  ggplot(data = psm_interpolated$data_vanwestendorp, aes(x = price)) +
   geom_line(aes(y = ecdf_not_cheap, # line: not cheap
                 colour = "not cheap"),
-            size = 1) +
+            linewidth = 1) +
   geom_line(aes(y = ecdf_not_expensive, # line: not expensive
                 colour = "not expensive"),
-            size = 1) +
+            linewidth = 1) +
   geom_rug() +
   annotate(geom = "point", # Indifference Price Point (intersection of "cheap" and "expensive")
            x = psm_interpolated$idp,
@@ -149,18 +149,18 @@ The following plot demonstrates the close relationship between the original data
 psmplot_comparison <-  ggplot(data = psm_interpolated$data_vanwestendorp, aes(x = price)) +
   geom_line(aes(y = ecdf_not_cheap, # line: not cheap, interpolated
                 colour = "not cheap"),
-            size = 4, alpha = 0.25) +
+            linewidth = 4, alpha = 0.25) +
   geom_line(aes(y = ecdf_not_expensive, # line: not expensive, interpolated
                 colour = "not expensive"),
-            size = 4, alpha = 0.25) +
+            linewidth = 4, alpha = 0.25) +
   geom_line(data = psm_steps$data_vanwestendorp, # line: not cheap, not interpolated
             aes(y = ecdf_not_cheap, 
                 colour = "not cheap"),
-            size = 1) +
+            linewidth = 1) +
   geom_line(data = psm_steps$data_vanwestendorp, # line: not expensive, not interpolated
             aes(y = ecdf_not_expensive, 
                 colour = "not expensive"),
-            size = 1)
+            linewidth = 1)
 
 psmplot_comparison +
   labs(x = "Price",
