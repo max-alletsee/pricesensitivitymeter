@@ -1,12 +1,11 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   interpolation-in-small-samples: interpolation-in-small-samples.html
   visualizing-psm-results: visualizing-psm-results.html
   weighted-data: weighted-data.html
-last_built: 2024-02-25T13:21Z
+last_built: 2025-08-22T20:18Z
 urls:
   reference: https://max-alletsee.github.io/pricesensitivitymeter/reference
   article: https://max-alletsee.github.io/pricesensitivitymeter/articles
-

@@ -1,39 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/404.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/interpolation-in-small-samples.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/visualizing-psm-results.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/weighted-data.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/index.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/psm-class.html</loc>
-  </url>
-  <url>
-    <loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/summary.psm.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/404.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/LICENSE-text.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/index.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/interpolation-in-small-samples.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/visualizing-psm-results.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/articles/weighted-data.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/authors.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/index.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/news/index.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/index.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/psm-class.html</loc></url>
+<url><loc>https://max-alletsee.github.io/pricesensitivitymeter/reference/summary.psm.html</loc></url>
 </urlset>
+
