@@ -5,7 +5,7 @@
 - fixes a bug / edge case where the empirical cumulative density function did not reach 100% for the "too cheap" distribution
 - addresses a CRAN note: proper link to page svydesign
 - fixes an edge cases for plotting price points (when not present in original dataframe)
-- refactores code for better code quality and maintainability
+- refactors code for better code quality and maintainability
 - replaces deprecated ggplot2 parameters
 
 # pricesensitivitymeter, v1.3.0 (release date: 2024-02-25)
