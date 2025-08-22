@@ -22,7 +22,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pricesensitivitymeter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -84,13 +84,14 @@
 <span>  data <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  validate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  interpolate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  interpolation_steps <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  interpolation_steps <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_INTERPOLATION_STEPS"</span><span class="op">)</span>,</span>
 <span>  intersection_method <span class="op">=</span> <span class="st">"min"</span>,</span>
 <span>  acceptable_range <span class="op">=</span> <span class="st">"original"</span>,</span>
 <span>  pi_cheap <span class="op">=</span> <span class="cn">NA</span>, pi_expensive <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  pi_scale <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">1</span>,</span>
-<span>  pi_calibrated <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>  pi_calibrated_toocheap <span class="op">=</span> <span class="fl">0</span>, pi_calibrated_tooexpensive <span class="op">=</span> <span class="fl">0</span></span>
+<span>  pi_scale <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_SCALE"</span><span class="op">)</span>,</span>
+<span>  pi_calibrated <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_CALIBRATED"</span><span class="op">)</span>,</span>
+<span>  pi_calibrated_toocheap <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP"</span><span class="op">)</span>, </span>
+<span>  pi_calibrated_tooexpensive <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -455,13 +456,13 @@ analyses for weighted data.</p></div>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">output_psm_demo2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Van Westendorp Price Sensitivity Meter Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Accepted Price Range: 6.35 - 14.67 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Accepted Price Range: 6.35 - 14.53 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Indifference Price Point: 9.98 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal Price Point: 6.35 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Newton Miller Smith Extension</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Reach: 8.72 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Revenue: 11.49 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Reach: 8.8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Price with Optimal Revenue: 9.4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 250 cases with individual price preferences were analyzed (unweighted data).</span>

@@ -21,7 +21,7 @@ It takes the object created by psm_analysis() or
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pricesensitivitymeter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -84,21 +84,15 @@ It takes the object created by psm_analysis() or
 <span>         line_notcheap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         line_notexpensive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         point_idp <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>         point_color_idp <span class="op">=</span> <span class="st">"#009E73"</span>,</span>
+<span>         point_color_idp <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_COLORS.IDP"</span><span class="op">)</span>,</span>
 <span>         label_idp <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         point_opp <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>         point_color_opp <span class="op">=</span> <span class="st">"#009E73"</span>,</span>
+<span>         point_color_opp <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_COLORS.OPP"</span><span class="op">)</span>,</span>
 <span>         label_opp<span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>         pricerange_color <span class="op">=</span> <span class="st">"grey50"</span>,</span>
-<span>         pricerange_alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span>         line_color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"too cheap"</span> <span class="op">=</span> <span class="st">"#009E73"</span>,</span>
-<span>                        <span class="st">"not cheap"</span> <span class="op">=</span> <span class="st">"#009E73"</span>,</span>
-<span>                        <span class="st">"not expensive"</span> <span class="op">=</span> <span class="st">"#D55E00"</span>,</span>
-<span>                        <span class="st">"too expensive"</span> <span class="op">=</span> <span class="st">"#D55E00"</span><span class="op">)</span>,</span>
-<span>         line_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"too cheap"</span> <span class="op">=</span> <span class="st">"dotted"</span>,</span>
-<span>                       <span class="st">"not cheap"</span> <span class="op">=</span> <span class="st">"solid"</span>,</span>
-<span>                       <span class="st">"not expensive"</span> <span class="op">=</span> <span class="st">"solid"</span>,</span>
-<span>                       <span class="st">"too expensive"</span> <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>         pricerange_color <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_COLORS.PRICE_RANGE"</span><span class="op">)</span>,</span>
+<span>         pricerange_alpha <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_PLOT_SETTINGS.PRICE_RANGE_ALPHA"</span><span class="op">)</span>,</span>
+<span>         line_color <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_COLORS.LINE_COLORS"</span><span class="op">)</span>,</span>
+<span>         line_type <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_LINE_TYPES"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -135,8 +129,9 @@ It takes the object created by psm_analysis() or
 
   <dt id="arg-point-color-idp">point_color_idp<a class="anchor" aria-label="anchor" href="#arg-point-color-idp"></a></dt>
 <dd><p>character vector, specifying the
-  color of the Optimal Price Point. Can be a hex color (e.g.
-  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").</p></dd>
+  color of the Indifference Price Point. Can be a hex color (e.g.
+  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
+  Default is <code>get_psm_constant("DEFAULT_COLORS.IDP")</code>.</p></dd>
 
   <dt id="arg-label-idp">label_idp<a class="anchor" aria-label="anchor" href="#arg-label-idp"></a></dt>
 <dd><p>logical value. Determines if the label for
@@ -149,7 +144,8 @@ It takes the object created by psm_analysis() or
   <dt id="arg-point-color-opp">point_color_opp<a class="anchor" aria-label="anchor" href="#arg-point-color-opp"></a></dt>
 <dd><p>character vector, specifying the
   color of the Optimal Price Point. Can be a hex color (e.g.
-  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").</p></dd>
+  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
+  Default is <code>get_psm_constant("DEFAULT_COLORS.OPP")</code>.</p></dd>
 
   <dt id="arg-label-opp">label_opp<a class="anchor" aria-label="anchor" href="#arg-label-opp"></a></dt>
 <dd><p>logical value. Determines if the label for
@@ -160,13 +156,15 @@ It takes the object created by psm_analysis() or
   background color for the accepted price range. Can be a
   hex color (e.g. "#7f7f7f") or one of R's built-in colors
   (e.g. "grey50"). You can see all of R's built-in colors
-  with the function <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code>. Is only applied if
+  with the function <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code>. Default is
+  <code>get_psm_constant("DEFAULT_COLORS.PRICE_RANGE")</code>. Is only applied if
   <code>shade_pricerange = TRUE</code></p></dd>
 
   <dt id="arg-pricerange-alpha">pricerange_alpha<a class="anchor" aria-label="anchor" href="#arg-pricerange-alpha"></a></dt>
 <dd><p>numeric between 0 and 1,
   specifying the alpha transparency for the shaded area of
-  the the accepted price range. Is only applied if
+  the the accepted price range. Default is
+  <code>get_psm_constant("DEFAULT_PLOT_SETTINGS.PRICE_RANGE_ALPHA")</code>. Is only applied if
   <code>shade_pricerange = TRUE</code></p></dd>
 
   <dt id="arg-line-color">line_color<a class="anchor" aria-label="anchor" href="#arg-line-color"></a></dt>
@@ -175,7 +173,8 @@ It takes the object created by psm_analysis() or
   definitions must match the lines you have defined via
   <code>line_toocheap, line_tooexpensive, line_notcheap</code>
   and <code>line_notexpensive</code>. Can be a hex color (e.g.
-  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").</p></dd>
+  "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
+  Default is <code>get_psm_constant("DEFAULT_COLORS.LINE_COLORS")</code>.</p></dd>
 
   <dt id="arg-line-type">line_type<a class="anchor" aria-label="anchor" href="#arg-line-type"></a></dt>
 <dd><p>vector, specifying the line type for each
@@ -186,7 +185,7 @@ It takes the object created by psm_analysis() or
   a name (blank, solid, dashed, dotted, dotdash, longdash,
   twodash), or a string with an even number (up to eight) of
   hexadecimal digits which give the lengths in consecutive
-  positions in the string.</p></dd>
+  positions in the string. Default is <code>get_psm_constant("DEFAULT_LINE_TYPES")</code>.</p></dd>
 
 </dl></div>
     <div id="value">

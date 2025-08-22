@@ -24,7 +24,7 @@ To run a PSM analysis without weighting, use the function
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pricesensitivitymeter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -88,13 +88,14 @@ To run a PSM analysis without weighting, use the function
 <span>  <span class="va">design</span>,</span>
 <span>  validate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  interpolate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  interpolation_steps <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  interpolation_steps <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"DEFAULT_INTERPOLATION_STEPS"</span><span class="op">)</span>,</span>
 <span>  intersection_method <span class="op">=</span> <span class="st">"min"</span>,</span>
 <span>  acceptable_range <span class="op">=</span> <span class="st">"original"</span>,</span>
 <span>  pi_cheap <span class="op">=</span> <span class="cn">NA</span>, pi_expensive <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  pi_scale <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">1</span>,</span>
-<span>  pi_calibrated <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>  pi_calibrated_toocheap <span class="op">=</span> <span class="fl">0</span>, pi_calibrated_tooexpensive <span class="op">=</span> <span class="fl">0</span></span>
+<span>  pi_scale <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_SCALE"</span><span class="op">)</span>,</span>
+<span>  pi_calibrated <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_CALIBRATED"</span><span class="op">)</span>,</span>
+<span>  pi_calibrated_toocheap <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP"</span><span class="op">)</span>, </span>
+<span>  pi_calibrated_tooexpensive <span class="op">=</span> <span class="fu">get_psm_constant</span><span class="op">(</span><span class="st">"NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -115,7 +116,7 @@ To run a PSM analysis without weighting, use the function
 
   <dt id="arg-design">design<a class="anchor" aria-label="anchor" href="#arg-design"></a></dt>
 <dd><p>A survey design which has been created by the
-  function <code>svydesign()</code> from the <span class="pkg">survey</span>
+  function <code><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a>()</code> from the <span class="pkg">survey</span>
   package. The data that is used as an input of <code>svydesign()</code>
   must include all the variable names for <code>toocheap</code>,
   <code>cheap</code>, <code>expensive</code> and <code>tooexpensive</code> variables
@@ -137,7 +138,7 @@ To run a PSM analysis without weighting, use the function
   <dt id="arg-interpolation-steps">interpolation_steps<a class="anchor" aria-label="anchor" href="#arg-interpolation-steps"></a></dt>
 <dd><p>numeric. if <code>interpolate</code> is
   <code>TRUE</code>: the size of the interpolation steps. Set by
-  default to 0.01, which should be appropriate for most goods
+  default to <code>get_psm_constant("DEFAULT_INTERPOLATION_STEPS")</code>, which should be appropriate for most goods
   in a price range of 0-50 USD/Euro.</p></dd>
 
   <dt id="arg-intersection-method">intersection_method<a class="anchor" aria-label="anchor" href="#arg-intersection-method"></a></dt>
@@ -182,7 +183,7 @@ To run a PSM analysis without weighting, use the function
   <dt id="arg-pi-scale">pi_scale<a class="anchor" aria-label="anchor" href="#arg-pi-scale"></a></dt>
 <dd><p>Only required for the Newton Miller Smith
   extension. Scale of the purchase intent variables pi_cheap and
-  pi_expensive. By default assuming a five-point scale with 5
+  pi_expensive. By default using <code>get_psm_constant("NMS_DEFAULTS.PI_SCALE")</code>, assuming a five-point scale with 5
   indicating the highest purchase intent.</p></dd>
 
   <dt id="arg-pi-calibrated">pi_calibrated<a class="anchor" aria-label="anchor" href="#arg-pi-calibrated"></a></dt>
@@ -191,7 +192,7 @@ To run a PSM analysis without weighting, use the function
   for each value of the purchase intent scale. Must be the same
   order as the pi_scale variable so that the first value of
   pi_calibrated corresponds to the first value in the pi_scale
-  variable. Default values are taken from the Sawtooth Software
+  variable. Default values are <code>get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED")</code>, taken from the Sawtooth Software
   PSM implementation in Excel: 70% for the best value of the
   purchase intent scale, 50% for the second best value,
   30% for the third best value (middle of the scale), 10%
@@ -201,7 +202,7 @@ To run a PSM analysis without weighting, use the function
 <dd><p>Only required for the Newton Miller Smith extension. Calibrated
   purchase probabilities for the "too cheap" and the "too
   expensive" price, respectively. Must be a value between 0 and
-  1; by default set to zero following the logic in van
+  1; by default set to <code>get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP")</code> and <code>get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE")</code>, respectively, following the logic in van
   Westendorp's paper.</p></dd>
 
 </dl></div>
@@ -326,7 +327,7 @@ population.</p>
 <span class="r-in"><span><span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span> <span class="op">&lt;-</span> <span class="fl">5000</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">input_design</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span></span>
-<span class="r-in"><span>                          probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster samling probabilities,</span></span></span>
+<span class="r-in"><span>                          probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span></span></span>
 <span class="r-in"><span>                          strata <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span></span>
 <span class="r-in"><span>                          fpc <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span></span>
 <span class="r-in"><span>                          data <span class="op">=</span> <span class="va">input_data</span><span class="op">)</span></span></span>
@@ -342,9 +343,9 @@ population.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">output_weighted_psm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Van Westendorp Price Sensitivity Meter Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Accepted Price Range: 11.4 - 16.81 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Indifference Price Point: 14.05 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Optimal Price Point: 14.16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Accepted Price Range: 11.38 - 16.79 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Indifference Price Point: 14.02405 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Optimal Price Point: 14.15909 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 125 cases with individual price preferences were analyzed (weighted data).</span>

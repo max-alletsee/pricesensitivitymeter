@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pricesensitivitymeter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -218,8 +218,8 @@ same template as the function for the unweighted PSM analysis.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">output_weighted_psm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Accepted Price Range: 11.91 - 15.63 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 13.69 </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 11.9 - 15.62 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 13.68877 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: 13.63 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
@@ -310,7 +310,7 @@ need sub-group analyses to understand this.</p>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Accepted Price Range: 7.17 - 16.82 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 12.06 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.055 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: 8 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
@@ -319,7 +319,7 @@ need sub-group analyses to understand this.</p>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Accepted Price Range: 7.17 - 16.82 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 12.06 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.055 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: 7.995 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
@@ -370,8 +370,8 @@ the results of our analysis.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">check_weighted_2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Accepted Price Range: 7.22 - 17.09 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 12.08 </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 7.22 - 17.03 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.0725 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: 8 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
@@ -381,8 +381,8 @@ the results of our analysis.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">check_unweighted_2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Accepted Price Range: 7.22 - 17.09 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 12.075 </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 7.22 - 17.03 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 12.0725 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: 7.995 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
@@ -423,7 +423,7 @@ indifference price point are estimated.</p>
 <span></span>
 <span><span class="co"># create new sample design</span></span>
 <span><span class="va">input_design_2</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, <span class="co"># no clusters</span></span>
-<span>                                    probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster samling probabilities,</span></span>
+<span>                                    probs <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># hence no cluster sampling probabilities,</span></span>
 <span>                                    strata <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender</span>, <span class="co"># stratified by gender</span></span>
 <span>                                    fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
 <span>                                    data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
@@ -436,8 +436,8 @@ indifference price point are estimated.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test_2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Accepted Price Range: NA - 15.63 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 13.69 </span></span>
+<span><span class="co">#&gt; Accepted Price Range: NA - 15.62 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 13.68877 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: NA </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
@@ -484,13 +484,13 @@ same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">test_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Van Westendorp Price Sensitivity Meter Analysis</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Accepted Price Range: 11.91 - 15.63 </span></span>
-<span><span class="co">#&gt; Indifference Price Point: 13.69 </span></span>
+<span><span class="co">#&gt; Accepted Price Range: 11.9 - 15.62 </span></span>
+<span><span class="co">#&gt; Indifference Price Point: 13.68877 </span></span>
 <span><span class="co">#&gt; Optimal Price Point: 13.63 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Newton Miller Smith Extension</span></span>
-<span><span class="co">#&gt; Price with Optimal Reach: 12.16 </span></span>
-<span><span class="co">#&gt; Price with Optimal Revenue: 17.7 </span></span>
+<span><span class="co">#&gt; Price with Optimal Reach: 11.99 </span></span>
+<span><span class="co">#&gt; Price with Optimal Revenue: 17.8 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; 228 cases with individual price preferences were analyzed (weighted data).</span></span>

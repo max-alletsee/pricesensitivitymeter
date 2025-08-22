@@ -25,7 +25,7 @@ To read the documentation for the function's syntax,
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pricesensitivitymeter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
