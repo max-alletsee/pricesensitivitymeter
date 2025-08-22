@@ -20,13 +20,14 @@ psm_analysis(
   data = NA,
   validate = TRUE,
   interpolate = FALSE,
-  interpolation_steps = 0.01,
+  interpolation_steps = get_psm_constant("DEFAULT_INTERPOLATION_STEPS"),
   intersection_method = "min",
   acceptable_range = "original",
   pi_cheap = NA, pi_expensive = NA,
-  pi_scale = 5:1,
-  pi_calibrated = c(0.7, 0.5, 0.3, 0.1, 0),
-  pi_calibrated_toocheap = 0, pi_calibrated_tooexpensive = 0
+  pi_scale = get_psm_constant("NMS_DEFAULTS.PI_SCALE"),
+  pi_calibrated = get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED"),
+  pi_calibrated_toocheap = get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP"), 
+  pi_calibrated_tooexpensive = get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE")
   )
 }
 

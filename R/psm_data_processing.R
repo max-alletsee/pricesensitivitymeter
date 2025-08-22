@@ -712,3 +712,56 @@ create_nms_matrix <- function(psmdata, nms_prices, pi_calibrated_toocheap,
   
   return(nms_matrix)
 }
+
+#' Construct PSM result object
+#' 
+#' @description Creates the final PSM result object with all analysis components.
+#'   This function ensures consistent result structure across all analysis types.
+#' 
+#' @param prepared_data Prepared data structure from prepare_psm_data()
+#' @param ecdf_data ECDF calculation results from calculate_ecdf_data()
+#' @param price_points Identified price points from identify_price_points()
+#' @param nms_results NMS analysis results (optional, from calculate_nms_analysis())
+#' @param acceptable_range Acceptable range definition used
+#' @param pi_scale Purchase intent scale (for NMS)
+#' @param pi_calibrated Calibrated probabilities (for NMS)
+#' 
+#' @return Object of class "psm" with standardized structure
+#' 
+#' @keywords internal
+construct_psm_result <- function(prepared_data, ecdf_data, price_points, nms_results,
+                                acceptable_range, pi_scale, pi_calibrated) {
+  
+  # Base PSM result structure (identical to original)
+  output_psm <- list(
+    data_input = prepared_data$data,
+    validated = length(prepared_data$invalid_cases) > 0 && prepared_data$invalid_cases < prepared_data$total_sample,
+    invalid_cases = prepared_data$invalid_cases,
+    total_sample = prepared_data$total_sample,
+    data_vanwestendorp = ecdf_data,
+    pricerange_lower = price_points$pricerange_lower,
+    pricerange_upper = price_points$pricerange_upper,
+    idp = price_points$idp,
+    opp = price_points$opp,
+    acceptable_range_definition = acceptable_range,
+    weighted = prepared_data$weighted,
+    nms = prepared_data$nms_requested
+  )
+  
+  # Add survey design for weighted analysis
+  if (prepared_data$weighted) {
+    output_psm$survey_design <- prepared_data$survey_design
+  }
+  
+  # Add NMS results if calculated
+  if (prepared_data$nms_requested && !is.null(nms_results)) {
+    output_psm$data_nms <- nms_results$data_nms
+    output_psm$pi_scale <- data.frame(pi_scale = pi_scale, pi_calibrated = pi_calibrated)
+    output_psm$price_optimal_reach <- nms_results$price_optimal_reach
+    output_psm$price_optimal_revenue <- nms_results$price_optimal_revenue
+  }
+  
+  # Set class and return
+  class(output_psm) <- "psm"
+  return(output_psm)
+}
