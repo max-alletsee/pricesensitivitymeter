@@ -218,7 +218,7 @@ input_data$tex[input_data$gender == "female"] <- input_data$tex[input_data$gende
 input_data$gender_pop <- 5000
 
 input_design <- survey::svydesign(ids = ~ 1, # no clusters
-                          probs = NULL, # hence no cluster samling probabilities,
+                          probs = NULL, # hence no cluster sampling probabilities,
                           strata = input_data$gender, # stratified by gender
                           fpc = input_data$gender_pop, # strata size in the population
                           data = input_data)

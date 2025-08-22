@@ -80,7 +80,7 @@ test_that("Data Input: interpolate must be logical vector of length 1", {
 # Detecting invalid input data: "interpolation_steps" must be valid if interpolate == TRUE
 # (but can be off when interpolate == FALSE)
 #----
-test_that("Data Input: interpolatation_steps must be numeric vector of length 1", {
+test_that("Data Input: interpolation_steps must be numeric vector of length 1", {
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = TRUE, interpolation_steps = c(0, 1)))
   expect_error(psm_analysis(toocheap = 1, cheap = 2, expensive = 3, tooexpensive = 4, interpolate = TRUE, interpolation_steps = "default"))
 

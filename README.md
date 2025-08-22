@@ -1,18 +1,23 @@
 
 # pricesensitivitymeter
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
-[![CRAN\_Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
+[![CRAN_Download_Badge](https://cranlogs.r-pkg.org/badges/grand-total/pricesensitivitymeter)](https://cran.r-project.org/package=pricesensitivitymeter)
 [![R-CMD-check](https://github.com/max-alletsee/pricesensitivitymeter/workflows/R-CMD-check/badge.svg)](https://github.com/max-alletsee/pricesensitivitymeter/actions)
 [![codecov](https://codecov.io/gh/max-alletsee/pricesensitivitymeter/branch/master/graph/badge.svg?token=W1JHNAMMEB)](https://app.codecov.io/gh/max-alletsee/pricesensitivitymeter)
 
 ## Overview
 
 pricesensitivitymeter is an implementation of the van Westendorp Price
-Sensitivity Meter (PSM) in R, which is a popular method in market
-research to analyze consumer price preferences and price sensitivity. It
-also covers the so-called Newton Miller Smith Extension which allows to
-estimate prices that maximize the reach (trial rate) and the revenue.
+Sensitivity Meter (PSM) in R. It also covers the so-called Newton Miller
+Smith Extension which allows to estimate prices that maximize the reach
+(trial rate) and the revenue.
+
+The van Westendorp Price Sensitivity Meter is a common method in market
+research to analyze consumer price preferences and price sensitivity.
+Examples include OpenAI’s decision how to determine the price for
+ChatGPT Pro
+([source](https://simonwillison.net/2025/Aug/12/nick-turley/)).
 
 ## Installation
 
@@ -56,14 +61,14 @@ output_psm_demo <- psm_analysis(
 summary(output_psm_demo)
 #> Van Westendorp Price Sensitivity Meter Analysis
 #> 
-#> Accepted Price Range: 9.28 - 12.5 
-#> Indifference Price Point: 11.1 
-#> Optimal Price Point: 10.62 
+#> Accepted Price Range: 9.23 - 12.37 
+#> Indifference Price Point: 11.085 
+#> Optimal Price Point: 10.75 
 #> 
 #> ---
-#> 150 cases with individual price preferences were analyzed (unweighted data).
+#> 158 cases with individual price preferences were analyzed (unweighted data).
 #> Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.
-#> (Removed: n = 100 / 40% of data)
+#> (Removed: n = 92 / 37% of data)
 ```
 
 The package also has a function `psm_analysis_weighted()` that deals
@@ -76,6 +81,7 @@ result created above.
 
 ``` r
 library(ggplot2)
+#> Warning: Paket 'ggplot2' wurde unter R Version 4.4.3 erstellt
 
 psm_plot(output_psm_demo) +
   labs(
@@ -90,9 +96,9 @@ psm_plot(output_psm_demo) +
 
 ## Additional Information
 
--   Please [report any issues or
-    bugs](https://github.com/max-alletsee/pricesensitivitymeter/issues).
--   License: MIT
+- Please [report any issues or
+  bugs](https://github.com/max-alletsee/pricesensitivitymeter/issues).
+- License: MIT
 
 ## References
 
