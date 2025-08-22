@@ -89,10 +89,15 @@ psm_plot <- function(psm_result,
   
   # Point for Indifference Price Point (intersection of "cheap" and "expensive")
   if (isTRUE(point_idp)) {
+    # Use interpolation to find y-coordinate at exact IDP price
+    y_idp <- approx(x = psm_result$data_vanwestendorp$price, 
+                    y = psm_result$data_vanwestendorp$ecdf_not_cheap, 
+                    xout = psm_result$idp)$y
+    
     plot_object <- plot_object + ggplot2::annotate(
       geom = "point",
       x = psm_result$idp,
-      y = psm_result$data_vanwestendorp$ecdf_not_cheap[psm_result$data_vanwestendorp$price == psm_result$idp],
+      y = y_idp,
       size = point_size_idp,
       shape = point_shape_idp,
       colour = point_color_idp
@@ -101,10 +106,15 @@ psm_plot <- function(psm_result,
   
   # Point for Optimal Price Point (intersection of "too cheap" and "too expensive")
   if (isTRUE(point_opp)) {
+    # Use interpolation to find y-coordinate at exact OPP price
+    y_opp <- approx(x = psm_result$data_vanwestendorp$price, 
+                    y = psm_result$data_vanwestendorp$ecdf_toocheap, 
+                    xout = psm_result$opp)$y
+    
     plot_object <- plot_object + ggplot2::annotate(
       geom = "point",
       x = psm_result$opp,
-      y = psm_result$data_vanwestendorp$ecdf_toocheap[psm_result$data_vanwestendorp$price == psm_result$opp],
+      y = y_opp,
       size = point_size_opp,
       shape = point_shape_opp,
       colour = point_color_opp
@@ -117,10 +127,15 @@ psm_plot <- function(psm_result,
   
   # Adding label for Indifference Price Point
   if (isTRUE(label_idp)) {
+    # Use interpolation to find y-coordinate at exact IDP price for label
+    y_idp_label <- approx(x = psm_result$data_vanwestendorp$price, 
+                          y = psm_result$data_vanwestendorp$ecdf_not_cheap, 
+                          xout = psm_result$idp)$y
+    
     plot_object <- plot_object + ggplot2::annotate(
       geom = "label",
       x = psm_result$idp,
-      y = psm_result$data_vanwestendorp$ecdf_not_cheap[psm_result$data_vanwestendorp$price == psm_result$idp],
+      y = y_idp_label,
       label = paste("IDP: ", format(psm_result$idp, nsmall = 2)),
       fill = "white",
       alpha = 0.5
@@ -129,10 +144,15 @@ psm_plot <- function(psm_result,
   
   # Adding label for Optimal Price Point
   if (isTRUE(label_opp)) {
+    # Use interpolation to find y-coordinate at exact OPP price for label
+    y_opp_label <- approx(x = psm_result$data_vanwestendorp$price, 
+                          y = psm_result$data_vanwestendorp$ecdf_toocheap, 
+                          xout = psm_result$opp)$y
+    
     plot_object <- plot_object + ggplot2::annotate(
       geom = "label",
       x = psm_result$opp,
-      y = psm_result$data_vanwestendorp$ecdf_toocheap[psm_result$data_vanwestendorp$price == psm_result$opp],
+      y = y_opp_label,
       label = paste("OPP: ", format(psm_result$opp, nsmall = 2)),
       fill = "white",
       alpha = 0.5
