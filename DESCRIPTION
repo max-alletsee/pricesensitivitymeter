@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 LazyData: false
 Encoding: UTF-8
 BugReports: https://github.com/max-alletsee/pricesensitivitymeter/issues
-URL: https://max-alletsee.github.io/pricesensitivitymeter
+URL: https://max-alletsee.github.io/pricesensitivitymeter/, https://github.com/max-alletsee/pricesensitivitymeter
 Depends:
     R (>= 3.5.0),
 	methods
