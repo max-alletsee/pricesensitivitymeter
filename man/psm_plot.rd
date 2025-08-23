@@ -52,7 +52,7 @@ psm_plot(psm_result,
   \item{point_color_idp}{character vector, specifying the
   color of the Indifference Price Point. Can be a hex color (e.g.
   "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
-  Default is \code{get_psm_constant("DEFAULT_COLORS.IDP")}.}
+  Default is \code{#009E73}.}
   \item{label_idp}{logical value. Determines if the label for
   the Indifference Price Point is shown or not.}
   \item{point_opp}{logical value. Determines if the Optimal
@@ -60,7 +60,7 @@ psm_plot(psm_result,
   \item{point_color_opp}{character vector, specifying the
   color of the Optimal Price Point. Can be a hex color (e.g.
   "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
-  Default is \code{get_psm_constant("DEFAULT_COLORS.OPP")}.}
+  Default is \code{#009E73}.}
   \item{label_opp}{logical value. Determines if the label for
   the Optimal Price Point is shown or not.}
   \item{pricerange_color}{character, specifying the
@@ -68,20 +68,18 @@ psm_plot(psm_result,
   hex color (e.g. "#7f7f7f") or one of R's built-in colors
   (e.g. "grey50"). You can see all of R's built-in colors
   with the function \code{colors()}. Default is
-  \code{get_psm_constant("DEFAULT_COLORS.PRICE_RANGE")}. Is only applied if
-  \code{shade_pricerange = TRUE}}
+  \code{grey50}" Is only applied if \code{shade_pricerange = TRUE}}
   \item{pricerange_alpha}{numeric between 0 and 1,
   specifying the alpha transparency for the shaded area of
-  the the accepted price range. Default is
-  \code{get_psm_constant("DEFAULT_PLOT_SETTINGS.PRICE_RANGE_ALPHA")}. Is only applied if
-  \code{shade_pricerange = TRUE}}
+  the the accepted price range. Default is \code{0.3}.
+  Is only applied if \code{shade_pricerange = TRUE}}
   \item{line_color}{character vector, specifying the line
   color for each of the price curves shown. Color
   definitions must match the lines you have defined via
   \code{line_toocheap, line_tooexpensive, line_notcheap}
   and \code{line_notexpensive}. Can be a hex color (e.g.
   "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
-  Default is \code{get_psm_constant("DEFAULT_COLORS.LINE_COLORS")}.}
+  Default is \code{c("too cheap" = "#009E73", "not cheap" = "#009E73", "not expensive" = "#D55E00", "too expensive" = "#D55E00")}.}
   \item{line_type}{vector, specifying the line type for each
   of the price curves shown. Definitions must match the lines
   you have defined via \code{line_toocheap, line_tooexpensive,
@@ -90,7 +88,7 @@ psm_plot(psm_result,
   a name (blank, solid, dashed, dotted, dotdash, longdash,
   twodash), or a string with an even number (up to eight) of
   hexadecimal digits which give the lengths in consecutive
-  positions in the string. Default is \code{get_psm_constant("DEFAULT_LINE_TYPES")}.}
+  positions in the string. Default is \code{c("too cheap" = "dotted", "not cheap" = "solid", "not expensive" = "solid", "too expensive" = "dotted")}.}
 }
 
 \value{

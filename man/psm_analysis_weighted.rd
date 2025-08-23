@@ -49,10 +49,10 @@ psm_analysis_weighted(
   the Optimal Price Point.}
   \item{design}{A survey design which has been created by the
   function \code{\link[survey]{svydesign}()} from the \pkg{survey}
-  package. The data that is used as an input of \code{svydesign()}
-  must include all the variable names for \code{toocheap},
-  \code{cheap}, \code{expensive} and \code{tooexpensive} variables
-  specified above.}
+  package. The data that is used as an input of 
+  \code{\link[survey]{svydesign}()} must include all the variable
+  names for \code{toocheap}, \code{cheap}, \code{expensive}
+  and \code{tooexpensive} variables specified above.}
   \item{validate}{logical. should only respondents with
   consistent price preferences (too cheap < cheap < expensive
   < too expensive) be considered in the analysis?}
@@ -64,8 +64,8 @@ psm_analysis_weighted(
   be necessary.}
   \item{interpolation_steps}{numeric. if \code{interpolate} is
   \code{TRUE}: the size of the interpolation steps. Set by
-  default to \code{get_psm_constant("DEFAULT_INTERPOLATION_STEPS")}, which should be appropriate for most goods
-  in a price range of 0-50 USD/Euro.}
+  default to \code{0.01}, which should be appropriate for
+  most goods in a price range of 0-50 USD/Euro.}
   \item{intersection_method}{"min" (default), "max", "mean" or
   "median". defines the method how to determine the price
   points (range, indifference price, optimal price) if there
@@ -101,23 +101,24 @@ psm_analysis_weighted(
   intent at their individual cheap/expensive price.}
   \item{pi_scale}{Only required for the Newton Miller Smith
   extension. Scale of the purchase intent variables pi_cheap and
-  pi_expensive. By default using \code{get_psm_constant("NMS_DEFAULTS.PI_SCALE")}, assuming a five-point scale with 5
-  indicating the highest purchase intent.}
+  pi_expensive. By default using \code{5:1}, assuming a
+  five-point scale with 5 indicating the highest purchase intent.}
   \item{pi_calibrated}{Only required for the Newton Miller Smith
   extension. Calibrated purchase probabilities that are assumed
   for each value of the purchase intent scale. Must be the same
   order as the pi_scale variable so that the first value of
   pi_calibrated corresponds to the first value in the pi_scale
-  variable. Default values are \code{get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED")}, taken from the Sawtooth Software
-  PSM implementation in Excel: 70\% for the best value of the
-  purchase intent scale, 50\% for the second best value,
-  30\% for the third best value (middle of the scale), 10\%
-  for the fourth best value and 0\% for the worst value.}
+  variable. Default values are \code{c(0.7, 0.5, 0.3, 0.1, 0},
+  taken from the Sawtooth Software PSM implementation in Excel:
+  70\% for the best value of the purchase intent scale, 50\%
+  for the second best value, 30\% for the third best value
+  (middle of the scale), 10\% for the fourth best value and
+  0\% for the worst value.}
   \item{pi_calibrated_toocheap, pi_calibrated_tooexpensive}{
   Only required for the Newton Miller Smith extension. Calibrated
   purchase probabilities for the "too cheap" and the "too
   expensive" price, respectively. Must be a value between 0 and
-  1; by default set to \code{get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP")} and \code{get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE")}, respectively, following the logic in van
+  1; by default set to \code{0} following the logic in van
   Westendorp's paper.}
 }
 
