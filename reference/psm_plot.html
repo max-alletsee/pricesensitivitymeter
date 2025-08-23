@@ -65,15 +65,15 @@ It takes the object created by psm_analysis() or
     <div class="page-header">
     <h1>Plot of the van Westendorp Price Sensitivity Meter Analysis (PSM)</h1>
 
-    <div class="hidden name"><code>psm_plot_.Rd</code></div>
+    <div class="hidden name"><code>psm_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p><code>psm_plot()</code> uses <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> to show the standard van
   Westendorp Price Sensitivity Meter plot that allows to see the
   acceptance for each price on each of the four variables.</p>
-<p>It takes the object created by <code><a href="psm_analysis_.html">psm_analysis()</a></code> or
-  <code><a href="psm_analysis_weighted_.html">psm_analysis_weighted()</a></code> as an input.</p>
+<p>It takes the object created by <code><a href="psm_analysis.html">psm_analysis()</a></code> or
+  <code><a href="psm_analysis_weighted.html">psm_analysis_weighted()</a></code> as an input.</p>
     </div>
 
     <div id="ref-usage">
@@ -100,8 +100,8 @@ It takes the object created by psm_analysis() or
     <p></p>
 <dl><dt id="arg-psm-result">psm_result<a class="anchor" aria-label="anchor" href="#arg-psm-result"></a></dt>
 <dd><p>Result of a Price Sensitivity Meter analysis,
-  created by running <code><a href="psm_analysis_.html">psm_analysis()</a></code> or
-  <code><a href="psm_analysis_weighted_.html">psm_analysis_weighted()</a></code>. (Object of class <code>"psm"</code>)</p></dd>
+  created by running <code><a href="psm_analysis.html">psm_analysis()</a></code> or
+  <code><a href="psm_analysis_weighted.html">psm_analysis_weighted()</a></code>. (Object of class <code>"psm"</code>)</p></dd>
 
   <dt id="arg-shade-pricerange">shade_pricerange<a class="anchor" aria-label="anchor" href="#arg-shade-pricerange"></a></dt>
 <dd><p>logical value. Determines if the
@@ -211,7 +211,7 @@ It takes the object created by psm_analysis() or
 <span class="r-in"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">13</span>, sd <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">250</span>, mean <span class="op">=</span> <span class="fl">17</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">output_psm_demo</span> <span class="op">&lt;-</span> <span class="fu"><a href="psm_analysis_.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="va">tch</span>,</span></span>
+<span class="r-in"><span><span class="va">output_psm_demo</span> <span class="op">&lt;-</span> <span class="fu"><a href="psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="va">tch</span>,</span></span>
 <span class="r-in"><span>  cheap <span class="op">=</span> <span class="va">ch</span>,</span></span>
 <span class="r-in"><span>  expensive <span class="op">=</span> <span class="va">ex</span>,</span></span>
 <span class="r-in"><span>  tooexpensive <span class="op">=</span> <span class="va">tex</span><span class="op">)</span></span></span>

@@ -121,7 +121,7 @@ finds reliable insights in a crappy sample.</p>
 <p>The <em>pricesensitivitymeter</em> package includes a function that
 allows to use <em>weighted</em> survey data. This vignette explains the
 use of this function. For a general overview of the main function for
-unweighted data, please read the help of th <code><a href="../reference/psm_analysis_.html">psm_analysis()</a></code>
+unweighted data, please read the help of th <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code>
 function. The function that uses weighted data uses the <em>survey</em>
 package to calculate the weights; please read its documentation if you
 need to find out how to specify your sample design. The author of the
@@ -194,14 +194,14 @@ and creates the survey design object with the <em>survey</em> package
 <span>                          fpc <span class="op">=</span> <span class="va">input_data</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
 <span>                          data <span class="op">=</span> <span class="va">input_data</span><span class="op">)</span> <span class="co"># data object used as input</span></span></code></pre></div>
 <p>After those preparations, we can run the weighted Price Sensitivity
-Meter Analysis using the <code><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted()</a></code> function.
+Meter Analysis using the <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function.
 Its basic inputs are the names of the variables with the price
 information (“too cheap”, “cheap”, “expensive” and “too expensive”) and
 the survey design object that we have just created using the
 <code><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign()</a></code> function of the <em>survey</em> package. To
 emphasize the difference to unweighted data, the input for this survey
 design object is called “design” instead of “data”. Please note that the
-<code><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted()</a></code> function requires a “design” input
+<code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function requires a “design” input
 and cannot cope with just four vectors that contain the price
 information.</p>
 <p>The resulting object and the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function use the
@@ -209,7 +209,7 @@ same template as the function for the unweighted PSM analysis.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">output_weighted_psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<code class="sourceCode R"><span><span class="va">output_weighted_psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                             cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                             expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                             tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
@@ -232,8 +232,8 @@ same template as the function for the unweighted PSM analysis.</p>
 </h2>
 <p>If the sample is a perfect representation of the target population,
 the results of the Price Sensitivity Meter analysis will be the same
-regardless if the <code><a href="../reference/psm_analysis_.html">psm_analysis()</a></code> function or the
-<code><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted()</a></code> function is used - under the
+regardless if the <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function or the
+<code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function is used - under the
 condition that there are no respondents with intransitive price
 preferences.</p>
 <p>The code below demonstrates first what happens if there are indeed
@@ -293,13 +293,13 @@ need sub-group analyses to understand this.</p>
 <span><span class="co">#&gt; [1] 40</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># running both weighted and unweighted analysis on the same data </span></span>
-<span><span class="va">check_weighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span><span class="va">check_weighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                          tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
 <span>                                          design <span class="op">=</span> <span class="va">input_design_2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">check_unweighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span><span class="va">check_unweighted_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                   cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                   expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                   tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
@@ -354,13 +354,13 @@ the results of our analysis.</p>
 <span>                                  fpc <span class="op">=</span> <span class="va">input_data_3</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
 <span>                                  data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
 <span></span>
-<span><span class="va">check_weighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span><span class="va">check_weighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                          cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                          expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                          tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
 <span>                                          design <span class="op">=</span> <span class="va">input_design_3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">check_unweighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span><span class="va">check_unweighted_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                   cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                   expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                   tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
@@ -410,8 +410,8 @@ be very small and unsystematic.</p>
 <p>It is also possible to run a weighted Price Sensitivity Meter
 analysis if there is no “too cheap” price (like for certain services
 like a drawing account, access to a sports match, …). The
-<code><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted()</a></code> function handles this in the same
-way as the <code><a href="../reference/psm_analysis_.html">psm_analysis()</a></code> function: The “toocheap” variable
+<code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function handles this in the same
+way as the <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function: The “toocheap” variable
 should be set to NA for all cases. Having no “too cheap” price means
 that the lower bound of the price range and the optimal price point
 cannot be estimated, whereas the upper end of the price range and the
@@ -428,7 +428,7 @@ indifference price point are estimated.</p>
 <span>                                    fpc <span class="op">=</span> <span class="va">input_data_2</span><span class="op">$</span><span class="va">gender_pop</span>, <span class="co"># strata size in the population</span></span>
 <span>                                    data <span class="op">=</span> <span class="va">input_data_2</span><span class="op">)</span> <span class="co"># data object used as input</span></span>
 <span></span>
-<span><span class="va">test_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span><span class="va">test_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
@@ -448,10 +448,10 @@ indifference price point are estimated.</p>
 <div class="section level2">
 <h2 id="using-weighting-in-the-newton-miller-smith-extension">Using Weighting in the Newton Miller Smith Extension<a class="anchor" aria-label="anchor" href="#using-weighting-in-the-newton-miller-smith-extension"></a>
 </h2>
-<p>The <code><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted()</a></code> function also allows to
+<p>The <code><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted()</a></code> function also allows to
 include an estimate for the price with optimal reach or optimal revenue
 via the Newton Miller Smith extension. This option can be used in the
-same way as in the unweighted <code><a href="../reference/psm_analysis_.html">psm_analysis()</a></code> function.</p>
+same way as in the unweighted <code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># setting up dataset with purchase intent information</span></span>
 <span><span class="va">input_data_3</span> <span class="op">&lt;-</span> <span class="va">input_data</span></span>
@@ -471,7 +471,7 @@ same way as in the unweighted <code><a href="../reference/psm_analysis_.html">ps
 <span>                                    data <span class="op">=</span> <span class="va">input_data_3</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># running the weighted Price Sensitivity Meter analysis</span></span>
-<span><span class="va">test_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted_.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
+<span><span class="va">test_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_weighted.html">psm_analysis_weighted</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="st">"tch"</span>,</span>
 <span>                                cheap <span class="op">=</span> <span class="st">"ch"</span>,</span>
 <span>                                expensive <span class="op">=</span> <span class="st">"ex"</span>,</span>
 <span>                                tooexpensive <span class="op">=</span> <span class="st">"tex"</span>,</span>
