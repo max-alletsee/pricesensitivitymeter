@@ -131,7 +131,7 @@ It takes the object created by psm_analysis() or
 <dd><p>character vector, specifying the
   color of the Indifference Price Point. Can be a hex color (e.g.
   "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
-  Default is <code>get_psm_constant("DEFAULT_COLORS.IDP")</code>.</p></dd>
+  Default is <code>#009E73</code>.</p></dd>
 
   <dt id="arg-label-idp">label_idp<a class="anchor" aria-label="anchor" href="#arg-label-idp"></a></dt>
 <dd><p>logical value. Determines if the label for
@@ -145,7 +145,7 @@ It takes the object created by psm_analysis() or
 <dd><p>character vector, specifying the
   color of the Optimal Price Point. Can be a hex color (e.g.
   "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
-  Default is <code>get_psm_constant("DEFAULT_COLORS.OPP")</code>.</p></dd>
+  Default is <code>#009E73</code>.</p></dd>
 
   <dt id="arg-label-opp">label_opp<a class="anchor" aria-label="anchor" href="#arg-label-opp"></a></dt>
 <dd><p>logical value. Determines if the label for
@@ -157,15 +157,13 @@ It takes the object created by psm_analysis() or
   hex color (e.g. "#7f7f7f") or one of R's built-in colors
   (e.g. "grey50"). You can see all of R's built-in colors
   with the function <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code>. Default is
-  <code>get_psm_constant("DEFAULT_COLORS.PRICE_RANGE")</code>. Is only applied if
-  <code>shade_pricerange = TRUE</code></p></dd>
+  <code>grey50</code>" Is only applied if <code>shade_pricerange = TRUE</code></p></dd>
 
   <dt id="arg-pricerange-alpha">pricerange_alpha<a class="anchor" aria-label="anchor" href="#arg-pricerange-alpha"></a></dt>
 <dd><p>numeric between 0 and 1,
   specifying the alpha transparency for the shaded area of
-  the the accepted price range. Default is
-  <code>get_psm_constant("DEFAULT_PLOT_SETTINGS.PRICE_RANGE_ALPHA")</code>. Is only applied if
-  <code>shade_pricerange = TRUE</code></p></dd>
+  the the accepted price range. Default is <code>0.3</code>.
+  Is only applied if <code>shade_pricerange = TRUE</code></p></dd>
 
   <dt id="arg-line-color">line_color<a class="anchor" aria-label="anchor" href="#arg-line-color"></a></dt>
 <dd><p>character vector, specifying the line
@@ -174,7 +172,7 @@ It takes the object created by psm_analysis() or
   <code>line_toocheap, line_tooexpensive, line_notcheap</code>
   and <code>line_notexpensive</code>. Can be a hex color (e.g.
   "#7f7f7f") or one of R's built-in colors (e.g. "grey50").
-  Default is <code>get_psm_constant("DEFAULT_COLORS.LINE_COLORS")</code>.</p></dd>
+  Default is <code>c("too cheap" = "#009E73", "not cheap" = "#009E73", "not expensive" = "#D55E00", "too expensive" = "#D55E00")</code>.</p></dd>
 
   <dt id="arg-line-type">line_type<a class="anchor" aria-label="anchor" href="#arg-line-type"></a></dt>
 <dd><p>vector, specifying the line type for each
@@ -185,7 +183,7 @@ It takes the object created by psm_analysis() or
   a name (blank, solid, dashed, dotted, dotdash, longdash,
   twodash), or a string with an even number (up to eight) of
   hexadecimal digits which give the lengths in consecutive
-  positions in the string. Default is <code>get_psm_constant("DEFAULT_LINE_TYPES")</code>.</p></dd>
+  positions in the string. Default is <code>c("too cheap" = "dotted", "not cheap" = "solid", "not expensive" = "solid", "too expensive" = "dotted")</code>.</p></dd>
 
 </dl></div>
     <div id="value">

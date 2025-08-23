@@ -117,10 +117,10 @@ To run a PSM analysis without weighting, use the function
   <dt id="arg-design">design<a class="anchor" aria-label="anchor" href="#arg-design"></a></dt>
 <dd><p>A survey design which has been created by the
   function <code><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a>()</code> from the <span class="pkg">survey</span>
-  package. The data that is used as an input of <code>svydesign()</code>
-  must include all the variable names for <code>toocheap</code>,
-  <code>cheap</code>, <code>expensive</code> and <code>tooexpensive</code> variables
-  specified above.</p></dd>
+  package. The data that is used as an input of
+  <code><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a>()</code> must include all the variable
+  names for <code>toocheap</code>, <code>cheap</code>, <code>expensive</code>
+  and <code>tooexpensive</code> variables specified above.</p></dd>
 
   <dt id="arg-validate">validate<a class="anchor" aria-label="anchor" href="#arg-validate"></a></dt>
 <dd><p>logical. should only respondents with
@@ -138,8 +138,8 @@ To run a PSM analysis without weighting, use the function
   <dt id="arg-interpolation-steps">interpolation_steps<a class="anchor" aria-label="anchor" href="#arg-interpolation-steps"></a></dt>
 <dd><p>numeric. if <code>interpolate</code> is
   <code>TRUE</code>: the size of the interpolation steps. Set by
-  default to <code>get_psm_constant("DEFAULT_INTERPOLATION_STEPS")</code>, which should be appropriate for most goods
-  in a price range of 0-50 USD/Euro.</p></dd>
+  default to <code>0.01</code>, which should be appropriate for
+  most goods in a price range of 0-50 USD/Euro.</p></dd>
 
   <dt id="arg-intersection-method">intersection_method<a class="anchor" aria-label="anchor" href="#arg-intersection-method"></a></dt>
 <dd><p>"min" (default), "max", "mean" or
@@ -183,8 +183,8 @@ To run a PSM analysis without weighting, use the function
   <dt id="arg-pi-scale">pi_scale<a class="anchor" aria-label="anchor" href="#arg-pi-scale"></a></dt>
 <dd><p>Only required for the Newton Miller Smith
   extension. Scale of the purchase intent variables pi_cheap and
-  pi_expensive. By default using <code>get_psm_constant("NMS_DEFAULTS.PI_SCALE")</code>, assuming a five-point scale with 5
-  indicating the highest purchase intent.</p></dd>
+  pi_expensive. By default using <code>5:1</code>, assuming a
+  five-point scale with 5 indicating the highest purchase intent.</p></dd>
 
   <dt id="arg-pi-calibrated">pi_calibrated<a class="anchor" aria-label="anchor" href="#arg-pi-calibrated"></a></dt>
 <dd><p>Only required for the Newton Miller Smith
@@ -192,17 +192,18 @@ To run a PSM analysis without weighting, use the function
   for each value of the purchase intent scale. Must be the same
   order as the pi_scale variable so that the first value of
   pi_calibrated corresponds to the first value in the pi_scale
-  variable. Default values are <code>get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED")</code>, taken from the Sawtooth Software
-  PSM implementation in Excel: 70% for the best value of the
-  purchase intent scale, 50% for the second best value,
-  30% for the third best value (middle of the scale), 10%
-  for the fourth best value and 0% for the worst value.</p></dd>
+  variable. Default values are <code>c(0.7, 0.5, 0.3, 0.1, 0</code>,
+  taken from the Sawtooth Software PSM implementation in Excel:
+  70% for the best value of the purchase intent scale, 50%
+  for the second best value, 30% for the third best value
+  (middle of the scale), 10% for the fourth best value and
+  0% for the worst value.</p></dd>
 
   <dt id="arg-pi-calibrated-toocheap-pi-calibrated-tooexpensive">pi_calibrated_toocheap, pi_calibrated_tooexpensive<a class="anchor" aria-label="anchor" href="#arg-pi-calibrated-toocheap-pi-calibrated-tooexpensive"></a></dt>
 <dd><p>Only required for the Newton Miller Smith extension. Calibrated
   purchase probabilities for the "too cheap" and the "too
   expensive" price, respectively. Must be a value between 0 and
-  1; by default set to <code>get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOCHEAP")</code> and <code>get_psm_constant("NMS_DEFAULTS.PI_CALIBRATED_TOOEXPENSIVE")</code>, respectively, following the logic in van
+  1; by default set to <code>0</code> following the logic in van
   Westendorp's paper.</p></dd>
 
 </dl></div>

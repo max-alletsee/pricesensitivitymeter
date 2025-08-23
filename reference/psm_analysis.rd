@@ -190,7 +190,7 @@
 <dd><p>Only required for the Newton Miller Smith
   extension. Scale of the purchase intent variables pi_cheap and
   pi_expensive. By default assuming a five-point scale with 5
-  indicating the highest purchase intent.</p></dd>
+  indicating the highest purchase intent (i.e. <code>5:1</code>).</p></dd>
 
   <dt id="arg-pi-calibrated">pi_calibrated<a class="anchor" aria-label="anchor" href="#arg-pi-calibrated"></a></dt>
 <dd><p>Only required for the Newton Miller Smith
@@ -208,7 +208,7 @@
 <dd><p>Only required for the Newton Miller Smith extension. Calibrated
   purchase probabilities for the "too cheap" and the "too
   expensive" price, respectively. Must be a value between 0 and
-  1; by default set to zero following the logic in van
+  1; by default set to <code>0</code> following the logic in van
   Westendorp's paper.</p></dd>
 
 </dl></div>
