@@ -61,14 +61,14 @@ output_psm_demo <- psm_analysis(
 summary(output_psm_demo)
 #> Van Westendorp Price Sensitivity Meter Analysis
 #> 
-#> Accepted Price Range: 9.23 - 12.37 
-#> Indifference Price Point: 11.085 
-#> Optimal Price Point: 10.75 
+#> Accepted Price Range: 9 - 12.48 
+#> Indifference Price Point: 10.94 
+#> Optimal Price Point: 10.64 
 #> 
 #> ---
-#> 158 cases with individual price preferences were analyzed (unweighted data).
+#> 143 cases with individual price preferences were analyzed (unweighted data).
 #> Total data set consists of 250 cases. Analysis was limited to cases with transitive price preferences.
-#> (Removed: n = 92 / 37% of data)
+#> (Removed: n = 107 / 43% of data)
 ```
 
 The package also has a function `psm_analysis_weighted()` that deals
@@ -81,7 +81,6 @@ result created above.
 
 ``` r
 library(ggplot2)
-#> Warning: Paket 'ggplot2' wurde unter R Version 4.4.3 erstellt
 
 psm_plot(output_psm_demo) +
   labs(
