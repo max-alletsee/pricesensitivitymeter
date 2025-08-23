@@ -134,7 +134,7 @@ zoomed in.)</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://max-alletsee.github.io/pricesensitivitymeter/">pricesensitivitymeter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Running the analysis with price steps and without interpolation</span></span>
-<span><span class="va">psm_steps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="va">toocheap</span>,</span>
+<span><span class="va">psm_steps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="va">toocheap</span>,</span>
 <span>                          cheap <span class="op">=</span> <span class="va">cheap_alt</span>,</span>
 <span>                          expensive <span class="op">=</span> <span class="va">expensive_alt</span>,</span>
 <span>                          tooexpensive <span class="op">=</span> <span class="va">tooexpensive</span>,</span>
@@ -183,12 +183,12 @@ initial data manipulation that added price steps). The combination of
 price steps (as can be seen in the steep slope of the curves in this
 area) and sparse data points creates this problem. If the
 <code>interpolate</code> argument is set to <code>FALSE</code>, the
-<code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function uses the first price for which the
+<code><a href="../reference/psm_analysis_.html">psm_analysis()</a></code> function uses the first price for which the
 “not expensive” curve is higher than the “not cheap” curve, which is the
 case for a price of 14.91 in our example.</p>
 <p>A larger sample size is usually sufficient to overcome this issue.
 However, this might not always be possible. Therefore, the
-<code><a href="../reference/psm_analysis.html">psm_analysis()</a></code> function has an optional argument which
+<code><a href="../reference/psm_analysis_.html">psm_analysis()</a></code> function has an optional argument which
 helps to interpolate the pricing curve in cases of sparse
 information.</p>
 </div>
@@ -208,7 +208,7 @@ default value of 0.01.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</su
 <code>interpolate</code> function is set to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Running the analysis with interpolation</span></span>
-<span><span class="va">psm_interpolated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="va">toocheap</span>,</span>
+<span><span class="va">psm_interpolated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psm_analysis_.html">psm_analysis</a></span><span class="op">(</span>toocheap <span class="op">=</span> <span class="va">toocheap</span>,</span>
 <span>                                 cheap <span class="op">=</span> <span class="va">cheap_alt</span>,</span>
 <span>                                 expensive <span class="op">=</span> <span class="va">expensive_alt</span>,</span>
 <span>                                 tooexpensive <span class="op">=</span> <span class="va">tooexpensive</span>,</span>
