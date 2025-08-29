@@ -252,6 +252,9 @@ validate_price_preferences <- function(psmdata, validate) {
     psmdata <- psmdata[psmdata$valid, keep_cols, drop = FALSE]
   }
   
+  # Remove the temporary 'valid' column before returning
+  psmdata$valid <- NULL
+  
   list(
     data = psmdata,
     invalid_cases = invalid_cases,
