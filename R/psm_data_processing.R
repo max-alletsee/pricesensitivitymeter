@@ -125,6 +125,9 @@ prepare_psm_data <- function(toocheap, cheap, expensive, tooexpensive,
     survey_design <- NULL
   }
   
+  # Clean up the 'valid' column before returning the final data
+  validation_result$data$valid <- NULL
+  
   # Return prepared data structure
   list(
     data = validation_result$data,
@@ -251,9 +254,6 @@ validate_price_preferences <- function(psmdata, validate) {
     
     psmdata <- psmdata[psmdata$valid, keep_cols, drop = FALSE]
   }
-  
-  # Remove the temporary 'valid' column before returning
-  psmdata$valid <- NULL
   
   list(
     data = psmdata,
