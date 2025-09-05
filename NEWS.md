@@ -1,6 +1,7 @@
-# pricesensitivitymeter, v1.3.2 (release date: 2025-08-30)
+# pricesensitivitymeter, 1.3.3 (release date: 2025-08-30)
 
 - fixes an edge case that returned an additional column during data preparation for valid cases in some scenarios
+- fixes a NOTE on a non-standard file name
 
 # pricesensitivitymeter, v1.3.1 (release date: 2025-08-22)
 
